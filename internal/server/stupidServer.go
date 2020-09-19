@@ -55,7 +55,6 @@ func (s *StupidServer) StartServe() error {
 
 func (s *StupidServer) serve(conn net.Conn, errChan chan error) {
 	connSession := session.CreateSession(conn)
-	println("new session connect")
 	s.sessions = append(s.sessions, connSession)
 	err := connSession.Serve(s.handlers)
 	if err != nil {
