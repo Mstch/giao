@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08aaee7c-90a2-4371-b5a4-29cb042cccce" name="Default Changelist" comment="" />
+    <list default="true" id="08aaee7c-90a2-4371-b5a4-29cb042cccce" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/session/rw.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/session/rw.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,7 +23,10 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="/usr/local/go" />
+  <component name="GOROOT" path="C:\Go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
   </component>
@@ -33,7 +42,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
-    <property name="settings.editor.selected.configurable" value="http.proxy" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="GoMoveDeclarationDialog.RECENT_KEY">
@@ -47,7 +56,7 @@
       <recent name="$PROJECT_DIR$/impl" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestQPSStp1C in github.com/Mstch/giao/test/qps">
+  <component name="RunManager" selected="Go Test.TestQPSStp1C in github.com/Mstch/giao/test/qps (1)">
     <configuration name="TestQPSStd16C in github.com/Mstch/giao/test/qps" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="giao" />
       <working_directory value="$PROJECT_DIR$/test/qps" />
@@ -81,6 +90,17 @@
       <pattern value="^\QTestQPSStp16C\E$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestQPSStp1C in github.com/Mstch/giao/test/qps (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="giao" />
+      <working_directory value="$PROJECT_DIR$/test/qps" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Mstch/giao/test/qps" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestQPSStp1C\E$" />
+      <method v="2" />
+    </configuration>
     <configuration name="TestQPSStp1C in github.com/Mstch/giao/test/qps" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="giao" />
       <working_directory value="$PROJECT_DIR$/test/qps" />
@@ -92,23 +112,13 @@
       <pattern value="^\QTestQPSStp1C\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="go test github.com/Mstch/giao/test/qps" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="giao" />
-      <working_directory value="$PROJECT_DIR$/test/qps" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/Mstch/giao/test/qps" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestQPSStp1C in github.com/Mstch/giao/test/qps (1)" />
         <item itemvalue="Go Test.TestQPSStp1C in github.com/Mstch/giao/test/qps" />
         <item itemvalue="Go Test.TestQPSStd1C in github.com/Mstch/giao/test/qps" />
         <item itemvalue="Go Test.TestQPSStd16C in github.com/Mstch/giao/test/qps" />
         <item itemvalue="Go Test.TestQPSStp16C in github.com/Mstch/giao/test/qps" />
-        <item itemvalue="Go Test.go test github.com/Mstch/giao/test/qps" />
       </list>
     </recent_temporary>
   </component>
@@ -135,13 +145,18 @@
     </environment>
   </component>
   <component name="WindowStateProjectService">
+    <state x="752" y="470" key="#GOROOT" timestamp="1600525303582">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="752" y="470" key="#GOROOT/0.0.1920.1080@0.0.1920.1080" timestamp="1600525303582" />
     <state x="520" y="302" key="#Go_Modules" timestamp="1600089682254">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="520" y="302" key="#Go_Modules/0.23.1440.877@0.23.1440.877" timestamp="1600089682254" />
-    <state x="450" y="270" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600510832394">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="600" y="304" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600525476978">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state x="600" y="304" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1600525476978" />
     <state x="450" y="270" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.877@0.23.1440.877" timestamp="1600510832394" />
     <state x="483" y="176" key="#xdebugger.evaluate" timestamp="1600510365059">
       <screen x="0" y="23" width="1440" height="877" />
@@ -155,21 +170,29 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="611" y="330" key="EnvironmentVariablesDialog/0.23.1440.877@0.23.1440.877" timestamp="1600089681400" />
-    <state width="1398" height="190" key="GridCell.Tab.0.bottom" timestamp="1600519189946">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="554" y="191" key="FileChooserDialogImpl" timestamp="1600528337890">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state x="554" y="191" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1600528337890" />
+    <state width="1879" height="164" key="GridCell.Tab.0.bottom" timestamp="1600526035457">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1879" height="164" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
     <state width="1398" height="190" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600519189946" />
-    <state width="1398" height="190" key="GridCell.Tab.0.center" timestamp="1600519189945">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1879" height="164" key="GridCell.Tab.0.center" timestamp="1600526035457">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state width="1879" height="164" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
     <state width="1398" height="190" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1600519189945" />
-    <state width="1398" height="190" key="GridCell.Tab.0.left" timestamp="1600519189945">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1879" height="164" key="GridCell.Tab.0.left" timestamp="1600526035457">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state width="1879" height="164" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
     <state width="1398" height="190" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1600519189945" />
-    <state width="1398" height="190" key="GridCell.Tab.0.right" timestamp="1600519189946">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1879" height="164" key="GridCell.Tab.0.right" timestamp="1600526035457">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state width="1879" height="164" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
     <state width="1398" height="190" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1600519189946" />
     <state width="1398" height="300" key="GridCell.Tab.1.bottom" timestamp="1600510482793">
       <screen x="0" y="23" width="1440" height="877" />
@@ -187,9 +210,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1398" height="300" key="GridCell.Tab.1.right/0.23.1440.877@0.23.1440.877" timestamp="1600510482793" />
-    <state x="229" y="100" key="SettingsEditor" timestamp="1600332924784">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="305" y="95" key="SettingsEditor" timestamp="1600528365712">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state x="305" y="95" key="SettingsEditor/0.0.1920.1080@0.0.1920.1080" timestamp="1600528365712" />
     <state x="229" y="100" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1600332924784" />
     <state width="720" height="438" key="XDebugger.FullValuePopup" timestamp="1600348053038">
       <screen x="0" y="23" width="1440" height="877" />
@@ -207,9 +231,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="263" y="197" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1440.877@0.23.1440.877" timestamp="1600350949108" />
-    <state x="421" y="216" width="617" height="490" key="find.popup" timestamp="1600509425727">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="561" y="238" width="823" height="604" key="find.popup" timestamp="1600525522885">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state x="561" y="238" width="823" height="604" key="find.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1600525522885" />
     <state x="421" y="216" width="617" height="490" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1600509425727" />
     <state x="549" y="235" key="refactoring.ChangeSignatureDialog" timestamp="1600332605908">
       <screen x="0" y="23" width="1440" height="877" />
