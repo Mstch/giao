@@ -182,12 +182,40 @@ func TestQPSStd1C(t *testing.T) {
 				panic(err)
 			}
 			count++
+			runtime.Gosched()
 		}
 	}()
 	<-time.NewTimer(10 * time.Second).C
 	memStat := &runtime.MemStats{}
 	runtime.ReadMemStats(memStat)
 	println("[STANDARD] 1C QPS:", count/10, memStat.TotalAlloc/1E6, "mb")
+}
+func TestQPSStdAsync1C(t *testing.T) {
+	done := make(chan *rpc.Call, 10)
+	c, err := rpc.Dial("tcp", "localhost:8080")
+	if err != nil {
+		panic(err)
+	}
+	count := 0
+	go func() {
+		for j := 0; ; j++ {
+			c.Go("Echo.GoEcho", EchoMsg[j%12], &test.Echo{}, done)
+			runtime.Gosched()
+		}
+	}()
+	go func() {
+		for {
+			call := <-done
+			count++
+			if call.Error != nil {
+				panic(call.Error)
+			}
+		}
+	}()
+	<-time.NewTimer(10 * time.Second).C
+	memStat := &runtime.MemStats{}
+	runtime.ReadMemStats(memStat)
+	println("[STANDARD] 1C QPS:", count/10, memStat.HeapInuse/1E6, "mb")
 }
 func TestQPSStd16C(t *testing.T) {
 	done := make([]chan *rpc.Call, 16)
