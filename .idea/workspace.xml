@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="08aaee7c-90a2-4371-b5a4-29cb042cccce" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="/usr/local/go" />
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1hVFVu8UKBqF5HCg1bAO0L4g0IR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="settings.editor.selected.configurable" value="http.proxy" />
+  </component>
+  <component name="RecentsManager">
+    <key name="GoMoveDeclarationDialog.RECENT_KEY">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test/qps" />
+      <recent name="$PROJECT_DIR$/internal/server" />
+      <recent name="$PROJECT_DIR$/internal/buffer" />
+      <recent name="$PROJECT_DIR$/internal" />
+      <recent name="$PROJECT_DIR$/impl" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Test.TestQPSStp1C in github.com/Mstch/giao/test/qps">
+    <configuration name="TestQPSStd16C in github.com/Mstch/giao/test/qps" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="giao" />
+      <working_directory value="$PROJECT_DIR$/test/qps" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Mstch/giao/test/qps" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestQPSStd16C\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestQPSStd1C in github.com/Mstch/giao/test/qps" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="giao" />
+      <working_directory value="$PROJECT_DIR$/test/qps" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Mstch/giao/test/qps" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestQPSStd1C\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestQPSStp16C in github.com/Mstch/giao/test/qps" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="giao" />
+      <working_directory value="$PROJECT_DIR$/test/qps" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Mstch/giao/test/qps" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestQPSStp16C\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestQPSStp1C in github.com/Mstch/giao/test/qps" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="giao" />
+      <working_directory value="$PROJECT_DIR$/test/qps" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Mstch/giao/test/qps" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestQPSStp1C\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go test github.com/Mstch/giao/test/qps" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="giao" />
+      <working_directory value="$PROJECT_DIR$/test/qps" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Mstch/giao/test/qps" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.TestQPSStp1C in github.com/Mstch/giao/test/qps" />
+        <item itemvalue="Go Test.TestQPSStd1C in github.com/Mstch/giao/test/qps" />
+        <item itemvalue="Go Test.TestQPSStd16C in github.com/Mstch/giao/test/qps" />
+        <item itemvalue="Go Test.TestQPSStp16C in github.com/Mstch/giao/test/qps" />
+        <item itemvalue="Go Test.go test github.com/Mstch/giao/test/qps" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="08aaee7c-90a2-4371-b5a4-29cb042cccce" name="Default Changelist" comment="" />
+      <created>1600088379706</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1600088379706</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+    <environment>
+      <map>
+        <entry key="GOPROXY" value="https://goproxy.cn,direct" />
+      </map>
+    </environment>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="520" y="302" key="#Go_Modules" timestamp="1600089682254">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="520" y="302" key="#Go_Modules/0.23.1440.877@0.23.1440.877" timestamp="1600089682254" />
+    <state x="450" y="270" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600510832394">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="450" y="270" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.877@0.23.1440.877" timestamp="1600510832394" />
+    <state x="483" y="176" key="#xdebugger.evaluate" timestamp="1600510365059">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="483" y="176" key="#xdebugger.evaluate/0.23.1440.877@0.23.1440.877" timestamp="1600510365059" />
+    <state width="882" height="466" key="DebuggerActiveHint" timestamp="1600510444487">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="882" height="466" key="DebuggerActiveHint/0.23.1440.877@0.23.1440.877" timestamp="1600510444487" />
+    <state x="611" y="330" key="EnvironmentVariablesDialog" timestamp="1600089681400">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="611" y="330" key="EnvironmentVariablesDialog/0.23.1440.877@0.23.1440.877" timestamp="1600089681400" />
+    <state width="1398" height="190" key="GridCell.Tab.0.bottom" timestamp="1600519189946">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="190" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600519189946" />
+    <state width="1398" height="190" key="GridCell.Tab.0.center" timestamp="1600519189945">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="190" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1600519189945" />
+    <state width="1398" height="190" key="GridCell.Tab.0.left" timestamp="1600519189945">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="190" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1600519189945" />
+    <state width="1398" height="190" key="GridCell.Tab.0.right" timestamp="1600519189946">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="190" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1600519189946" />
+    <state width="1398" height="300" key="GridCell.Tab.1.bottom" timestamp="1600510482793">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="300" key="GridCell.Tab.1.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600510482793" />
+    <state width="1398" height="300" key="GridCell.Tab.1.center" timestamp="1600510482793">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="300" key="GridCell.Tab.1.center/0.23.1440.877@0.23.1440.877" timestamp="1600510482793" />
+    <state width="1398" height="300" key="GridCell.Tab.1.left" timestamp="1600510482792">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="300" key="GridCell.Tab.1.left/0.23.1440.877@0.23.1440.877" timestamp="1600510482792" />
+    <state width="1398" height="300" key="GridCell.Tab.1.right" timestamp="1600510482793">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="300" key="GridCell.Tab.1.right/0.23.1440.877@0.23.1440.877" timestamp="1600510482793" />
+    <state x="229" y="100" key="SettingsEditor" timestamp="1600332924784">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="229" y="100" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1600332924784" />
+    <state width="720" height="438" key="XDebugger.FullValuePopup" timestamp="1600348053038">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="720" height="438" key="XDebugger.FullValuePopup/0.23.1440.877@0.23.1440.877" timestamp="1600348053038" />
+    <state x="484" y="307" key="com.goide.refactor.move.GoMoveDeclarationDialog" timestamp="1600332468396">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="484" y="307" key="com.goide.refactor.move.GoMoveDeclarationDialog/0.23.1440.877@0.23.1440.877" timestamp="1600332468396" />
+    <state x="100" y="123" width="1240" height="677" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600514084238">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="100" y="123" width="1240" height="677" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.1440.877@0.23.1440.877" timestamp="1600514084238" />
+    <state x="263" y="197" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1600350949108">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="263" y="197" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1440.877@0.23.1440.877" timestamp="1600350949108" />
+    <state x="421" y="216" width="617" height="490" key="find.popup" timestamp="1600509425727">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="421" y="216" width="617" height="490" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1600509425727" />
+    <state x="549" y="235" key="refactoring.ChangeSignatureDialog" timestamp="1600332605908">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="549" y="235" key="refactoring.ChangeSignatureDialog/0.23.1440.877@0.23.1440.877" timestamp="1600332605908" />
+    <state x="385" y="213" width="670" height="676" key="search.everywhere.popup" timestamp="1600518434157">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="385" y="213" width="670" height="676" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1600518434157" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/test/msg/test.pb.go</url>
+          <line>332</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/test/msg/test.pb.go</url>
+          <line>269</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/test/msg/test.pb.go</url>
+          <line>325</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/test/msg/test.pb.go</url>
+          <line>241</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="GoTestRunConfiguration">
+        <watch expression="*(*&quot;[]uint8&quot;)(824633778912)" />
+        <watch expression="l" />
+        <watch expression="iNdEx" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
