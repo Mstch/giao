@@ -1,0 +1,7 @@
+//protoc -I=. -I=$GOPATH/src -I="$GOPATH"/src/github.com/gogo/protobuf/protobuf --gogoslick_out=. test.proto
+syntax = "proto3";
+
+message Echo {
+    bytes content = 1;
+    int32 index = 2;
+}
