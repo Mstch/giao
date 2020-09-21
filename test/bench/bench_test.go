@@ -8,11 +8,8 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"net"
 	"net/rpc"
-	"runtime"
 	"sync"
-	"sync/atomic"
 	"testing"
-	"time"
 )
 
 const EchoRpc = 0
@@ -52,12 +49,12 @@ func (e *Echo) GoEcho(req *test.Echo, resp *test.Echo) error {
 
 func init() {
 	var err error
-	benchmarkStupidEchoServer, err = server.NewStupidServer("tcp", ":8888")
+	benchmarkStupidEchoServer = server.NewStupidServer()
 	if err != nil {
 		panic(err)
 	}
 	go func() {
-		err := benchmarkStupidEchoServer.StartServe()
+		err := benchmarkStupidEchoServer.Listen("tcp", ":8888")
 		if err != nil {
 			panic(err)
 		}
@@ -87,32 +84,29 @@ func BenchmarkStp1C(b *testing.B) {
 		ReqPool: echoPool,
 	}
 	chandler := &giao.Handler{
-		H: func(reqReader proto.Message, respWriter giao.ProtoWriter) {
+		H: func(req proto.Message, respWriter giao.ProtoWriter) {
 			w.Done()
 		},
 		ReqPool: echoPool,
 	}
-	benchmarkStupidEchoServer.RegFuncWithId(EchoRpc, shandler)
-	c, err := client.NewStupidClient("tcp", "localhost:8888")
+	w.Add(b.N)
+	benchmarkStupidEchoServer.RegWithId(EchoRpc, shandler)
+	c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
 	if err != nil {
 		panic(err)
 	}
-	c.RegFuncWithId(EchoRpc, chandler)
 	go func() {
-		err := c.StartServe()
+		err := c.Serve()
 		if err != nil {
 			panic(err)
 		}
 	}()
-	w.Add(b.N)
-	go func() {
-		for j := 0; j < b.N; j++ {
-			err := c.ACall(EchoRpc, EchoMsg[j%12])
-			if err != nil {
-				panic(err)
-			}
+	for j := 0; j < b.N; j++ {
+		err := c.Go(EchoRpc, EchoMsg[j%12])
+		if err != nil {
+			panic(err)
 		}
-	}()
+	}
 	b.ResetTimer()
 	w.Wait()
 }
@@ -135,39 +129,37 @@ func BenchmarkStp16C(b *testing.B) {
 		},
 		ReqPool: echoPool,
 	}
-	benchmarkStupidEchoServer.RegFuncWithId(EchoRpc, shandler)
+	benchmarkStupidEchoServer.RegWithId(EchoRpc, shandler)
 	w.Add(b.N)
 	for i := 0; i < 16; i++ {
-		c, err := client.NewStupidClient("tcp", "localhost:8888")
+		c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
 		if err != nil {
 			panic(err)
 		}
-		c.RegFuncWithId(EchoRpc, chandler)
-		go func() {
-			err := c.StartServe()
+		go func(c giao.Client) {
+			err := c.Serve()
 			if err != nil {
 				panic(err)
 			}
-		}()
+		}(c)
 		go func(index int) {
 			for j := 0; j < b.N/16; j++ {
 				msg := &test.Echo{}
 				msg.Content = EchoMsg[j%12].Content
 				msg.Index = int32(index)
-				err := c.ACall(EchoRpc, msg)
+				err := c.Go(EchoRpc, msg)
 				if err != nil {
 					panic(err)
 				}
 			}
 		}(i)
 	}
-	c, err := client.NewStupidClient("tcp", "localhost:8888")
+	c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
 	if err != nil {
 		panic(err)
 	}
-	c.RegFuncWithId(EchoRpc, chandler)
 	go func() {
-		err := c.StartServe()
+		err := c.Serve()
 		if err != nil {
 			panic(err)
 		}
@@ -177,7 +169,7 @@ func BenchmarkStp16C(b *testing.B) {
 			msg := &test.Echo{}
 			msg.Content = EchoMsg[j%12].Content
 			msg.Index = int32(index)
-			err := c.ACall(EchoRpc, msg)
+			err := c.Go(EchoRpc, msg)
 			if err != nil {
 				panic(err)
 			}
@@ -186,56 +178,48 @@ func BenchmarkStp16C(b *testing.B) {
 	b.ResetTimer()
 	w.Wait()
 }
-func BenchmarkStdSync1C(b *testing.B) {
+func BenchmarkSyncStd1C(b *testing.B) {
 	c, err := rpc.Dial("tcp", "localhost:8080")
+	w := sync.WaitGroup{}
+	w.Add(b.N)
 	if err != nil {
 		panic(err)
 	}
 	b.ResetTimer()
 	for j := 0; j < b.N; j++ {
-		err := c.Call("Echo.GoEcho", EchoMsg[j%12], &test.Echo{})
-		if err != nil {
-			panic(err)
-		}
+		go func() {
+			err := c.Call("Echo.GoEcho", EchoMsg[j%12], &test.Echo{})
+			if err != nil {
+				panic(err)
+			}
+			w.Done()
+		}()
 	}
+	w.Wait()
 }
-func BenchmarkStdASync1C(b *testing.B) {
-	done := make(chan *rpc.Call, b.N)
-	count := int32(0)
-	inflight := 0
+func BenchmarkAStd1C(b *testing.B) {
+	done := make(chan *rpc.Call, 1024)
 	c, err := rpc.Dial("tcp", "localhost:8080")
 	if err != nil {
 		panic(err)
 	}
-	for j := 0; j < b.N; j++ {
-		runtime.Gosched()
-		call := c.Go("Echo.GoEcho", EchoMsg[j%12], &test.Echo{}, done)
-		if call.Error != nil {
-			panic(call.Error)
-		}
-		inflight++
-	}
-	ticker := time.NewTicker(1 * time.Second)
 	go func() {
-		for {
-			<-ticker.C
-			println(b.N, atomic.LoadInt32(&count), inflight)
+		for j := 0; j < b.N; j++ {
+			call := c.Go("Echo.GoEcho", EchoMsg[j%12], &test.Echo{}, done)
+			if call.Error != nil {
+				panic(call.Error)
+			}
 		}
 	}()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		call := <-done
-		atomic.AddInt32(&count, 1)
-		if call.Error != nil {
-			panic(call.Error)
-		}
+		<-done
 	}
-	ticker.Stop()
 }
-func BenchmarkStdASync16C(b *testing.B) {
-	done := make([]chan *rpc.Call, b.N)
+func BenchmarkAStd16C(b *testing.B) {
+	done := make([]chan *rpc.Call, 16)
 	for i := 0; i < 16; i++ {
-		done[i] = make(chan *rpc.Call, 10)
+		done[i] = make(chan *rpc.Call, 1024)
 	}
 	for i := 0; i < 16; i++ {
 		c, err := rpc.Dial("tcp", "localhost:8080")
@@ -248,7 +232,7 @@ func BenchmarkStdASync16C(b *testing.B) {
 				msg.Content = EchoMsg[j%12].Content
 				msg.Index = int32(index)
 				c.Go("Echo.GoEcho", msg, &test.Echo{}, done[index])
-				runtime.Gosched()
+
 			}
 		}(i)
 	}
@@ -262,6 +246,7 @@ func BenchmarkStdASync16C(b *testing.B) {
 			msg.Content = EchoMsg[j%12].Content
 			msg.Index = int32(index)
 			c.Go("Echo.GoEcho", msg, &test.Echo{}, done[index])
+
 		}
 	}(0)
 	b.ResetTimer()
