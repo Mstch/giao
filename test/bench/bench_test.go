@@ -197,30 +197,9 @@ func BenchmarkSyncStd1C(b *testing.B) {
 	}
 	w.Wait()
 }
-func BenchmarkAStd1C(b *testing.B) {
-	done := make(chan *rpc.Call, 1024)
-	c, err := rpc.Dial("tcp", "localhost:8080")
-	if err != nil {
-		panic(err)
-	}
-	go func() {
-		for j := 0; j < b.N; j++ {
-			call := c.Go("Echo.GoEcho", EchoMsg[j%12], &test.Echo{}, done)
-			if call.Error != nil {
-				panic(call.Error)
-			}
-		}
-	}()
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		<-done
-	}
-}
-func BenchmarkAStd16C(b *testing.B) {
-	done := make([]chan *rpc.Call, 16)
-	for i := 0; i < 16; i++ {
-		done[i] = make(chan *rpc.Call, 1024)
-	}
+func BenchmarkSyncStd16C(b *testing.B) {
+	w := sync.WaitGroup{}
+	w.Add(b.N)
 	for i := 0; i < 16; i++ {
 		c, err := rpc.Dial("tcp", "localhost:8080")
 		if err != nil {
@@ -231,8 +210,11 @@ func BenchmarkAStd16C(b *testing.B) {
 				msg := &test.Echo{}
 				msg.Content = EchoMsg[j%12].Content
 				msg.Index = int32(index)
-				c.Go("Echo.GoEcho", msg, &test.Echo{}, done[index])
-
+				err := c.Call("Echo.GoEcho", msg, &test.Echo{})
+				if err != nil {
+					panic(err)
+				}
+				w.Done()
 			}
 		}(i)
 	}
@@ -245,33 +227,91 @@ func BenchmarkAStd16C(b *testing.B) {
 			msg := &test.Echo{}
 			msg.Content = EchoMsg[j%12].Content
 			msg.Index = int32(index)
-			c.Go("Echo.GoEcho", msg, &test.Echo{}, done[index])
-
+			err := c.Call("Echo.GoEcho", msg, &test.Echo{})
+			if err != nil {
+				panic(err)
+			}
+			w.Done()
 		}
 	}(0)
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		var call *rpc.Call
-		select {
-		case call = <-done[0]:
-		case call = <-done[1]:
-		case call = <-done[2]:
-		case call = <-done[3]:
-		case call = <-done[4]:
-		case call = <-done[5]:
-		case call = <-done[6]:
-		case call = <-done[7]:
-		case call = <-done[8]:
-		case call = <-done[9]:
-		case call = <-done[0]:
-		case call = <-done[11]:
-		case call = <-done[12]:
-		case call = <-done[13]:
-		case call = <-done[14]:
-		case call = <-done[15]:
-		}
-		if call.Error != nil {
-			panic(call.Error)
-		}
-	}
+	w.Wait()
 }
+//func BenchmarkAStd1C(b *testing.B) {
+//	done := make(chan *rpc.Call, 1024)
+//	c, err := rpc.Dial("tcp", "localhost:8080")
+//	if err != nil {
+//		panic(err)
+//	}
+//	go func() {
+//		for j := 0; j < b.N; j++ {
+//			call := c.Go("Echo.GoEcho", EchoMsg[j%12], &test.Echo{}, done)
+//			if call.Error != nil {
+//				panic(call.Error)
+//			}
+//		}
+//	}()
+//	b.ResetTimer()
+//	for i := 0; i < b.N; i++ {
+//		<-done
+//	}
+//}
+//func BenchmarkAStd16C(b *testing.B) {
+//	done := make([]chan *rpc.Call, 16)
+//	for i := 0; i < 16; i++ {
+//		done[i] = make(chan *rpc.Call, 1024)
+//	}
+//	for i := 0; i < 16; i++ {
+//		c, err := rpc.Dial("tcp", "localhost:8080")
+//		if err != nil {
+//			panic(err)
+//		}
+//		go func(index int) {
+//			for j := 0; j < b.N/16; j++ {
+//				msg := &test.Echo{}
+//				msg.Content = EchoMsg[j%12].Content
+//				msg.Index = int32(index)
+//				c.Go("Echo.GoEcho", msg, &test.Echo{}, done[index])
+//
+//			}
+//		}(i)
+//	}
+//	c, err := rpc.Dial("tcp", "localhost:8080")
+//	if err != nil {
+//		panic(err)
+//	}
+//	go func(index int) {
+//		for j := 0; j < b.N%16; j++ {
+//			msg := &test.Echo{}
+//			msg.Content = EchoMsg[j%12].Content
+//			msg.Index = int32(index)
+//			c.Go("Echo.GoEcho", msg, &test.Echo{}, done[index])
+//
+//		}
+//	}(0)
+//	b.ResetTimer()
+//	for i := 0; i < b.N; i++ {
+//		var call *rpc.Call
+//		select {
+//		case call = <-done[0]:
+//		case call = <-done[1]:
+//		case call = <-done[2]:
+//		case call = <-done[3]:
+//		case call = <-done[4]:
+//		case call = <-done[5]:
+//		case call = <-done[6]:
+//		case call = <-done[7]:
+//		case call = <-done[8]:
+//		case call = <-done[9]:
+//		case call = <-done[0]:
+//		case call = <-done[11]:
+//		case call = <-done[12]:
+//		case call = <-done[13]:
+//		case call = <-done[14]:
+//		case call = <-done[15]:
+//		}
+//		if call.Error != nil {
+//			panic(call.Error)
+//		}
+//	}
+//}
