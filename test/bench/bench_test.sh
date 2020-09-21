@@ -1,5 +1,6 @@
-go test -benchmem  -count 5 -bench . -timeout 1h | tee results && benchstat results
-
+go test -run=InitServer &
+sleep 3s
+go test -run=None -benchmem -count 5 -bench . -timeout 1h | tee benchresult && benchstat -sort delta benchresult
 #name          time/op
 #Stp1C-8       1.30µs ±130%
 #Stp16C-8       7.34µs ± 9%

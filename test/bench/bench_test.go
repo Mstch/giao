@@ -1,12 +1,10 @@
-package qps
+package bench
 
 import (
 	"github.com/Mstch/giao"
 	"github.com/Mstch/giao/internal/client"
-	"github.com/Mstch/giao/internal/server"
 	test "github.com/Mstch/giao/test/msg"
 	"github.com/gogo/protobuf/proto"
-	"net"
 	"net/rpc"
 	"sync"
 	"testing"
@@ -35,11 +33,10 @@ var echoPool = &sync.Pool{New: func() interface{} {
 	return &test.Echo{}
 }}
 
-var benchmarkStupidEchoServer giao.Server
-var benchmarkStandardEchoServer *rpc.Server
-
 type Echo struct {
 }
+
+
 
 func (e *Echo) GoEcho(req *test.Echo, resp *test.Echo) error {
 	resp = &test.Echo{}
@@ -47,42 +44,8 @@ func (e *Echo) GoEcho(req *test.Echo, resp *test.Echo) error {
 	return nil
 }
 
-func init() {
-	var err error
-	benchmarkStupidEchoServer = server.NewStupidServer()
-	if err != nil {
-		panic(err)
-	}
-	go func() {
-		err := benchmarkStupidEchoServer.Listen("tcp", ":8888")
-		if err != nil {
-			panic(err)
-		}
-	}()
-	benchmarkStandardEchoServer = rpc.NewServer()
-	err = benchmarkStandardEchoServer.Register(&Echo{})
-	if err != nil {
-		panic(err)
-	}
-	l, err := net.Listen("tcp", ":8080")
-	if err != nil {
-		panic(err)
-	}
-	go benchmarkStandardEchoServer.Accept(l)
-}
 func BenchmarkStp1C(b *testing.B) {
 	w := sync.WaitGroup{}
-	shandler := &giao.Handler{
-		H: func(req proto.Message, respWriter giao.ProtoWriter) {
-			respMsg := &test.Echo{}
-			respMsg.Content = req.(*test.Echo).Content
-			err := respWriter(EchoRpc, respMsg)
-			if err != nil {
-				panic(err)
-			}
-		},
-		ReqPool: echoPool,
-	}
 	chandler := &giao.Handler{
 		H: func(req proto.Message, respWriter giao.ProtoWriter) {
 			w.Done()
@@ -90,7 +53,6 @@ func BenchmarkStp1C(b *testing.B) {
 		ReqPool: echoPool,
 	}
 	w.Add(b.N)
-	benchmarkStupidEchoServer.RegWithId(EchoRpc, shandler)
 	c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
 	if err != nil {
 		panic(err)
@@ -112,24 +74,12 @@ func BenchmarkStp1C(b *testing.B) {
 }
 func BenchmarkStp16C(b *testing.B) {
 	w := sync.WaitGroup{}
-	shandler := &giao.Handler{
-		H: func(req proto.Message, respWriter giao.ProtoWriter) {
-			respMsg := &test.Echo{}
-			respMsg.Content = req.(*test.Echo).Content
-			err := respWriter(EchoRpc, respMsg)
-			if err != nil {
-				panic(err)
-			}
-		},
-		ReqPool: echoPool,
-	}
 	chandler := &giao.Handler{
 		H: func(req proto.Message, respWriter giao.ProtoWriter) {
 			w.Done()
 		},
 		ReqPool: echoPool,
 	}
-	benchmarkStupidEchoServer.RegWithId(EchoRpc, shandler)
 	w.Add(b.N)
 	for i := 0; i < 16; i++ {
 		c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
@@ -187,13 +137,13 @@ func BenchmarkSyncStd1C(b *testing.B) {
 	}
 	b.ResetTimer()
 	for j := 0; j < b.N; j++ {
-		go func() {
-			err := c.Call("Echo.GoEcho", EchoMsg[j%12], &test.Echo{})
+		go func(k int) {
+			err := c.Call("Echo.GoEcho", EchoMsg[k%12], &test.Echo{})
 			if err != nil {
 				panic(err)
 			}
 			w.Done()
-		}()
+		}(j)
 	}
 	w.Wait()
 }
@@ -237,6 +187,7 @@ func BenchmarkSyncStd16C(b *testing.B) {
 	b.ResetTimer()
 	w.Wait()
 }
+
 //func BenchmarkAStd1C(b *testing.B) {
 //	done := make(chan *rpc.Call, 1024)
 //	c, err := rpc.Dial("tcp", "localhost:8080")
