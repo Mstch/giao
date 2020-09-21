@@ -12,31 +12,19 @@ type StupidServer struct {
 	sessions []*session.Session
 }
 
-func NewStupidServer(network, address string) (giao.Server, error) {
-	l, err := net.Listen(network, address)
-	if err != nil {
-		return nil, err
-	}
+func NewStupidServer() giao.Server {
 	return &StupidServer{
 		handlers: make(map[int]*giao.Handler, 8),
-		l:        l,
 		sessions: make([]*session.Session, 0),
-	}, nil
+	}
 }
 
-func (s *StupidServer) RegStruct(handlerStruct interface{}) {
-	panic("implement me")
-}
-
-func (s *StupidServer) RegStructWithId(id int, handlerStruct interface{}) {
-	panic("implement me")
-}
-
-func (s *StupidServer) RegFuncWithId(id int, handler *giao.Handler) {
-	s.handlers[id] = handler
-}
-
-func (s *StupidServer) StartServe() error {
+func (s *StupidServer) Listen(network, address string) error {
+	l, err := net.Listen(network, address)
+	if err != nil {
+		return err
+	}
+	s.l = l
 	errChan := make(chan error)
 	go func() {
 		for {
@@ -51,6 +39,11 @@ func (s *StupidServer) StartServe() error {
 	case err := <-errChan:
 		return err
 	}
+}
+
+func (s *StupidServer) RegWithId(id int, handler *giao.Handler) giao.Server {
+	s.handlers[id] = handler
+	return s
 }
 
 func (s *StupidServer) serve(conn net.Conn, errChan chan error) {

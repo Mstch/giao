@@ -12,33 +12,34 @@ type StupidClient struct {
 	handlers    map[int]*giao.Handler
 }
 
-func NewStupidClient(network, address string) (*StupidClient, error) {
-	c, err := net.Dial(network, address)
+func NewStupidClient() *StupidClient {
+	return &StupidClient{
+		handlers: make(map[int]*giao.Handler, 8),
+	}
+}
+
+func (c *StupidClient) Connect(network, address string) (giao.Client, error) {
+	conn, err := net.Dial(network, address)
 	if err != nil {
 		return nil, err
 	}
-	return &StupidClient{
-		handlers:    make(map[int]*giao.Handler, 8),
-		connSession: session.CreateSession(c),
-	}, nil
+	c.connSession = session.CreateSession(conn)
+	return c, nil
 }
 
-func (s *StupidClient) ACall(id int, req proto.Message) error {
-	return s.connSession.Writer(id, req)
+func (c *StupidClient) Serve() error {
+	return c.connSession.Serve(c.handlers)
 }
 
-func (s *StupidClient) Call(id int, req proto.Message) proto.Message {
-	panic("implement me")
+func (c *StupidClient) Go(id int, req proto.Message) error {
+	return c.connSession.Writer(id, req)
 }
 
-func (s *StupidClient) RegFuncWithId(id int, handler *giao.Handler) {
-	s.handlers[id] = handler
+func (c *StupidClient) RegWithId(id int, handler *giao.Handler) giao.Client {
+	c.handlers[id] = handler
+	return c
 }
 
-func (s *StupidClient) StartServe() error {
-	return s.connSession.Serve(s.handlers)
-}
-
-func (s *StupidClient) Shutdown() error {
-	return s.connSession.Close()
+func (c *StupidClient) Shutdown() error {
+	return c.connSession.Close()
 }
