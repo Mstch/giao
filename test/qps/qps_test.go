@@ -51,12 +51,9 @@ func (e *Echo) GoEcho(req *test.Echo, resp *test.Echo) error {
 
 func init() {
 	var err error
-	benchmarkStupidEchoServer, err = server.NewStupidServer("tcp", ":8888")
-	if err != nil {
-		panic(err)
-	}
+	benchmarkStupidEchoServer = server.NewStupidServer()
 	go func() {
-		err := benchmarkStupidEchoServer.StartServe()
+		err := benchmarkStupidEchoServer.Listen("tcp", ":8888")
 		if err != nil {
 			panic(err)
 		}
@@ -91,21 +88,20 @@ func TestQPSStp1C(t *testing.T) {
 		},
 		ReqPool: echoPool,
 	}
-	benchmarkStupidEchoServer.RegFuncWithId(EchoRpc, shandler)
-	c, err := client.NewStupidClient("tcp", "localhost:8888")
+	benchmarkStupidEchoServer.RegWithId(EchoRpc, shandler)
+	c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
 	if err != nil {
 		panic(err)
 	}
-	c.RegFuncWithId(EchoRpc, chandler)
 	go func() {
-		err := c.StartServe()
+		err := c.Serve()
 		if err != nil {
 			panic(err)
 		}
 	}()
 	go func() {
 		for j := 0; ; j++ {
-			err := c.ACall(EchoRpc, EchoMsg[j%12])
+			err := c.Go(EchoRpc, EchoMsg[j%12])
 			if err != nil {
 				panic(err)
 			}
@@ -114,7 +110,7 @@ func TestQPSStp1C(t *testing.T) {
 	<-time.NewTimer(10 * time.Second).C
 	memStat := &runtime.MemStats{}
 	runtime.ReadMemStats(memStat)
-	println("[STUPID] 1C QPS:", count/10, "now memory :", memStat.TotalAlloc/1E6, "mb")
+	println("[STUPID] 1C QPS:", count/10, "now memory :", memStat.HeapInuse/1E6, "mb")
 }
 func TestQPSStp16C(t *testing.T) {
 	count := make([]int, 16)
@@ -135,15 +131,14 @@ func TestQPSStp16C(t *testing.T) {
 		},
 		ReqPool: echoPool,
 	}
-	benchmarkStupidEchoServer.RegFuncWithId(EchoRpc, shandler)
+	benchmarkStupidEchoServer.RegWithId(EchoRpc, shandler)
 	for i := 0; i < 16; i++ {
-		c, err := client.NewStupidClient("tcp", "localhost:8888")
+		c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
 		if err != nil {
 			panic(err)
 		}
-		c.RegFuncWithId(EchoRpc, chandler)
 		go func() {
-			err := c.StartServe()
+			err := c.Serve()
 			if err != nil {
 				panic(err)
 			}
@@ -153,7 +148,7 @@ func TestQPSStp16C(t *testing.T) {
 				msg := &test.Echo{}
 				msg.Content = EchoMsg[j%12].Content
 				msg.Index = int32(index)
-				err := c.ACall(EchoRpc, msg)
+				err := c.Go(EchoRpc, msg)
 				if err != nil {
 					panic(err)
 				}
@@ -167,7 +162,7 @@ func TestQPSStp16C(t *testing.T) {
 	}
 	memStat := &runtime.MemStats{}
 	runtime.ReadMemStats(memStat)
-	println("[STUPID] 16C QPS:", countCount/10, "now memory :", memStat.TotalAlloc/1E6, "mb")
+	println("[STUPID] 16C QPS:", countCount/10, "now memory :", memStat.HeapInuse/1E6, "mb")
 }
 func TestQPSStd1C(t *testing.T) {
 	c, err := rpc.Dial("tcp", "localhost:8080")
@@ -188,7 +183,7 @@ func TestQPSStd1C(t *testing.T) {
 	<-time.NewTimer(10 * time.Second).C
 	memStat := &runtime.MemStats{}
 	runtime.ReadMemStats(memStat)
-	println("[STANDARD] 1C QPS:", count/10, memStat.TotalAlloc/1E6, "mb")
+	println("[STANDARD] 1C QPS:", count/10, memStat.HeapInuse/1E6, "mb")
 }
 func TestQPSStdAsync1C(t *testing.T) {
 	done := make(chan *rpc.Call, 10)
@@ -263,5 +258,5 @@ func TestQPSStd16C(t *testing.T) {
 	<-time.NewTimer(10 * time.Second).C
 	memStat := &runtime.MemStats{}
 	runtime.ReadMemStats(memStat)
-	println("[STANDARD] 16C QPS:", count/10, memStat.TotalAlloc/1E6, "mb")
+	println("[STANDARD] 16C QPS:", count/10, memStat.HeapInuse/1E6, "mb")
 }
