@@ -10,8 +10,6 @@ import (
 )
 
 func (s *Session) doRead() (int, []byte, error) {
-	//在fixedSizeBuffPool申请handlerId和length的buf
-
 	//读handlerId
 	_, err := io.ReadFull(s, s.ReadHeaderBuf[:4])
 	if err != nil {
@@ -22,7 +20,6 @@ func (s *Session) doRead() (int, []byte, error) {
 	if err != nil {
 		return 0, nil, err
 	}
-	//归还buf
 	//申请proto的buf
 	protoBytes := s.ReadBuf.Take(int(binary.BigEndian.Uint32(s.ReadHeaderBuf[4:8])))
 	_, err = io.ReadFull(s, protoBytes)
@@ -42,22 +39,16 @@ func (s *Session) doWrite(handlerId int, msg proto.Message) error {
 	msgPb := msg.(giao.PB)
 	size := msgPb.Size()
 	writerBuf := s.WriteBufPool.Get().(*buffer.Buffer)
+	defer s.WriteBufPool.Put(writerBuf)
 	totalBytes := writerBuf.Take(8 + size)
 	headerBytes := totalBytes[:8]
 	binary.BigEndian.PutUint32(headerBytes, uint32(handlerId))
 	binary.BigEndian.PutUint32(headerBytes[4:8], uint32(size))
 	protoBytes := totalBytes[8 : 8+size]
-	marshalLen, err := msg.(giao.PB).MarshalTo(protoBytes)
+	_, err := msg.(giao.PB).MarshalTo(protoBytes)
 	if err != nil {
 		return err
-	}
-	if marshalLen != size {
-		panic("len not match")
 	}
 	_, err = s.Write(totalBytes)
-	s.WriteBufPool.Put(writerBuf)
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
