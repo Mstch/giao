@@ -3,12 +3,10 @@
 - [ ] graceful shutdown
 - [ ] humanize api
 
-
-
 bench result  
 "Stp" means stupid,a milestone of the framework  
 the test cases are 2,4,8~4k protobuf message  
-SyncStd means use net/rpc with default codec  
+SyncStd means use net/rpc with default codec and just for Compared   
 the detail of this bench please move to [test/bench](test/bench)
 ```
 name          time/op
@@ -28,6 +26,4 @@ Stp1C-8         0.00
 Stp16C-8        0.00     
 SyncStd1C-8     5.40 ±11%
 SyncStd16C-8    5.00 ± 0%
-
-
 ```
