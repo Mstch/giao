@@ -17,7 +17,7 @@ type Server interface {
 }
 
 type Client interface {
-	Connect(network, address string)(Client, error)
+	Connect(network, address string) (Client, error)
 	Serve() error
 	RegWithId(id int, handler *Handler) Client
 	Go(id int, req proto.Message) error
@@ -25,6 +25,7 @@ type Client interface {
 }
 
 type ProtoWriter func(handlerId int, msg proto.Message) error
+type ProtoHandler func(req proto.Message, respWriter ProtoWriter)
 
 type PB interface {
 	Size() int
