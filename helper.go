@@ -35,3 +35,4 @@ func (p PipelineHandler) Build() *Handler {
 	}
 	return &p.Handler
 }
+

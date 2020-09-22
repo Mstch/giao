@@ -28,11 +28,11 @@ func main() {
 	}
 	msg := testMsgPool.Get().(*test.Echo)
 	msg.Content = []byte("fuck")
-	err = c.Go(TestRpc, msg)
+	err = c.Serve()
 	if err != nil {
 		panic(err)
 	}
-	err = c.Serve()
+	err = c.Go(TestRpc, msg)
 	if err != nil {
 		panic(err)
 	}

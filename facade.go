@@ -6,7 +6,7 @@ import (
 )
 
 type Handler struct {
-	H       func(req proto.Message, respWriter ProtoWriter)
+	H       ProtoHandler
 	ReqPool *sync.Pool
 }
 
