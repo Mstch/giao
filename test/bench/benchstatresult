@@ -1,16 +1,3 @@
-- [x] basic rpc logic
-- [ ] goroutine safe off heap memory pool
-- [ ] graceful shutdown
-- [ ] humanize api
-
-
-
-bench result  
-"Stp" means stupid,a milestone of the framework  
-the test cases are 2,4,8~4k protobuf message  
-SyncStd means use net/rpc with default codec  
-the detail of this bench please move to [test/bench](test/bench)
-```
 name          time/op
 Stp1C-8        925ns ±39%
 Stp16C-8      7.61µs ±30%
@@ -28,6 +15,3 @@ Stp1C-8         0.00
 Stp16C-8        0.00     
 SyncStd1C-8     5.40 ±11%
 SyncStd16C-8    5.00 ± 0%
-
-
-```
