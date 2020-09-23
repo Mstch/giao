@@ -5,3 +5,7 @@ message Echo {
     bytes content = 1;
     int32 index = 2;
 }
+
+service EchoService {
+    rpc DoEcho (Echo) returns (Echo);
+}

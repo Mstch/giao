@@ -6,10 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="08aaee7c-90a2-4371-b5a4-29cb042cccce" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/bench/bench_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test/bench/bench_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/bench/benchresult" beforeDir="false" afterPath="$PROJECT_DIR$/test/bench/benchresult" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/qps/qps_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test/qps/qps_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/bench/initserver_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test/bench/initserver_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/msg/test.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/test/msg/test.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/msg/test.proto" beforeDir="false" afterPath="$PROJECT_DIR$/test/msg/test.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,14 +63,16 @@
       <recent name="$PROJECT_DIR$/internal" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.BenchmarkJustWrite in github.com/Mstch/giao/test/bench">
-    <configuration name="go build github.com/Mstch/giao/example/client" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.BenchmarkGrpc1C in github.com/Mstch/giao/test/bench">
+    <configuration name="BenchmarkGrpc1C in github.com/Mstch/giao/test/bench" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="giao" />
-      <working_directory value="$PROJECT_DIR$" />
+      <working_directory value="$PROJECT_DIR$/test/bench" />
+      <framework value="gobench" />
       <kind value="PACKAGE" />
-      <filePath value="$PROJECT_DIR$/example/client/client.go" />
-      <package value="github.com/Mstch/giao/example/client" />
+      <package value="github.com/Mstch/giao/test/bench" />
       <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QBenchmarkGrpc1C\E$" />
       <method v="2" />
     </configuration>
     <configuration name="BenchmarkJustWrite in github.com/Mstch/giao/test/bench" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -117,11 +121,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.BenchmarkJustWrite in github.com/Mstch/giao/test/bench" />
+        <item itemvalue="Go Test.BenchmarkGrpc1C in github.com/Mstch/giao/test/bench" />
         <item itemvalue="Go Test.TestInitServer in github.com/Mstch/giao/test/bench" />
+        <item itemvalue="Go Test.BenchmarkJustWrite in github.com/Mstch/giao/test/bench" />
         <item itemvalue="Go Test.TestQPSStp1C in github.com/Mstch/giao/test/qps" />
         <item itemvalue="Go Test.BenchmarkSyncStd1C in github.com/Mstch/giao/test/bench" />
-        <item itemvalue="Go Build.go build github.com/Mstch/giao/example/client" />
       </list>
     </recent_temporary>
   </component>
@@ -178,26 +182,26 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="554" y="191" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1600528337890" />
-    <state width="1398" height="247" key="GridCell.Tab.0.bottom" timestamp="1600845855184">
+    <state width="1398" height="247" key="GridCell.Tab.0.bottom" timestamp="1600849470454">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="247" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600845855184" />
-    <state width="1398" height="247" key="GridCell.Tab.0.center" timestamp="1600845855183">
+    <state width="1398" height="247" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600849470454" />
+    <state width="1398" height="247" key="GridCell.Tab.0.center" timestamp="1600849470453">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="247" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1600845855183" />
-    <state width="1398" height="247" key="GridCell.Tab.0.left" timestamp="1600845855183">
+    <state width="1398" height="247" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1600849470453" />
+    <state width="1398" height="247" key="GridCell.Tab.0.left" timestamp="1600849470453">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="247" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1600845855183" />
-    <state width="1398" height="247" key="GridCell.Tab.0.right" timestamp="1600845855184">
+    <state width="1398" height="247" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1600849470453" />
+    <state width="1398" height="247" key="GridCell.Tab.0.right" timestamp="1600849470454">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="247" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1600845855184" />
+    <state width="1398" height="247" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1600849470454" />
     <state width="1398" height="300" key="GridCell.Tab.1.bottom" timestamp="1600827767380">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -254,22 +258,22 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/test/msg/test.pb.go</url>
-          <line>332</line>
+          <line>419</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/test/msg/test.pb.go</url>
-          <line>269</line>
+          <line>356</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/test/msg/test.pb.go</url>
-          <line>325</line>
+          <line>412</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/test/msg/test.pb.go</url>
-          <line>241</line>
+          <line>328</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>

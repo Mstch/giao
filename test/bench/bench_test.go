@@ -1,10 +1,12 @@
 package bench
 
 import (
+	"context"
 	"github.com/Mstch/giao"
 	"github.com/Mstch/giao/internal/client"
 	test "github.com/Mstch/giao/test/msg"
 	"github.com/gogo/protobuf/proto"
+	"google.golang.org/grpc"
 	"net/rpc"
 	"sync"
 	"testing"
@@ -32,15 +34,6 @@ func init() {
 var echoPool = &sync.Pool{New: func() interface{} {
 	return &test.Echo{}
 }}
-
-type Echo struct {
-}
-
-func (e *Echo) GoEcho(req *test.Echo, resp *test.Echo) error {
-	resp = &test.Echo{}
-	resp.Content = req.Content
-	return nil
-}
 
 func BenchmarkStp1C(b *testing.B) {
 	b.SetBytes(343 * 2)
@@ -141,7 +134,7 @@ func BenchmarkSyncStd1C(b *testing.B) {
 	b.ResetTimer()
 	for j := 0; j < b.N; j++ {
 		go func(k int) {
-			err := c.Call("Echo.GoEcho", EchoMsg[k%12], &test.Echo{})
+			err := c.Call("StandardEcho.DoEcho", EchoMsg[k%12], &test.Echo{})
 			if err != nil {
 				panic(err)
 			}
@@ -164,7 +157,7 @@ func BenchmarkSyncStd16C(b *testing.B) {
 				msg := &test.Echo{}
 				msg.Content = EchoMsg[j%12].Content
 				msg.Index = int32(index)
-				err := c.Call("Echo.GoEcho", msg, &test.Echo{})
+				err := c.Call("StandardEcho.DoEcho", msg, &test.Echo{})
 				if err != nil {
 					panic(err)
 				}
@@ -181,7 +174,7 @@ func BenchmarkSyncStd16C(b *testing.B) {
 			msg := &test.Echo{}
 			msg.Content = EchoMsg[j%12].Content
 			msg.Index = int32(index)
-			err := c.Call("Echo.GoEcho", msg, &test.Echo{})
+			err := c.Call("StandardEcho.DoEcho", msg, &test.Echo{})
 			if err != nil {
 				panic(err)
 			}
@@ -189,6 +182,68 @@ func BenchmarkSyncStd16C(b *testing.B) {
 		}
 	}(0)
 	b.ResetTimer()
+	w.Wait()
+}
+
+func BenchmarkGrpc1C(b *testing.B) {
+	b.SetBytes(343 * 2)
+	conn, err := grpc.Dial("localhost:8181", grpc.WithInsecure())
+	c := test.NewEchoServiceClient(conn)
+	if err != nil {
+		panic(err)
+	}
+	b.ResetTimer()
+	for j := 0; j < b.N; j++ {
+		_, err := c.DoEcho(context.Background(), EchoMsg[j%12])
+		if err != nil {
+			panic(err)
+		}
+	}
+	err = conn.Close()
+	if err != nil {
+		panic(err)
+	}
+}
+func BenchmarkGrpc16C(b *testing.B) {
+	w := sync.WaitGroup{}
+	w.Add(b.N)
+	b.SetBytes(343 * 2)
+	for i := 0; i < 16; i++ {
+		conn, err := grpc.Dial("localhost:8181", grpc.WithInsecure())
+		c := test.NewEchoServiceClient(conn)
+		if err != nil {
+			panic(err)
+		}
+		go func(index int) {
+			for j := 0; j < b.N/16; j++ {
+				msg := &test.Echo{}
+				msg.Content = EchoMsg[j%12].Content
+				msg.Index = int32(index)
+				_, err := c.DoEcho(context.Background(), msg)
+				if err != nil {
+					panic(err)
+				}
+				w.Done()
+			}
+		}(i)
+	}
+	conn, err := grpc.Dial("localhost:8181", grpc.WithInsecure())
+	c := test.NewEchoServiceClient(conn)
+	if err != nil {
+		panic(err)
+	}
+	go func(index int) {
+		for j := 0; j < b.N%16; j++ {
+			msg := &test.Echo{}
+			msg.Content = EchoMsg[j%12].Content
+			msg.Index = int32(index)
+			_, err := c.DoEcho(context.Background(), msg)
+			if err != nil {
+				panic(err)
+			}
+			w.Done()
+		}
+	}(0)
 	w.Wait()
 }
 
@@ -200,7 +255,7 @@ func BenchmarkSyncStd16C(b *testing.B) {
 //	}
 //	go func() {
 //		for j := 0; j < b.N; j++ {
-//			call := c.Go("Echo.GoEcho", EchoMsg[j%12], &test.Echo{}, done)
+//			call := c.Go("StandardEcho.DoEcho", EchoMsg[j%12], &test.StandardEcho{}, done)
 //			if call.Error != nil {
 //				panic(call.Error)
 //			}
@@ -223,10 +278,10 @@ func BenchmarkSyncStd16C(b *testing.B) {
 //		}
 //		go func(index int) {
 //			for j := 0; j < b.N/16; j++ {
-//				msg := &test.Echo{}
+//				msg := &test.StandardEcho{}
 //				msg.Content = EchoMsg[j%12].Content
 //				msg.Index = int32(index)
-//				c.Go("Echo.GoEcho", msg, &test.Echo{}, done[index])
+//				c.Go("StandardEcho.DoEcho", msg, &test.StandardEcho{}, done[index])
 //
 //			}
 //		}(i)
@@ -237,10 +292,10 @@ func BenchmarkSyncStd16C(b *testing.B) {
 //	}
 //	go func(index int) {
 //		for j := 0; j < b.N%16; j++ {
-//			msg := &test.Echo{}
+//			msg := &test.StandardEcho{}
 //			msg.Content = EchoMsg[j%12].Content
 //			msg.Index = int32(index)
-//			c.Go("Echo.GoEcho", msg, &test.Echo{}, done[index])
+//			c.Go("StandardEcho.DoEcho", msg, &test.StandardEcho{}, done[index])
 //
 //		}
 //	}(0)

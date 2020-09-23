@@ -5,8 +5,12 @@ package test
 
 import (
 	bytes "bytes"
+	context "context"
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
+	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	io "io"
 	math "math"
 	math_bits "math/bits"
@@ -83,16 +87,18 @@ func init() {
 func init() { proto.RegisterFile("test.proto", fileDescriptor_c161fcfdc0c3ff1e) }
 
 var fileDescriptor_c161fcfdc0c3ff1e = []byte{
-	// 144 bytes of a gzipped FileDescriptorProto
+	// 171 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2a, 0x49, 0x2d, 0x2e,
 	0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x57, 0x32, 0xe3, 0x62, 0x71, 0x4d, 0xce, 0xc8, 0x17, 0x92,
 	0xe0, 0x62, 0x4f, 0xce, 0xcf, 0x2b, 0x49, 0xcd, 0x2b, 0x91, 0x60, 0x54, 0x60, 0xd4, 0xe0, 0x09,
 	0x82, 0x71, 0x85, 0x44, 0xb8, 0x58, 0x33, 0xf3, 0x52, 0x52, 0x2b, 0x24, 0x98, 0x14, 0x18, 0x35,
-	0x58, 0x83, 0x20, 0x1c, 0x27, 0x93, 0x0b, 0x0f, 0xe5, 0x18, 0x6e, 0x3c, 0x94, 0x63, 0xf8, 0xf0,
-	0x50, 0x8e, 0xb1, 0xe1, 0x91, 0x1c, 0xe3, 0x8a, 0x47, 0x72, 0x8c, 0x27, 0x1e, 0xc9, 0x31, 0x5e,
-	0x78, 0x24, 0xc7, 0xf8, 0xe0, 0x91, 0x1c, 0xe3, 0x8b, 0x47, 0x72, 0x0c, 0x1f, 0x1e, 0xc9, 0x31,
-	0x4e, 0x78, 0x2c, 0xc7, 0x70, 0xe1, 0xb1, 0x1c, 0xc3, 0x8d, 0xc7, 0x72, 0x0c, 0x49, 0x6c, 0x60,
-	0x4b, 0x8d, 0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0xa5, 0x9e, 0x16, 0xbd, 0x82, 0x00, 0x00, 0x00,
+	0x58, 0x83, 0x20, 0x1c, 0x23, 0x55, 0x2e, 0x6e, 0x90, 0xbe, 0xe0, 0xd4, 0xa2, 0xb2, 0xcc, 0xe4,
+	0x54, 0x21, 0x31, 0x2e, 0x36, 0x97, 0x7c, 0xb0, 0x41, 0xac, 0x7a, 0x20, 0x4a, 0x0a, 0x42, 0x39,
+	0x99, 0x5c, 0x78, 0x28, 0xc7, 0x70, 0xe3, 0xa1, 0x1c, 0xc3, 0x87, 0x87, 0x72, 0x8c, 0x0d, 0x8f,
+	0xe4, 0x18, 0x57, 0x3c, 0x92, 0x63, 0x3c, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07,
+	0x8f, 0xe4, 0x18, 0x5f, 0x3c, 0x92, 0x63, 0xf8, 0xf0, 0x48, 0x8e, 0x71, 0xc2, 0x63, 0x39, 0x86,
+	0x0b, 0x8f, 0xe5, 0x18, 0x6e, 0x3c, 0x96, 0x63, 0x48, 0x62, 0x03, 0xbb, 0xcd, 0x18, 0x10, 0x00,
+	0x00, 0xff, 0xff, 0x02, 0x63, 0x12, 0xa9, 0xa9, 0x00, 0x00, 0x00,
 }
 
 func (this *Echo) Equal(that interface{}) bool {
@@ -141,6 +147,87 @@ func valueToGoStringTest(v interface{}, typ string) string {
 	pv := reflect.Indirect(rv).Interface()
 	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
 }
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// EchoServiceClient is the client API for EchoService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type EchoServiceClient interface {
+	DoEcho(ctx context.Context, in *Echo, opts ...grpc.CallOption) (*Echo, error)
+}
+
+type echoServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewEchoServiceClient(cc *grpc.ClientConn) EchoServiceClient {
+	return &echoServiceClient{cc}
+}
+
+func (c *echoServiceClient) DoEcho(ctx context.Context, in *Echo, opts ...grpc.CallOption) (*Echo, error) {
+	out := new(Echo)
+	err := c.cc.Invoke(ctx, "/EchoService/DoEcho", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// EchoServiceServer is the server API for EchoService service.
+type EchoServiceServer interface {
+	DoEcho(context.Context, *Echo) (*Echo, error)
+}
+
+// UnimplementedEchoServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedEchoServiceServer struct {
+}
+
+func (*UnimplementedEchoServiceServer) DoEcho(ctx context.Context, req *Echo) (*Echo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DoEcho not implemented")
+}
+
+func RegisterEchoServiceServer(s *grpc.Server, srv EchoServiceServer) {
+	s.RegisterService(&_EchoService_serviceDesc, srv)
+}
+
+func _EchoService_DoEcho_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Echo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EchoServiceServer).DoEcho(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/EchoService/DoEcho",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EchoServiceServer).DoEcho(ctx, req.(*Echo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _EchoService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "EchoService",
+	HandlerType: (*EchoServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "DoEcho",
+			Handler:    _EchoService_DoEcho_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "test.proto",
+}
+
 func (m *Echo) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
