@@ -1,35 +1,35 @@
 goos: darwin
 goarch: amd64
 pkg: github.com/Mstch/giao/test/bench
-BenchmarkStp1C-8        	  108583	      9503 ns/op	  72.19 MB/s	       0 B/op	       0 allocs/op
-BenchmarkStp1C-8        	  115662	     11494 ns/op	  59.68 MB/s	       0 B/op	       0 allocs/op
-BenchmarkStp1C-8        	  113137	      9884 ns/op	  69.41 MB/s	       0 B/op	       0 allocs/op
-BenchmarkStp1C-8        	  116042	      9813 ns/op	  69.91 MB/s	       0 B/op	       0 allocs/op
-BenchmarkStp1C-8        	  122340	      9277 ns/op	  73.95 MB/s	       2 B/op	       0 allocs/op
-BenchmarkStp16C-8       	 1000000	      7265 ns/op	  94.43 MB/s	      26 B/op	       0 allocs/op
-BenchmarkStp16C-8       	 1000000	      7055 ns/op	  97.23 MB/s	      25 B/op	       0 allocs/op
-BenchmarkStp16C-8       	 1000000	      6434 ns/op	 106.62 MB/s	      24 B/op	       0 allocs/op
-BenchmarkStp16C-8       	 1000000	     10187 ns/op	  67.34 MB/s	      22 B/op	       0 allocs/op
-BenchmarkStp16C-8       	 1000000	      7049 ns/op	  97.32 MB/s	      23 B/op	       0 allocs/op
-BenchmarkSyncStd1C-8    	   55528	     26881 ns/op	  25.52 MB/s	     678 B/op	       6 allocs/op
-BenchmarkSyncStd1C-8    	   51321	     24114 ns/op	  28.45 MB/s	     341 B/op	       5 allocs/op
-BenchmarkSyncStd1C-8    	   54170	     24055 ns/op	  28.52 MB/s	     342 B/op	       5 allocs/op
-BenchmarkSyncStd1C-8    	   51181	     22766 ns/op	  30.13 MB/s	     342 B/op	       5 allocs/op
-BenchmarkSyncStd1C-8    	   51322	     20812 ns/op	  32.96 MB/s	     341 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   82771	     14915 ns/op	  45.99 MB/s	     277 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   86209	     15123 ns/op	  45.36 MB/s	     278 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   87390	     14638 ns/op	  46.87 MB/s	     278 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   86289	     14939 ns/op	  45.92 MB/s	     278 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   84693	     14622 ns/op	  46.92 MB/s	     278 B/op	       5 allocs/op
-BenchmarkGrpc1C-8       	   11319	    113609 ns/op	   6.04 MB/s	    5791 B/op	      95 allocs/op
-BenchmarkGrpc1C-8       	   10934	    104964 ns/op	   6.54 MB/s	    5790 B/op	      95 allocs/op
-BenchmarkGrpc1C-8       	   11200	    118572 ns/op	   5.79 MB/s	    5791 B/op	      95 allocs/op
-BenchmarkGrpc1C-8       	   11424	    107643 ns/op	   6.37 MB/s	    5791 B/op	      95 allocs/op
-BenchmarkGrpc1C-8       	   11198	    118769 ns/op	   5.78 MB/s	    5790 B/op	      95 allocs/op
-BenchmarkGrpc16C-8      	   48570	     24477 ns/op	  28.03 MB/s	    5878 B/op	      96 allocs/op
-BenchmarkGrpc16C-8      	   46290	     24551 ns/op	  27.94 MB/s	    5877 B/op	      96 allocs/op
-BenchmarkGrpc16C-8      	   46694	     25433 ns/op	  26.97 MB/s	    5875 B/op	      96 allocs/op
-BenchmarkGrpc16C-8      	   44426	     25995 ns/op	  26.39 MB/s	    5876 B/op	      96 allocs/op
-BenchmarkGrpc16C-8      	   50248	     24343 ns/op	  28.18 MB/s	    5871 B/op	      96 allocs/op
+BenchmarkStp1C-8        	   75109	     13342 ns/op	 818.78 MB/s	       6 B/op	       0 allocs/op
+BenchmarkStp1C-8        	   76485	     32572 ns/op	 335.38 MB/s	       2 B/op	       0 allocs/op
+BenchmarkStp1C-8        	   85015	     43848 ns/op	 249.14 MB/s	       2 B/op	       0 allocs/op
+BenchmarkStp1C-8        	   67447	     46607 ns/op	 234.39 MB/s	       6 B/op	       0 allocs/op
+BenchmarkStp1C-8        	   53702	     44002 ns/op	 248.26 MB/s	       6 B/op	       0 allocs/op
+BenchmarkStp16C-8       	  331179	     20292 ns/op	 538.34 MB/s	      30 B/op	       0 allocs/op
+BenchmarkStp16C-8       	  338620	     15181 ns/op	 719.58 MB/s	      31 B/op	       0 allocs/op
+BenchmarkStp16C-8       	  367408	     11999 ns/op	 910.44 MB/s	      29 B/op	       0 allocs/op
+BenchmarkStp16C-8       	  385892	     12916 ns/op	 845.78 MB/s	      30 B/op	       0 allocs/op
+BenchmarkStp16C-8       	  170418	     22271 ns/op	 490.50 MB/s	      49 B/op	       0 allocs/op
+BenchmarkSyncStd1C-8    	   33694	     45884 ns/op	 238.08 MB/s	     630 B/op	       6 allocs/op
+BenchmarkSyncStd1C-8    	   30879	     50859 ns/op	 214.79 MB/s	     342 B/op	       5 allocs/op
+BenchmarkSyncStd1C-8    	   24993	     43760 ns/op	 249.63 MB/s	     343 B/op	       5 allocs/op
+BenchmarkSyncStd1C-8    	   32917	     40009 ns/op	 273.04 MB/s	     345 B/op	       5 allocs/op
+BenchmarkSyncStd1C-8    	   41956	     37779 ns/op	 289.15 MB/s	     427 B/op	       6 allocs/op
+BenchmarkSyncStd16C-8   	   63482	     22446 ns/op	 486.68 MB/s	     281 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   71037	     19463 ns/op	 561.26 MB/s	     284 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   65569	     19447 ns/op	 561.72 MB/s	     282 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   62354	     21328 ns/op	 512.20 MB/s	     281 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   63471	     21252 ns/op	 514.02 MB/s	     283 B/op	       5 allocs/op
+BenchmarkGrpc1C-8       	    5235	    199972 ns/op	  54.63 MB/s	   23288 B/op	      96 allocs/op
+BenchmarkGrpc1C-8       	    7350	    179065 ns/op	  61.01 MB/s	   23289 B/op	      96 allocs/op
+BenchmarkGrpc1C-8       	    5850	    187403 ns/op	  58.29 MB/s	   23289 B/op	      96 allocs/op
+BenchmarkGrpc1C-8       	    6879	    160510 ns/op	  68.06 MB/s	   23288 B/op	      96 allocs/op
+BenchmarkGrpc1C-8       	    7618	    170609 ns/op	  64.03 MB/s	   23264 B/op	      96 allocs/op
+BenchmarkGrpc16C-8      	   29655	     42279 ns/op	 258.38 MB/s	   23771 B/op	      98 allocs/op
+BenchmarkGrpc16C-8      	   29938	     41849 ns/op	 261.04 MB/s	   23715 B/op	      98 allocs/op
+BenchmarkGrpc16C-8      	   27832	     42221 ns/op	 258.74 MB/s	   23679 B/op	      98 allocs/op
+BenchmarkGrpc16C-8      	   27634	     43067 ns/op	 253.65 MB/s	   23693 B/op	      98 allocs/op
+BenchmarkGrpc16C-8      	   27262	     45397 ns/op	 240.63 MB/s	   23672 B/op	      98 allocs/op
 PASS
-ok  	github.com/Mstch/giao/test/bench	90.367s
+ok  	github.com/Mstch/giao/test/bench	80.552s
