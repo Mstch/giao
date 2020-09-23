@@ -6,7 +6,7 @@
 
 bench result  
 "Stp" means stupid,a milestone of the framework  
-the test cases are 2,4,8~4k that 343 bytes on average protobuf message  
+the test cases are 64~64k bytes that 5462 bytes on average protobuf message  
 SyncStd means use net/rpc with default codec and just for Compared   
 the detail of this bench please move to [test/bench](test/bench)
 
@@ -21,36 +21,35 @@ benchmark platform :
 benchmark data :
 ```
 name          time/op
-Stp1C-8         10.0µs ±15%
-Stp16C-8        7.60µs ±34%
-SyncStd1C-8     23.7µs ±13%
-SyncStd16C-8    14.8µs ± 2%
-Grpc1C-8         113µs ± 7%
-Grpc16C-8       25.0µs ± 4%
+Stp1C-8         36.1µs ±63%
+Stp16C-8        16.5µs ±35%
+SyncStd1C-8     43.7µs ±16%
+SyncStd16C-8    20.8µs ± 8%
+Grpc1C-8         180µs ±11%
+Grpc16C-8       43.0µs ± 6%
 
 name          speed
-Stp1C-8       69.0MB/s ±14%
-Stp16C-8      92.6MB/s ±27%
-SyncStd1C-8   29.1MB/s ±13%
-SyncStd16C-8  46.2MB/s ± 2%
-Grpc1C-8      6.10MB/s ± 7%
-Grpc16C-8     27.5MB/s ± 4%
-
+Stp1C-8       377MB/s ±117%
+Stp16C-8       701MB/s ±30%
+SyncStd1C-8    253MB/s ±15%
+SyncStd16C-8   527MB/s ± 8%
+Grpc1C-8      61.2MB/s ±11%
+Grpc16C-8      254MB/s ± 5%
 name          alloc/op
-Stp1C-8          0.00B     
-Stp16C-8         24.0B ± 8%
-SyncStd1C-8       342B ± 0%
-SyncStd16C-8      278B ± 0%
-Grpc1C-8        5.79kB ± 0%
-Grpc16C-8       5.88kB ± 0%
+Stp1C-8          4.40B ±55%
+Stp16C-8         30.0B ± 3%
+SyncStd1C-8       417B ±51%
+SyncStd16C-8      282B ± 1%
+Grpc1C-8        23.3kB ± 0%
+Grpc16C-8       23.7kB ± 0%
 
 name          allocs/op
 Stp1C-8           0.00     
 Stp16C-8          0.00     
-SyncStd1C-8       5.00 ± 0%
+SyncStd1C-8       5.40 ±11%
 SyncStd16C-8      5.00 ± 0%
-Grpc1C-8          95.0 ± 0%
-Grpc16C-8         96.0 ± 0%
+Grpc1C-8          96.0 ± 0%
+Grpc16C-8         98.0 ± 0%
 
 
 ```
