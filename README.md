@@ -8,7 +8,7 @@ bench result
 "Stp" means stupid,a milestone of the framework  
 the test cases are 64~64k bytes that 5462 bytes on average protobuf message  
 SyncStd means use net/rpc with default codec and just for Compared   
-the detail of this bench please move to [test/bench](test/bench)
+the detail of this bench please move to [test/bench](test/bench)  
 "1C,16C" means open how many client to test  
 benchmark platform :
 - CPU: 2.2 GHz Intel Core i7
