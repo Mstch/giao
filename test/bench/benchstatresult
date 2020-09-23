@@ -13,7 +13,6 @@ SyncStd1C-8    253MB/s ±15%
 SyncStd16C-8   527MB/s ± 8%
 Grpc1C-8      61.2MB/s ±11%
 Grpc16C-8      254MB/s ± 5%
-
 name          alloc/op
 Stp1C-8          4.40B ±55%
 Stp16C-8         30.0B ± 3%

@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="08aaee7c-90a2-4371-b5a4-29cb042cccce" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/bench/bench_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test/bench/bench_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/bench/initserver_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test/bench/initserver_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/msg/test.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/test/msg/test.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/msg/test.proto" beforeDir="false" afterPath="$PROJECT_DIR$/test/msg/test.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/bench/benchstatresult" beforeDir="false" afterPath="$PROJECT_DIR$/test/bench/benchstatresult" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +59,18 @@
       <recent name="$PROJECT_DIR$/internal" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.BenchmarkGrpc1C in github.com/Mstch/giao/test/bench">
+  <component name="RunManager" selected="Go Test.TestEchoLen in github.com/Mstch/giao/test/bench">
+    <configuration name="BenchmarkGrpc16C in github.com/Mstch/giao/test/bench" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="giao" />
+      <working_directory value="$PROJECT_DIR$/test/bench" />
+      <framework value="gobench" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Mstch/giao/test/bench" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QBenchmarkGrpc16C\E$" />
+      <method v="2" />
+    </configuration>
     <configuration name="BenchmarkGrpc1C in github.com/Mstch/giao/test/bench" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="giao" />
       <working_directory value="$PROJECT_DIR$/test/bench" />
@@ -86,15 +93,15 @@
       <pattern value="^\QBenchmarkJustWrite\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="BenchmarkSyncStd1C in github.com/Mstch/giao/test/bench" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestEchoLen in github.com/Mstch/giao/test/bench" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="giao" />
       <working_directory value="$PROJECT_DIR$/test/bench" />
-      <framework value="gobench" />
+      <framework value="gotest" />
       <kind value="PACKAGE" />
       <package value="github.com/Mstch/giao/test/bench" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QBenchmarkSyncStd1C\E$" />
+      <pattern value="^\QTestEchoLen\E$" />
       <method v="2" />
     </configuration>
     <configuration name="TestInitServer in github.com/Mstch/giao/test/bench" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -108,24 +115,13 @@
       <pattern value="^\QTestInitServer\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestQPSStp1C in github.com/Mstch/giao/test/qps" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="giao" />
-      <working_directory value="$PROJECT_DIR$/test/qps" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/Mstch/giao/test/qps" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestQPSStp1C\E$" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestEchoLen in github.com/Mstch/giao/test/bench" />
+        <item itemvalue="Go Test.BenchmarkGrpc16C in github.com/Mstch/giao/test/bench" />
         <item itemvalue="Go Test.BenchmarkGrpc1C in github.com/Mstch/giao/test/bench" />
         <item itemvalue="Go Test.TestInitServer in github.com/Mstch/giao/test/bench" />
         <item itemvalue="Go Test.BenchmarkJustWrite in github.com/Mstch/giao/test/bench" />
-        <item itemvalue="Go Test.TestQPSStp1C in github.com/Mstch/giao/test/qps" />
-        <item itemvalue="Go Test.BenchmarkSyncStd1C in github.com/Mstch/giao/test/bench" />
       </list>
     </recent_temporary>
   </component>
@@ -182,26 +178,26 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="554" y="191" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1600528337890" />
-    <state width="1398" height="247" key="GridCell.Tab.0.bottom" timestamp="1600849470454">
+    <state width="1398" height="322" key="GridCell.Tab.0.bottom" timestamp="1600850822823">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="247" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600849470454" />
-    <state width="1398" height="247" key="GridCell.Tab.0.center" timestamp="1600849470453">
+    <state width="1398" height="322" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600850822823" />
+    <state width="1398" height="322" key="GridCell.Tab.0.center" timestamp="1600850822823">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="247" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1600849470453" />
-    <state width="1398" height="247" key="GridCell.Tab.0.left" timestamp="1600849470453">
+    <state width="1398" height="322" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1600850822823" />
+    <state width="1398" height="322" key="GridCell.Tab.0.left" timestamp="1600850822822">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="247" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1600849470453" />
-    <state width="1398" height="247" key="GridCell.Tab.0.right" timestamp="1600849470454">
+    <state width="1398" height="322" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1600850822822" />
+    <state width="1398" height="322" key="GridCell.Tab.0.right" timestamp="1600850822823">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="247" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1600849470454" />
+    <state width="1398" height="322" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1600850822823" />
     <state width="1398" height="300" key="GridCell.Tab.1.bottom" timestamp="1600827767380">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
