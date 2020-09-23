@@ -1,30 +1,27 @@
 name          time/op
-Stp1C-8         36.1µs ±63%
-Stp16C-8        16.5µs ±35%
-SyncStd1C-8     43.7µs ±16%
-SyncStd16C-8    20.8µs ± 8%
-Grpc1C-8         180µs ±11%
-Grpc16C-8       43.0µs ± 6%
+Stp1C-8         37.0µs ±66%
+Stp16C-8        13.5µs ± 9%
+SyncStd1C-8     54.5µs ±29%
+SyncStd16C-8    18.4µs ± 4%
+Grpc16C-8       29.8µs ± 6%
 
 name          speed
-Stp1C-8       377MB/s ±117%
-Stp16C-8       701MB/s ±30%
-SyncStd1C-8    253MB/s ±15%
-SyncStd16C-8   527MB/s ± 8%
-Grpc1C-8      61.2MB/s ±11%
-Grpc16C-8      254MB/s ± 5%
+Stp1C-8       381MB/s ±131%
+Stp16C-8       810MB/s ± 9%
+SyncStd1C-8    205MB/s ±24%
+SyncStd16C-8   595MB/s ± 4%
+Grpc16C-8      366MB/s ± 6%
+
 name          alloc/op
-Stp1C-8          4.40B ±55%
-Stp16C-8         30.0B ± 3%
-SyncStd1C-8       417B ±51%
-SyncStd16C-8      282B ± 1%
-Grpc1C-8        23.3kB ± 0%
-Grpc16C-8       23.7kB ± 0%
+Stp1C-8         6.80B ±106%
+Stp16C-8         30.6B ± 8%
+SyncStd1C-8       411B ±45%
+SyncStd16C-8      284B ± 0%
+Grpc16C-8       24.6kB ± 7%
 
 name          allocs/op
 Stp1C-8           0.00     
 Stp16C-8          0.00     
-SyncStd1C-8       5.40 ±11%
+SyncStd1C-8       5.60 ±11%
 SyncStd16C-8      5.00 ± 0%
-Grpc1C-8          96.0 ± 0%
 Grpc16C-8         98.0 ± 0%

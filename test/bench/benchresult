@@ -1,35 +1,66 @@
 goos: darwin
 goarch: amd64
 pkg: github.com/Mstch/giao/test/bench
-BenchmarkStp1C-8        	   75109	     13342 ns/op	 818.78 MB/s	       6 B/op	       0 allocs/op
-BenchmarkStp1C-8        	   76485	     32572 ns/op	 335.38 MB/s	       2 B/op	       0 allocs/op
-BenchmarkStp1C-8        	   85015	     43848 ns/op	 249.14 MB/s	       2 B/op	       0 allocs/op
-BenchmarkStp1C-8        	   67447	     46607 ns/op	 234.39 MB/s	       6 B/op	       0 allocs/op
-BenchmarkStp1C-8        	   53702	     44002 ns/op	 248.26 MB/s	       6 B/op	       0 allocs/op
-BenchmarkStp16C-8       	  331179	     20292 ns/op	 538.34 MB/s	      30 B/op	       0 allocs/op
-BenchmarkStp16C-8       	  338620	     15181 ns/op	 719.58 MB/s	      31 B/op	       0 allocs/op
-BenchmarkStp16C-8       	  367408	     11999 ns/op	 910.44 MB/s	      29 B/op	       0 allocs/op
-BenchmarkStp16C-8       	  385892	     12916 ns/op	 845.78 MB/s	      30 B/op	       0 allocs/op
-BenchmarkStp16C-8       	  170418	     22271 ns/op	 490.50 MB/s	      49 B/op	       0 allocs/op
-BenchmarkSyncStd1C-8    	   33694	     45884 ns/op	 238.08 MB/s	     630 B/op	       6 allocs/op
-BenchmarkSyncStd1C-8    	   30879	     50859 ns/op	 214.79 MB/s	     342 B/op	       5 allocs/op
-BenchmarkSyncStd1C-8    	   24993	     43760 ns/op	 249.63 MB/s	     343 B/op	       5 allocs/op
-BenchmarkSyncStd1C-8    	   32917	     40009 ns/op	 273.04 MB/s	     345 B/op	       5 allocs/op
-BenchmarkSyncStd1C-8    	   41956	     37779 ns/op	 289.15 MB/s	     427 B/op	       6 allocs/op
-BenchmarkSyncStd16C-8   	   63482	     22446 ns/op	 486.68 MB/s	     281 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   71037	     19463 ns/op	 561.26 MB/s	     284 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   65569	     19447 ns/op	 561.72 MB/s	     282 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   62354	     21328 ns/op	 512.20 MB/s	     281 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   63471	     21252 ns/op	 514.02 MB/s	     283 B/op	       5 allocs/op
-BenchmarkGrpc1C-8       	    5235	    199972 ns/op	  54.63 MB/s	   23288 B/op	      96 allocs/op
-BenchmarkGrpc1C-8       	    7350	    179065 ns/op	  61.01 MB/s	   23289 B/op	      96 allocs/op
-BenchmarkGrpc1C-8       	    5850	    187403 ns/op	  58.29 MB/s	   23289 B/op	      96 allocs/op
-BenchmarkGrpc1C-8       	    6879	    160510 ns/op	  68.06 MB/s	   23288 B/op	      96 allocs/op
-BenchmarkGrpc1C-8       	    7618	    170609 ns/op	  64.03 MB/s	   23264 B/op	      96 allocs/op
-BenchmarkGrpc16C-8      	   29655	     42279 ns/op	 258.38 MB/s	   23771 B/op	      98 allocs/op
-BenchmarkGrpc16C-8      	   29938	     41849 ns/op	 261.04 MB/s	   23715 B/op	      98 allocs/op
-BenchmarkGrpc16C-8      	   27832	     42221 ns/op	 258.74 MB/s	   23679 B/op	      98 allocs/op
-BenchmarkGrpc16C-8      	   27634	     43067 ns/op	 253.65 MB/s	   23693 B/op	      98 allocs/op
-BenchmarkGrpc16C-8      	   27262	     45397 ns/op	 240.63 MB/s	   23672 B/op	      98 allocs/op
+BenchmarkStp1C-8   	   35941	     46222 ns/op	 236.34 MB/s	      14 B/op	       0 allocs/op
+BenchmarkStp1C-8   	   52929	     46352 ns/op	 235.68 MB/s	       8 B/op	       0 allocs/op
+BenchmarkStp1C-8   	  102783	     44703 ns/op	 244.37 MB/s	       1 B/op	       0 allocs/op
+BenchmarkStp1C-8   	   83983	     12413 ns/op	 880.06 MB/s	       5 B/op	       0 allocs/op
+BenchmarkStp1C-8   	   90512	     35347 ns/op	 309.05 MB/s	       6 B/op	       0 allocs/op
 PASS
-ok  	github.com/Mstch/giao/test/bench	80.552s
+ok  	github.com/Mstch/giao/test/bench	14.989s
+goos: darwin
+goarch: amd64
+pkg: github.com/Mstch/giao/test/bench
+BenchmarkStp16C-8   	  310363	     13442 ns/op	 812.68 MB/s	      33 B/op	       0 allocs/op
+BenchmarkStp16C-8   	  413647	     14297 ns/op	 764.06 MB/s	      31 B/op	       0 allocs/op
+BenchmarkStp16C-8   	  317461	     12347 ns/op	 884.77 MB/s	      29 B/op	       0 allocs/op
+BenchmarkStp16C-8   	  367906	     13281 ns/op	 822.52 MB/s	      29 B/op	       0 allocs/op
+BenchmarkStp16C-8   	  376813	     14227 ns/op	 767.83 MB/s	      31 B/op	       0 allocs/op
+PASS
+ok  	github.com/Mstch/giao/test/bench	27.264s
+goos: darwin
+goarch: amd64
+pkg: github.com/Mstch/giao/test/bench
+BenchmarkSyncStd1C-8   	   25362	     50230 ns/op	 217.48 MB/s	     598 B/op	       6 allocs/op
+BenchmarkSyncStd1C-8   	   21669	     48838 ns/op	 223.68 MB/s	     344 B/op	       5 allocs/op
+BenchmarkSyncStd1C-8   	   29113	     46199 ns/op	 236.46 MB/s	     394 B/op	       6 allocs/op
+BenchmarkSyncStd1C-8   	   26998	     70181 ns/op	 155.65 MB/s	     343 B/op	       5 allocs/op
+BenchmarkSyncStd1C-8   	   30985	     57299 ns/op	 190.65 MB/s	     376 B/op	       6 allocs/op
+PASS
+ok  	github.com/Mstch/giao/test/bench	13.091s
+goos: darwin
+goarch: amd64
+pkg: github.com/Mstch/giao/test/bench
+BenchmarkSyncStd16C-8   	   62799	     18921 ns/op	 577.34 MB/s	     284 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   62632	     19155 ns/op	 570.31 MB/s	     285 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   68142	     17895 ns/op	 610.45 MB/s	     283 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   69829	     17960 ns/op	 608.23 MB/s	     283 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   70636	     17894 ns/op	 610.49 MB/s	     284 B/op	       5 allocs/op
+PASS
+ok  	github.com/Mstch/giao/test/bench	7.515s
+goos: darwin
+goarch: amd64
+pkg: github.com/Mstch/giao/test/bench
+BenchmarkGrpc1C-8   	panic: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial tcp [::1]:8181: connect: connection refused"
+
+goroutine 22 [running]:
+github.com/Mstch/giao/test/bench.BenchmarkGrpc1C(0xc000022fc0)
+	/Users/sgcx201/go/src/github.com/Mstch/giao/test/bench/bench_test.go:200 +0x276
+testing.(*B).runN(0xc000022fc0, 0x1)
+	/usr/local/go/src/testing/benchmark.go:191 +0xeb
+testing.(*B).run1.func1(0xc000022fc0)
+	/usr/local/go/src/testing/benchmark.go:231 +0x57
+created by testing.(*B).run1
+	/usr/local/go/src/testing/benchmark.go:224 +0x7f
+exit status 2
+FAIL	github.com/Mstch/giao/test/bench	0.211s
+goos: darwin
+goarch: amd64
+pkg: github.com/Mstch/giao/test/bench
+BenchmarkGrpc16C-8   	   32797	     31589 ns/op	 345.82 MB/s	   26176 B/op	      98 allocs/op
+BenchmarkGrpc16C-8   	   38860	     29536 ns/op	 369.85 MB/s	   24660 B/op	      98 allocs/op
+BenchmarkGrpc16C-8   	   39721	     28954 ns/op	 377.29 MB/s	   24165 B/op	      98 allocs/op
+BenchmarkGrpc16C-8   	   37527	     30015 ns/op	 363.95 MB/s	   23979 B/op	      98 allocs/op
+BenchmarkGrpc16C-8   	   39310	     29094 ns/op	 375.48 MB/s	   23848 B/op	      98 allocs/op
+PASS
+ok  	github.com/Mstch/giao/test/bench	7.483s

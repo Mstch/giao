@@ -1,7 +1,7 @@
 package bench
 
 import (
-	context "context"
+	"context"
 	"github.com/Mstch/giao"
 	"github.com/Mstch/giao/internal/server"
 	test "github.com/Mstch/giao/test/msg"
@@ -13,7 +13,6 @@ import (
 	"net/rpc"
 	"testing"
 )
-
 
 type GrpcEcho struct {
 }
@@ -34,8 +33,7 @@ func (e *StandardEcho) DoEcho(req *test.Echo, resp *test.Echo) error {
 	return nil
 }
 
-func TestInitServer(t *testing.T) {
-	var err error
+func TestStpServer(t *testing.T) {
 	shandler := &giao.Handler{
 		H: func(req proto.Message, respWriter giao.ProtoWriter) {
 			respMsg := &test.Echo{}
@@ -48,12 +46,13 @@ func TestInitServer(t *testing.T) {
 		ReqPool: echoPool,
 	}
 	benchmarkStupidEchoServer := server.NewStupidServer().RegWithId(EchoRpc, shandler)
-	go func() {
-		err := benchmarkStupidEchoServer.Listen("tcp", ":8888")
-		if err != nil {
-			panic(err)
-		}
-	}()
+	err := benchmarkStupidEchoServer.Listen("tcp", ":8888")
+	if err != nil {
+		panic(err)
+	}
+}
+func TestStdServer(t *testing.T) {
+	var err error
 	benchmarkStandardEchoServer := rpc.NewServer()
 	err = benchmarkStandardEchoServer.Register(&StandardEcho{})
 	if err != nil {
@@ -63,9 +62,10 @@ func TestInitServer(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	go func() {
-		benchmarkStandardEchoServer.Accept(l)
-	}()
+	benchmarkStandardEchoServer.Accept(l)
+}
+func TestGRpcServer(t *testing.T) {
+	var err error
 	lis, err := net.Listen("tcp", ":8181")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
