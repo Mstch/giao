@@ -36,8 +36,6 @@ var echoPool = &sync.Pool{New: func() interface{} {
 type Echo struct {
 }
 
-
-
 func (e *Echo) GoEcho(req *test.Echo, resp *test.Echo) error {
 	resp = &test.Echo{}
 	resp.Content = req.Content
@@ -63,13 +61,15 @@ func BenchmarkStp1C(b *testing.B) {
 			panic(err)
 		}
 	}()
-	for j := 0; j < b.N; j++ {
-		err := c.Go(EchoRpc, EchoMsg[j%12])
-		if err != nil {
-			panic(err)
-		}
-	}
 	b.ResetTimer()
+	go func() {
+		for j := 0; j < b.N; j++ {
+			err := c.Go(EchoRpc, EchoMsg[j%12])
+			if err != nil {
+				panic(err)
+			}
+		}
+	}()
 	w.Wait()
 }
 func BenchmarkStp16C(b *testing.B) {
@@ -114,6 +114,7 @@ func BenchmarkStp16C(b *testing.B) {
 			panic(err)
 		}
 	}()
+	b.ResetTimer()
 	go func(index int) {
 		for j := 0; j < b.N%16; j++ {
 			msg := &test.Echo{}
@@ -125,7 +126,6 @@ func BenchmarkStp16C(b *testing.B) {
 			}
 		}
 	}(16)
-	b.ResetTimer()
 	w.Wait()
 }
 func BenchmarkSyncStd1C(b *testing.B) {
@@ -187,7 +187,6 @@ func BenchmarkSyncStd16C(b *testing.B) {
 	b.ResetTimer()
 	w.Wait()
 }
-
 //func BenchmarkAStd1C(b *testing.B) {
 //	done := make(chan *rpc.Call, 1024)
 //	c, err := rpc.Dial("tcp", "localhost:8080")
