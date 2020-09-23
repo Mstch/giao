@@ -3,10 +3,8 @@ package qps
 import (
 	"github.com/Mstch/giao"
 	"github.com/Mstch/giao/internal/client"
-	"github.com/Mstch/giao/internal/server"
 	test "github.com/Mstch/giao/test/msg"
 	"github.com/gogo/protobuf/proto"
-	"net"
 	"net/rpc"
 	"runtime"
 	"sync"
@@ -37,9 +35,6 @@ var echoPool = &sync.Pool{New: func() interface{} {
 	return &test.Echo{}
 }}
 
-var benchmarkStupidEchoServer giao.Server
-var benchmarkStandardEchoServer *rpc.Server
-
 type Echo struct {
 }
 
@@ -49,46 +44,15 @@ func (e *Echo) GoEcho(req *test.Echo, resp *test.Echo) error {
 	return nil
 }
 
-func init() {
-	var err error
-	benchmarkStupidEchoServer = server.NewStupidServer()
-	go func() {
-		err := benchmarkStupidEchoServer.Listen("tcp", ":8888")
-		if err != nil {
-			panic(err)
-		}
-	}()
-	benchmarkStandardEchoServer = rpc.NewServer()
-	err = benchmarkStandardEchoServer.Register(&Echo{})
-	if err != nil {
-		panic(err)
-	}
-	l, err := net.Listen("tcp", ":8080")
-	if err != nil {
-		panic(err)
-	}
-	go benchmarkStandardEchoServer.Accept(l)
-}
 func TestQPSStp1C(t *testing.T) {
-	count := 0
-	shandler := &giao.Handler{
-		H: func(req proto.Message, respWriter giao.ProtoWriter) {
-			respMsg := &test.Echo{}
-			respMsg.Content = req.(*test.Echo).Content
-			err := respWriter(EchoRpc, respMsg)
-			if err != nil {
-				panic(err)
-			}
-		},
-		ReqPool: echoPool,
-	}
+	w := sync.WaitGroup{}
+	w.Add(1e9)
 	chandler := &giao.Handler{
 		H: func(reqReader proto.Message, respWriter giao.ProtoWriter) {
-			count++
+			w.Done()
 		},
 		ReqPool: echoPool,
 	}
-	benchmarkStupidEchoServer.RegWithId(EchoRpc, shandler)
 	c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
 	if err != nil {
 		panic(err)
@@ -100,38 +64,25 @@ func TestQPSStp1C(t *testing.T) {
 		}
 	}()
 	go func() {
-		for j := 0; ; j++ {
+		for j := 0; j < 1e9; j++ {
 			err := c.Go(EchoRpc, EchoMsg[j%12])
 			if err != nil {
 				panic(err)
 			}
 		}
 	}()
-	<-time.NewTimer(10 * time.Second).C
-	memStat := &runtime.MemStats{}
-	runtime.ReadMemStats(memStat)
-	println("[STUPID] 1C QPS:", count/10, "now memory :", memStat.HeapInuse/1E6, "mb")
+	start := time.Now().UnixNano()
+	w.Wait()
+	println("[STUPID] 1C QPS:", int(1e9/(float64(time.Now().UnixNano()-start)/1e9)))
 }
 func TestQPSStp16C(t *testing.T) {
 	count := make([]int, 16)
-	shandler := &giao.Handler{
-		H: func(req proto.Message, respWriter giao.ProtoWriter) {
-			respMsg := &test.Echo{}
-			respMsg.Content = req.(*test.Echo).Content
-			err := respWriter(EchoRpc, respMsg)
-			if err != nil {
-				panic(err)
-			}
-		},
-		ReqPool: echoPool,
-	}
 	chandler := &giao.Handler{
 		H: func(req proto.Message, respWriter giao.ProtoWriter) {
 			count[req.(*test.Echo).Index] ++
 		},
 		ReqPool: echoPool,
 	}
-	benchmarkStupidEchoServer.RegWithId(EchoRpc, shandler)
 	for i := 0; i < 16; i++ {
 		c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
 		if err != nil {

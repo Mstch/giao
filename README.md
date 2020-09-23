@@ -1,7 +1,8 @@
 - [x] basic rpc logic
-- [ ] goroutine safe off heap memory pool
+- [ ] conn pool
 - [ ] graceful shutdown
 - [ ] humanize api
+- [ ] goroutine safe off heap memory pool
 
 bench result  
 "Stp" means stupid,a milestone of the framework  
@@ -10,20 +11,27 @@ SyncStd means use net/rpc with default codec and just for Compared
 the detail of this bench please move to [test/bench](test/bench)
 ```
 name          time/op
-Stp1C-8        925ns ±39%
-Stp16C-8      7.61µs ±30%
-SyncStd1C-8   22.6µs ± 9%
-SyncStd16C-8  14.1µs ± 2%
+Stp1C-8         11.2µs ±13%
+Stp16C-8        8.52µs ±58%
+SyncStd1C-8     22.9µs ± 7%
+SyncStd16C-8    15.3µs ± 2%
+
+name          speed
+Stp1C-8       61.9MB/s ±13%
+Stp16C-8      85.8MB/s ±40%
+SyncStd1C-8   30.0MB/s ± 7%
+SyncStd16C-8  45.0MB/s ± 2%
 
 name          alloc/op
-Stp1C-8        0.00B     
-Stp16C-8       24.4B ± 6%
-SyncStd1C-8     402B ±64%
-SyncStd16C-8    262B ± 0%
+Stp1C-8          0.00B     
+Stp16C-8         26.6B ± 5%
+SyncStd1C-8       330B ± 1%
+SyncStd16C-8      262B ± 0%
 
 name          allocs/op
-Stp1C-8         0.00     
-Stp16C-8        0.00     
-SyncStd1C-8     5.40 ±11%
-SyncStd16C-8    5.00 ± 0%
+Stp1C-8           0.00     
+Stp16C-8          0.00     
+SyncStd1C-8       5.00 ± 0%
+SyncStd16C-8      5.00 ± 0%
+
 ```

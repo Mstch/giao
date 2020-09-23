@@ -43,6 +43,7 @@ func (e *Echo) GoEcho(req *test.Echo, resp *test.Echo) error {
 }
 
 func BenchmarkStp1C(b *testing.B) {
+	b.SetBytes(343 * 2)
 	w := sync.WaitGroup{}
 	chandler := &giao.Handler{
 		H: func(req proto.Message, respWriter giao.ProtoWriter) {
@@ -73,6 +74,7 @@ func BenchmarkStp1C(b *testing.B) {
 	w.Wait()
 }
 func BenchmarkStp16C(b *testing.B) {
+	b.SetBytes(343 * 2)
 	w := sync.WaitGroup{}
 	chandler := &giao.Handler{
 		H: func(req proto.Message, respWriter giao.ProtoWriter) {
@@ -129,6 +131,7 @@ func BenchmarkStp16C(b *testing.B) {
 	w.Wait()
 }
 func BenchmarkSyncStd1C(b *testing.B) {
+	b.SetBytes(343 * 2)
 	c, err := rpc.Dial("tcp", "localhost:8080")
 	w := sync.WaitGroup{}
 	w.Add(b.N)
@@ -148,6 +151,7 @@ func BenchmarkSyncStd1C(b *testing.B) {
 	w.Wait()
 }
 func BenchmarkSyncStd16C(b *testing.B) {
+	b.SetBytes(343 * 2)
 	w := sync.WaitGroup{}
 	w.Add(b.N)
 	for i := 0; i < 16; i++ {
@@ -187,6 +191,7 @@ func BenchmarkSyncStd16C(b *testing.B) {
 	b.ResetTimer()
 	w.Wait()
 }
+
 //func BenchmarkAStd1C(b *testing.B) {
 //	done := make(chan *rpc.Call, 1024)
 //	c, err := rpc.Dial("tcp", "localhost:8080")
