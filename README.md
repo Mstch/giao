@@ -21,27 +21,36 @@ benchmark platform :
 benchmark data :
 ```
 name          time/op
-Stp1C-8         11.2µs ±13%
-Stp16C-8        8.52µs ±58%
-SyncStd1C-8     22.9µs ± 7%
-SyncStd16C-8    15.3µs ± 2%
+Stp1C-8         10.0µs ±15%
+Stp16C-8        7.60µs ±34%
+SyncStd1C-8     23.7µs ±13%
+SyncStd16C-8    14.8µs ± 2%
+Grpc1C-8         113µs ± 7%
+Grpc16C-8       25.0µs ± 4%
 
 name          speed
-Stp1C-8       61.9MB/s ±13%
-Stp16C-8      85.8MB/s ±40%
-SyncStd1C-8   30.0MB/s ± 7%
-SyncStd16C-8  45.0MB/s ± 2%
+Stp1C-8       69.0MB/s ±14%
+Stp16C-8      92.6MB/s ±27%
+SyncStd1C-8   29.1MB/s ±13%
+SyncStd16C-8  46.2MB/s ± 2%
+Grpc1C-8      6.10MB/s ± 7%
+Grpc16C-8     27.5MB/s ± 4%
 
 name          alloc/op
 Stp1C-8          0.00B     
-Stp16C-8         26.6B ± 5%
-SyncStd1C-8       330B ± 1%
-SyncStd16C-8      262B ± 0%
+Stp16C-8         24.0B ± 8%
+SyncStd1C-8       342B ± 0%
+SyncStd16C-8      278B ± 0%
+Grpc1C-8        5.79kB ± 0%
+Grpc16C-8       5.88kB ± 0%
 
 name          allocs/op
 Stp1C-8           0.00     
 Stp16C-8          0.00     
 SyncStd1C-8       5.00 ± 0%
 SyncStd16C-8      5.00 ± 0%
+Grpc1C-8          95.0 ± 0%
+Grpc16C-8         96.0 ± 0%
+
 
 ```
