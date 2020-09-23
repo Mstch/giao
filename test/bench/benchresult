@@ -1,25 +1,25 @@
 goos: darwin
 goarch: amd64
 pkg: github.com/Mstch/giao/test/bench
-BenchmarkStp1C-8        	 2583898	       563 ns/op	       0 B/op	       0 allocs/op
-BenchmarkStp1C-8        	 1036113	      1172 ns/op	       0 B/op	       0 allocs/op
-BenchmarkStp1C-8        	 1974291	       941 ns/op	       0 B/op	       0 allocs/op
-BenchmarkStp1C-8        	 1473703	       875 ns/op	       0 B/op	       0 allocs/op
-BenchmarkStp1C-8        	  939063	      1073 ns/op	       0 B/op	       0 allocs/op
-BenchmarkStp16C-8       	 1000000	      8911 ns/op	      24 B/op	       0 allocs/op
-BenchmarkStp16C-8       	 1000000	      9917 ns/op	      23 B/op	       0 allocs/op
-BenchmarkStp16C-8       	 1000000	      6046 ns/op	      25 B/op	       0 allocs/op
-BenchmarkStp16C-8       	 1000000	      6436 ns/op	      25 B/op	       0 allocs/op
-BenchmarkStp16C-8       	 1000000	      6756 ns/op	      25 B/op	       0 allocs/op
-BenchmarkSyncStd1C-8    	   50698	     24504 ns/op	     661 B/op	       6 allocs/op
-BenchmarkSyncStd1C-8    	   55244	     24153 ns/op	     362 B/op	       6 allocs/op
-BenchmarkSyncStd1C-8    	   53923	     22280 ns/op	     325 B/op	       5 allocs/op
-BenchmarkSyncStd1C-8    	   55909	     21269 ns/op	     329 B/op	       5 allocs/op
-BenchmarkSyncStd1C-8    	   57579	     20586 ns/op	     334 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   85322	     14070 ns/op	     262 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   87678	     14024 ns/op	     262 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   86620	     14404 ns/op	     262 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   90627	     14141 ns/op	     262 B/op	       5 allocs/op
-BenchmarkSyncStd16C-8   	   88167	     13936 ns/op	     262 B/op	       5 allocs/op
+BenchmarkStp1C-8        	  121652	     10519 ns/op	       0 B/op	       0 allocs/op
+BenchmarkStp1C-8        	  116215	     11082 ns/op	       0 B/op	       0 allocs/op
+BenchmarkStp1C-8        	  105145	     11041 ns/op	       0 B/op	       0 allocs/op
+BenchmarkStp1C-8        	  112166	     10042 ns/op	       0 B/op	       0 allocs/op
+BenchmarkStp1C-8        	  111752	     10598 ns/op	       0 B/op	       0 allocs/op
+BenchmarkStp16C-8       	 1000000	     10239 ns/op	      24 B/op	       0 allocs/op
+BenchmarkStp16C-8       	 1000000	     12600 ns/op	      27 B/op	       0 allocs/op
+BenchmarkStp16C-8       	 1000000	      6849 ns/op	      26 B/op	       0 allocs/op
+BenchmarkStp16C-8       	 1000000	      6487 ns/op	      25 B/op	       0 allocs/op
+BenchmarkStp16C-8       	 1000000	      6094 ns/op	      24 B/op	       0 allocs/op
+BenchmarkSyncStd1C-8    	   56979	     24969 ns/op	     675 B/op	       6 allocs/op
+BenchmarkSyncStd1C-8    	   53162	     22543 ns/op	     326 B/op	       5 allocs/op
+BenchmarkSyncStd1C-8    	   58316	     22287 ns/op	     329 B/op	       5 allocs/op
+BenchmarkSyncStd1C-8    	   56440	     21322 ns/op	     325 B/op	       5 allocs/op
+BenchmarkSyncStd1C-8    	   53750	     21086 ns/op	     326 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   83276	     14877 ns/op	     261 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   87228	     14618 ns/op	     262 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   85231	     14539 ns/op	     262 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   85521	     14930 ns/op	     262 B/op	       5 allocs/op
+BenchmarkSyncStd16C-8   	   84526	     16055 ns/op	     262 B/op	       5 allocs/op
 PASS
-ok  	github.com/Mstch/giao/test/bench	169.267s
+ok  	github.com/Mstch/giao/test/bench	75.451s
