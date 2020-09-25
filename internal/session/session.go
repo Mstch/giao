@@ -28,7 +28,6 @@ func CreateSession(conn net.Conn) *Session {
 		WriteBufPool:  buffer.CommonBufferPool,
 		WriteLock:     sync.Mutex{},
 		Meta:          sync.Map{},
-		closed:        false,
 	}
 	s.Writer = s.doWrite
 	return s
@@ -40,28 +39,29 @@ func (s *Session) Close() error {
 		s.Meta.Delete(key)
 		return true
 	})
-	return s.Conn.Close()
+	err := s.Conn.Close()
+	return err
 }
 
 func (s *Session) Serve(handlers map[int]*giao.Handler) error {
-	for {
+	for !s.closed {
 		handlerId, protoBytes, err := s.doRead()
 		if err != nil {
 			if err == io.EOF {
 				break
 			}
+			return err
 		}
 		if handler, ok := handlers[handlerId]; ok {
 			reqPool := handler.ReqPool
 			pb := reqPool.Get().(giao.PB)
 			err := pb.Unmarshal(protoBytes)
 			if err != nil {
-				//todo
-				continue
+				return err
 			}
 			reqPool.Put(pb)
 			go handler.H(pb.(proto.Message), s.Writer)
 		}
 	}
-	return s.Close()
+	return nil
 }

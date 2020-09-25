@@ -4,10 +4,12 @@ import (
 	"context"
 	"github.com/Mstch/giao"
 	"github.com/Mstch/giao/internal/client"
+	"github.com/Mstch/giao/internal/server"
 	test "github.com/Mstch/giao/test/msg"
 	"github.com/gogo/protobuf/proto"
 	"google.golang.org/grpc"
 	"net/rpc"
+	"strings"
 	"sync"
 	"testing"
 )
@@ -31,7 +33,6 @@ func init() {
 	}
 }
 
-
 var echoPool = &sync.Pool{New: func() interface{} {
 	return &test.Echo{}
 }}
@@ -39,33 +40,80 @@ var echoPool = &sync.Pool{New: func() interface{} {
 func BenchmarkStp1C(b *testing.B) {
 	b.SetBytes(5462 * 2)
 	w := sync.WaitGroup{}
+	w.Add(b.N)
+	shandler := &giao.Handler{
+		H: func(req proto.Message, respWriter giao.ProtoWriter) {
+			respMsg := &test.Echo{}
+			respMsg.Content = req.(*test.Echo).Content
+			err := respWriter(EchoRpc, respMsg)
+			if err != nil {
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
+		},
+		ReqPool: echoPool,
+	}
 	chandler := &giao.Handler{
 		H: func(req proto.Message, respWriter giao.ProtoWriter) {
 			w.Done()
 		},
 		ReqPool: echoPool,
 	}
-	w.Add(b.N)
+	benchmarkStupidEchoServer := server.NewStupidServer().RegWithId(EchoRpc, shandler)
+	err := benchmarkStupidEchoServer.Listen("tcp", ":8888")
+	if err != nil {
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
+	go func() {
+		err = benchmarkStupidEchoServer.Serve()
+		if err != nil {
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
+	}()
 	c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
 	if err != nil {
-		panic(err)
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
 	}
 	go func() {
 		err := c.Serve()
 		if err != nil {
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
 			panic(err)
 		}
+	}
 	}()
 	b.ResetTimer()
 	go func() {
 		for j := 0; j < b.N; j++ {
 			err := c.Go(EchoRpc, EchoMsg[j%12])
 			if err != nil {
-				panic(err)
-			}
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
 		}
 	}()
 	w.Wait()
+	b.StopTimer()
+	err = c.Shutdown()
+	if err != nil {
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
+	err = benchmarkStupidEchoServer.Shutdown()
+	if err != nil {
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
 }
 func BenchmarkStp16C(b *testing.B) {
 	b.SetBytes(5462 * 2)
@@ -80,13 +128,17 @@ func BenchmarkStp16C(b *testing.B) {
 	for i := 0; i < 16; i++ {
 		c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
 		if err != nil {
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
 			panic(err)
 		}
+	}
 		go func(c giao.Client) {
 			err := c.Serve()
 			if err != nil {
-				panic(err)
-			}
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
 		}(c)
 		go func(index int) {
 			for j := 0; j < b.N/16; j++ {
@@ -95,20 +147,26 @@ func BenchmarkStp16C(b *testing.B) {
 				msg.Index = int32(index)
 				err := c.Go(EchoRpc, msg)
 				if err != nil {
-					panic(err)
-				}
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
 			}
 		}(i)
 	}
 	c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
 	if err != nil {
-		panic(err)
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
 	}
 	go func() {
 		err := c.Serve()
 		if err != nil {
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
 			panic(err)
 		}
+	}
 	}()
 	b.ResetTimer()
 	go func(index int) {
@@ -118,8 +176,10 @@ func BenchmarkStp16C(b *testing.B) {
 			msg.Index = int32(index)
 			err := c.Go(EchoRpc, msg)
 			if err != nil {
-				panic(err)
-			}
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
 		}
 	}(16)
 	w.Wait()
@@ -130,15 +190,19 @@ func BenchmarkSyncStd1C(b *testing.B) {
 	w := sync.WaitGroup{}
 	w.Add(b.N)
 	if err != nil {
-		panic(err)
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
 	}
 	b.ResetTimer()
 	for j := 0; j < b.N; j++ {
 		go func(k int) {
 			err := c.Call("StandardEcho.DoEcho", EchoMsg[k%12], &test.Echo{})
 			if err != nil {
-				panic(err)
-			}
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
 			w.Done()
 		}(j)
 	}
@@ -151,8 +215,10 @@ func BenchmarkSyncStd16C(b *testing.B) {
 	for i := 0; i < 16; i++ {
 		c, err := rpc.Dial("tcp", "localhost:8080")
 		if err != nil {
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
 			panic(err)
 		}
+	}
 		go func(index int) {
 			for j := 0; j < b.N/16; j++ {
 				msg := &test.Echo{}
@@ -160,15 +226,19 @@ func BenchmarkSyncStd16C(b *testing.B) {
 				msg.Index = int32(index)
 				err := c.Call("StandardEcho.DoEcho", msg, &test.Echo{})
 				if err != nil {
-					panic(err)
-				}
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
 				w.Done()
 			}
 		}(i)
 	}
 	c, err := rpc.Dial("tcp", "localhost:8080")
 	if err != nil {
-		panic(err)
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
 	}
 	go func(index int) {
 		for j := 0; j < b.N%16; j++ {
@@ -177,8 +247,10 @@ func BenchmarkSyncStd16C(b *testing.B) {
 			msg.Index = int32(index)
 			err := c.Call("StandardEcho.DoEcho", msg, &test.Echo{})
 			if err != nil {
-				panic(err)
-			}
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
 			w.Done()
 		}
 	}(0)
@@ -191,18 +263,24 @@ func BenchmarkGrpc1C(b *testing.B) {
 	conn, err := grpc.Dial("localhost:8181", grpc.WithInsecure())
 	c := test.NewEchoServiceClient(conn)
 	if err != nil {
-		panic(err)
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
 	}
 	b.ResetTimer()
 	for j := 0; j < b.N; j++ {
 		_, err := c.DoEcho(context.Background(), EchoMsg[j%12])
 		if err != nil {
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
 			panic(err)
 		}
 	}
+	}
 	err = conn.Close()
 	if err != nil {
-		panic(err)
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
 	}
 }
 func BenchmarkGrpc16C(b *testing.B) {
@@ -213,8 +291,10 @@ func BenchmarkGrpc16C(b *testing.B) {
 		conn, err := grpc.Dial("localhost:8181", grpc.WithInsecure())
 		c := test.NewEchoServiceClient(conn)
 		if err != nil {
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
 			panic(err)
 		}
+	}
 		go func(index int) {
 			for j := 0; j < b.N/16; j++ {
 				msg := &test.Echo{}
@@ -222,8 +302,10 @@ func BenchmarkGrpc16C(b *testing.B) {
 				msg.Index = int32(index)
 				_, err := c.DoEcho(context.Background(), msg)
 				if err != nil {
-					panic(err)
-				}
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
 				w.Done()
 			}
 		}(i)
@@ -231,7 +313,9 @@ func BenchmarkGrpc16C(b *testing.B) {
 	conn, err := grpc.Dial("localhost:8181", grpc.WithInsecure())
 	c := test.NewEchoServiceClient(conn)
 	if err != nil {
-		panic(err)
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
 	}
 	go func(index int) {
 		for j := 0; j < b.N%16; j++ {
@@ -240,11 +324,12 @@ func BenchmarkGrpc16C(b *testing.B) {
 			msg.Index = int32(index)
 			_, err := c.DoEcho(context.Background(), msg)
 			if err != nil {
-				panic(err)
-			}
+		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+			panic(err)
+		}
+	}
 			w.Done()
 		}
 	}(0)
 	w.Wait()
 }
-

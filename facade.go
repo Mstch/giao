@@ -12,6 +12,8 @@ type Handler struct {
 
 type Server interface {
 	Listen(network, address string) error
+	Serve() error
+	ListenAndServe(network, address string) error
 	RegWithId(id int, handler *Handler) Server
 	Shutdown() error
 }

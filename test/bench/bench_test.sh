@@ -1,3 +1,3 @@
 go test -run=InitServer &
 sleep 3s
-go test -run=None -benchmem -count 5 -bench . -timeout 1h | tee benchresult && benchstat -sort delta benchresult >benchstatresult
+go test -run=None -benchmem -cpu 2,4,8,16 -count 5 -bench . -timeout 1h | tee benchresult && benchstat -sort delta benchresult >benchstatresult
