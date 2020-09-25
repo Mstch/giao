@@ -1,5 +1,5 @@
 - [x] basic rpc logic
-- [x] graceful shutdown
+- [ ] graceful shutdown
 - [ ] humanize api
 - [ ] goroutine safe off heap memory pool
 bench result  
