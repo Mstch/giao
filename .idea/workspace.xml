@@ -9,20 +9,7 @@
     </enabled-run-configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08aaee7c-90a2-4371-b5a4-29cb042cccce" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/nocachepool.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/example/client/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/example/server/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/facade.go" beforeDir="false" afterPath="$PROJECT_DIR$/facade.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helper.go" beforeDir="false" afterPath="$PROJECT_DIR$/chainhandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/client/stupidClient.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/client/stupidClient.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/session/rw.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/session/rw.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/session/session.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/session/session.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/bench/bench_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test/bench/bench_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/bench/initserver_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test/bench/initserver_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/qps/qps_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test/qps/qps_test.go" afterDir="false" />
-    </list>
+    <list default="true" id="08aaee7c-90a2-4371-b5a4-29cb042cccce" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -119,10 +106,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="520" y="302" key="#Go_Modules/0.23.1440.877@0.23.1440.877" timestamp="1600089682254" />
-    <state x="184" y="123" width="1071" height="726" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601177566932">
+    <state x="184" y="123" width="1071" height="726" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601177569735">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="184" y="123" width="1071" height="726" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877@0.23.1440.877" timestamp="1601177566932" />
+    <state x="184" y="123" width="1071" height="726" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877@0.23.1440.877" timestamp="1601177569735" />
     <state x="450" y="270" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600917755397">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -152,26 +139,26 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="554" y="191" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1600528337890" />
-    <state width="1398" height="322" key="GridCell.Tab.0.bottom" timestamp="1601177535513">
+    <state width="1398" height="322" key="GridCell.Tab.0.bottom" timestamp="1601177826905">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="322" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1601177535513" />
-    <state width="1398" height="322" key="GridCell.Tab.0.center" timestamp="1601177535512">
+    <state width="1398" height="322" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1601177826905" />
+    <state width="1398" height="322" key="GridCell.Tab.0.center" timestamp="1601177826904">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="322" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1601177535512" />
-    <state width="1398" height="322" key="GridCell.Tab.0.left" timestamp="1601177535511">
+    <state width="1398" height="322" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1601177826904" />
+    <state width="1398" height="322" key="GridCell.Tab.0.left" timestamp="1601177826904">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="322" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1601177535511" />
-    <state width="1398" height="322" key="GridCell.Tab.0.right" timestamp="1601177535512">
+    <state width="1398" height="322" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1601177826904" />
+    <state width="1398" height="322" key="GridCell.Tab.0.right" timestamp="1601177826905">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="322" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1601177535512" />
+    <state width="1398" height="322" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1601177826905" />
     <state width="1398" height="395" key="GridCell.Tab.1.bottom" timestamp="1601177270540">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -245,11 +232,6 @@
           <url>file://$PROJECT_DIR$/test/msg/test.pb.go</url>
           <line>328</line>
           <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/test/bench/bench_test.go</url>
-          <line>111</line>
-          <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
