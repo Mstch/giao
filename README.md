@@ -2,6 +2,7 @@
 - [ ] graceful shutdown
 - [ ] humanize api
 - [ ] goroutine safe off heap memory pool
+
 bench result  
 "Stp" means stupid,a milestone of the framework  
 the test cases are 64~64k bytes that 5462 bytes on average protobuf message  
