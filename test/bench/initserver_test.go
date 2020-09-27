@@ -5,7 +5,6 @@ import (
 	"github.com/Mstch/giao"
 	"github.com/Mstch/giao/internal/server"
 	test "github.com/Mstch/giao/test/msg"
-	"github.com/gogo/protobuf/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
@@ -35,15 +34,15 @@ func (e *StandardEcho) DoEcho(req *test.Echo, resp *test.Echo) error {
 
 func TestStpServer(t *testing.T) {
 	shandler := &giao.Handler{
-		H: func(req proto.Message, respWriter giao.ProtoWriter) {
+		H: func(req giao.Msg, session giao.Session) {
 			respMsg := &test.Echo{}
 			respMsg.Content = req.(*test.Echo).Content
-			err := respWriter(EchoRpc, respMsg)
+			err := session.Write(EchoRpc, respMsg)
 			if err != nil {
 				panic(err)
 			}
 		},
-		ReqPool: echoPool,
+		InputPool: echoPool,
 	}
 	benchmarkStupidEchoServer := server.NewStupidServer().RegWithId(EchoRpc, shandler)
 	err := benchmarkStupidEchoServer.Listen("tcp", ":8888")

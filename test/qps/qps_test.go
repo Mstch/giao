@@ -48,10 +48,10 @@ func TestQPSStp1C(t *testing.T) {
 	w := sync.WaitGroup{}
 	w.Add(1e9)
 	chandler := &giao.Handler{
-		H: func(reqReader proto.Message, respWriter giao.ProtoWriter) {
+		H: func(reqReader proto.Message, respWriter giao.Writer) {
 			w.Done()
 		},
-		ReqPool: echoPool,
+		InputPool: echoPool,
 	}
 	c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
 	if err != nil {
@@ -78,10 +78,10 @@ func TestQPSStp1C(t *testing.T) {
 func TestQPSStp16C(t *testing.T) {
 	count := make([]int, 16)
 	chandler := &giao.Handler{
-		H: func(req proto.Message, respWriter giao.ProtoWriter) {
+		H: func(req proto.Message, respWriter giao.Writer) {
 			count[req.(*test.Echo).Index] ++
 		},
-		ReqPool: echoPool,
+		InputPool: echoPool,
 	}
 	for i := 0; i < 16; i++ {
 		c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")

@@ -1,13 +1,8 @@
 package giao
 
-import (
-	"github.com/gogo/protobuf/proto"
-	"sync"
-)
-
 type Handler struct {
-	H       ProtoHandler
-	ReqPool *sync.Pool
+	H         MsgHandler
+	InputPool Pool
 }
 
 type Server interface {
@@ -22,15 +17,25 @@ type Client interface {
 	Connect(network, address string) (Client, error)
 	Serve() error
 	RegWithId(id int, handler *Handler) Client
-	Go(id int, req proto.Message) error
+	Go(id int, req Msg) error
 	Shutdown() error
 }
 
-type ProtoWriter func(handlerId int, msg proto.Message) error
-type ProtoHandler func(req proto.Message, respWriter ProtoWriter)
-
-type PB interface {
+type 	MsgHandler func(in Msg, session Session)
+type Msg interface {
 	Size() int
 	MarshalTo(data []byte) (n int, err error)
 	Unmarshal(data []byte) error
+}
+
+type Session interface {
+	Get(key interface{}) (interface{}, bool)
+	Set(key, value interface{})
+	GetId() uint64
+	Write(handlerId int, msg Msg) error
+}
+
+type Pool interface {
+	Get() interface{}
+	Put(interface{})
 }
