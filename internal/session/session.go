@@ -3,25 +3,40 @@ package session
 import (
 	"github.com/Mstch/giao"
 	"github.com/Mstch/giao/internal/buffer"
-	"github.com/gogo/protobuf/proto"
 	"io"
 	"net"
 	"sync"
+	"sync/atomic"
 )
+
+var lastSessionId = uint64(0)
 
 type Session struct {
 	net.Conn
+	Id            uint64
 	ReadBuf       *buffer.Buffer
 	ReadHeaderBuf []byte
 	WriteBufPool  *sync.Pool
 	Meta          sync.Map
 	WriteLock     sync.Mutex
-	Writer        giao.ProtoWriter
 	closed        bool
+}
+
+func (s *Session) Get(key interface{}) (interface{}, bool) {
+	return s.Meta.Load(key)
+}
+
+func (s *Session) Set(key, value interface{}) {
+	s.Meta.Store(key, value)
+}
+
+func (s *Session) GetId() uint64 {
+	return s.Id
 }
 
 func CreateSession(conn net.Conn) *Session {
 	s := &Session{
+		Id:            atomic.AddUint64(&lastSessionId, 1),
 		Conn:          conn,
 		ReadBuf:       buffer.GetBuffer(),
 		ReadHeaderBuf: make([]byte, 8),
@@ -29,7 +44,6 @@ func CreateSession(conn net.Conn) *Session {
 		WriteLock:     sync.Mutex{},
 		Meta:          sync.Map{},
 	}
-	s.Writer = s.doWrite
 	return s
 }
 
@@ -45,7 +59,7 @@ func (s *Session) Close() error {
 
 func (s *Session) Serve(handlers map[int]*giao.Handler) error {
 	for !s.closed {
-		handlerId, protoBytes, err := s.doRead()
+		handlerId, protoBytes, err := s.Read()
 		if err != nil {
 			if err == io.EOF {
 				break
@@ -53,14 +67,14 @@ func (s *Session) Serve(handlers map[int]*giao.Handler) error {
 			return err
 		}
 		if handler, ok := handlers[handlerId]; ok {
-			reqPool := handler.ReqPool
-			pb := reqPool.Get().(giao.PB)
+			reqPool := handler.InputPool
+			pb := reqPool.Get().(giao.Msg)
 			err := pb.Unmarshal(protoBytes)
 			if err != nil {
 				return err
 			}
 			reqPool.Put(pb)
-			go handler.H(pb.(proto.Message), s.Writer)
+			go handler.H(pb, s)
 		}
 	}
 	return nil

@@ -3,7 +3,6 @@ package client
 import (
 	"github.com/Mstch/giao"
 	"github.com/Mstch/giao/internal/session"
-	"github.com/gogo/protobuf/proto"
 	"net"
 )
 
@@ -31,8 +30,8 @@ func (c *StupidClient) Serve() error {
 	return c.connSession.Serve(c.handlers)
 }
 
-func (c *StupidClient) Go(id int, req proto.Message) error {
-	return c.connSession.Writer(id, req)
+func (c *StupidClient) Go(id int, req giao.Msg) error {
+	return c.connSession.Write(id, req)
 }
 
 func (c *StupidClient) RegWithId(id int, handler *giao.Handler) giao.Client {
