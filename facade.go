@@ -1,10 +1,5 @@
 package giao
 
-type Handler struct {
-	H         MsgHandler
-	InputPool Pool
-}
-
 type Server interface {
 	Listen(network, address string) error
 	Serve() error
@@ -21,11 +16,20 @@ type Client interface {
 	Shutdown() error
 }
 
-type 	MsgHandler func(in Msg, session Session)
-type Msg interface {
-	Size() int
-	MarshalTo(data []byte) (n int, err error)
-	Unmarshal(data []byte) error
+type MultiConnClient interface {
+	Connect(network, address string) (MultiConnClient, error)
+	RegWithId(id int, handler *Handler) MultiConnClient
+	Go(id int, req Msg) error
+	Serve() chan error
+	Broadcast(id int, req Msg) chan error
+	SetSelector(selector Selector)
+	Shutdown() chan error
+}
+
+type Selector interface {
+	AddSession(session Session)
+	GetAllSession() []Session
+	Select() Session
 }
 
 type Session interface {
