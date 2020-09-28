@@ -4,6 +4,18 @@ import (
 	"sync"
 )
 
+type Handler struct {
+	H         MsgHandler
+	InputPool Pool
+}
+
+type MsgHandler func(in Msg, session Session)
+type Msg interface {
+	Size() int
+	MarshalTo(data []byte) (n int, err error)
+	Unmarshal(data []byte) error
+}
+
 type ChainMsgHandler func(in Msg, session Session) bool
 type PipelineHandler struct {
 	Handler
