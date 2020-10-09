@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08aaee7c-90a2-4371-b5a4-29cb042cccce" name="Default Changelist" comment="" />
+    <list default="true" id="08aaee7c-90a2-4371-b5a4-29cb042cccce" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/internal/session/rw.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,13 +43,6 @@
     <property name="settings.editor.selected.configurable" value="go.vgo" />
   </component>
   <component name="RecentsManager">
-    <key name="GoMoveDeclarationDialog.RECENT_KEY">
-      <recent name="$PROJECT_DIR$" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/example" />
-      <recent name="$PROJECT_DIR$/test/bench" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/example/server" />
       <recent name="$PROJECT_DIR$/test/qps" />
@@ -54,9 +50,16 @@
       <recent name="$PROJECT_DIR$/internal/buffer" />
       <recent name="$PROJECT_DIR$/internal" />
     </key>
+    <key name="GoMoveDeclarationDialog.RECENT_KEY">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/example" />
+      <recent name="$PROJECT_DIR$/test/bench" />
+    </key>
   </component>
   <component name="RunManager">
-    <configuration name="BenchmarkStp1C in github.com/Mstch/giao/test/bench" type="GoTestRunConfiguration" factoryName="Go Test" nameIsGenerated="true">
+    <configuration name="BenchmarkStp1C in github.com/Mstch/giao/test/bench" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="giao" />
       <working_directory value="$PROJECT_DIR$/test/bench" />
       <parameters value="-test.count 5" />
@@ -68,6 +71,11 @@
       <pattern value="^\QBenchmarkStp1C\E$" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.BenchmarkStp1C in github.com/Mstch/giao/test/bench" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -134,26 +142,26 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="554" y="191" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1600528337890" />
-    <state width="1398" height="322" key="GridCell.Tab.0.bottom" timestamp="1601366554881">
+    <state width="1398" height="320" key="GridCell.Tab.0.bottom" timestamp="1602211119518">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="322" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1601366554881" />
-    <state width="1398" height="322" key="GridCell.Tab.0.center" timestamp="1601366554880">
+    <state width="1398" height="320" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1602211119518" />
+    <state width="1398" height="320" key="GridCell.Tab.0.center" timestamp="1602211119517">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="322" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1601366554880" />
-    <state width="1398" height="322" key="GridCell.Tab.0.left" timestamp="1601366554879">
+    <state width="1398" height="320" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1602211119517" />
+    <state width="1398" height="320" key="GridCell.Tab.0.left" timestamp="1602211119517">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="322" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1601366554879" />
-    <state width="1398" height="322" key="GridCell.Tab.0.right" timestamp="1601366554880">
+    <state width="1398" height="320" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1602211119517" />
+    <state width="1398" height="320" key="GridCell.Tab.0.right" timestamp="1602211119518">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
-    <state width="1398" height="322" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1601366554880" />
+    <state width="1398" height="320" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1602211119518" />
     <state width="1398" height="395" key="GridCell.Tab.1.bottom" timestamp="1601209083122">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -183,10 +191,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="484" y="307" key="com.goide.refactor.move.GoMoveDeclarationDialog/0.23.1440.877@0.23.1440.877" timestamp="1600332468396" />
-    <state x="100" y="123" width="1240" height="677" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600514084238">
+    <state x="100" y="123" width="1240" height="677" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1602210045446">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="100" y="123" width="1240" height="677" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.1440.877@0.23.1440.877" timestamp="1600514084238" />
+    <state x="100" y="123" width="1240" height="677" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.1440.877@0.23.1440.877" timestamp="1602210045446" />
     <state x="263" y="197" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1600350949108">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
