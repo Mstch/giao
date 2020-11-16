@@ -4,10 +4,8 @@ import (
 	"sync"
 )
 
-
-
 var CommonBufferPool = &sync.Pool{New: func() interface{} {
-	return GetBuffer()
+	return &Buffer{}
 }}
 
 //预热

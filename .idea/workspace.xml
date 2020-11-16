@@ -3,11 +3,33 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="08aaee7c-90a2-4371-b5a4-29cb042cccce" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/internal/buffer/buffer_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/buffer/buffer.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/buffer/buffer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/buffer/pool.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/buffer/pool.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/session/rw.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/session/rw.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/session/session.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/session/session.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/bench/bench_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test/bench/bench_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/bench/bench_test.sh" beforeDir="false" afterPath="$PROJECT_DIR$/test/bench/bench_test.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +45,11 @@
   </component>
   <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GoLibraries">
@@ -74,7 +101,6 @@
     <configuration name="BenchmarkStp1C in github.com/Mstch/giao/test/bench" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="giao" />
       <working_directory value="$PROJECT_DIR$/test/bench" />
-      <parameters value="-test.count 5" />
       <framework value="gobench" />
       <kind value="PACKAGE" />
       <package value="github.com/Mstch/giao/test/bench" />
@@ -83,10 +109,53 @@
       <pattern value="^\QBenchmarkStp1C\E$" />
       <method v="2" />
     </configuration>
+    <configuration name="BenchmarkWriterMPSC in github.com/Mstch/giao/internal/session" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="giao" />
+      <working_directory value="$PROJECT_DIR$/internal/session" />
+      <framework value="gobench" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Mstch/giao/internal/session" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QBenchmarkWriterMPSC\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestBuffer_ReadFromLen in github.com/Mstch/giao/internal/buffer" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="giao" />
+      <working_directory value="$PROJECT_DIR$/internal/buffer" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Mstch/giao/internal/buffer" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestBuffer_ReadFromLen\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestWriterMPSC in github.com/Mstch/giao/internal/session" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="giao" />
+      <working_directory value="$PROJECT_DIR$/internal/session" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Mstch/giao/internal/session" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestWriterMPSC\E$" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Test.TestWriterMPSC in github.com/Mstch/giao/internal/session" />
+      <item itemvalue="Go Test.BenchmarkWriterMPSC in github.com/Mstch/giao/internal/session" />
+      <item itemvalue="Go Test.TestBuffer_ReadFromLen in github.com/Mstch/giao/internal/buffer" />
+      <item itemvalue="Go Test.BenchmarkStp1C in github.com/Mstch/giao/test/bench" />
+      <item itemvalue="Go Test.BenchmarkStp16C in github.com/Mstch/giao/test/bench" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Go Test.BenchmarkStp16C in github.com/Mstch/giao/test/bench" />
         <item itemvalue="Go Test.BenchmarkStp1C in github.com/Mstch/giao/test/bench" />
+        <item itemvalue="Go Test.TestBuffer_ReadFromLen in github.com/Mstch/giao/internal/buffer" />
+        <item itemvalue="Go Test.BenchmarkWriterMPSC in github.com/Mstch/giao/internal/session" />
+        <item itemvalue="Go Test.TestWriterMPSC in github.com/Mstch/giao/internal/session" />
       </list>
     </recent_temporary>
   </component>
@@ -103,6 +172,18 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -139,9 +220,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="847" y="329" key="#xdebugger.evaluate/0.23.1440.877@0.23.1440.877" timestamp="1600951162746" />
-    <state width="882" height="466" key="DebuggerActiveHint" timestamp="1600952646990">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="882" height="439" key="DebuggerActiveHint" timestamp="1605498738308">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
+    <state width="882" height="439" key="DebuggerActiveHint/0.23.1440.826@0.23.1440.826" timestamp="1605498738308" />
     <state width="882" height="466" key="DebuggerActiveHint/0.23.1440.877@0.23.1440.877" timestamp="1600952646990" />
     <state x="100" y="123" width="1240" height="677" key="DiffContextDialog" timestamp="1600918778842">
       <screen x="0" y="23" width="1440" height="877" />
@@ -155,45 +237,57 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="554" y="191" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1600528337890" />
-    <state width="1398" height="167" key="GridCell.Tab.0.bottom" timestamp="1602675080061">
-      <screen x="0" y="23" width="1440" height="816" />
+    <state width="1396" height="215" key="GridCell.Tab.0.bottom" timestamp="1605499351013">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
     <state width="1398" height="167" key="GridCell.Tab.0.bottom/0.23.1440.816@0.23.1440.816" timestamp="1602675080061" />
+    <state width="1396" height="215" key="GridCell.Tab.0.bottom/0.23.1440.825@0.23.1440.825" timestamp="1605239386392" />
+    <state width="1396" height="215" key="GridCell.Tab.0.bottom/0.23.1440.826@0.23.1440.826" timestamp="1605499351013" />
     <state width="1398" height="320" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1602211119518" />
-    <state width="1398" height="167" key="GridCell.Tab.0.center" timestamp="1602675080060">
-      <screen x="0" y="23" width="1440" height="816" />
+    <state width="1396" height="215" key="GridCell.Tab.0.center" timestamp="1605499351012">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
     <state width="1398" height="167" key="GridCell.Tab.0.center/0.23.1440.816@0.23.1440.816" timestamp="1602675080060" />
+    <state width="1396" height="215" key="GridCell.Tab.0.center/0.23.1440.825@0.23.1440.825" timestamp="1605239386391" />
+    <state width="1396" height="215" key="GridCell.Tab.0.center/0.23.1440.826@0.23.1440.826" timestamp="1605499351012" />
     <state width="1398" height="320" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1602211119517" />
-    <state width="1398" height="167" key="GridCell.Tab.0.left" timestamp="1602675080059">
-      <screen x="0" y="23" width="1440" height="816" />
+    <state width="1396" height="215" key="GridCell.Tab.0.left" timestamp="1605499351012">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
     <state width="1398" height="167" key="GridCell.Tab.0.left/0.23.1440.816@0.23.1440.816" timestamp="1602675080059" />
+    <state width="1396" height="215" key="GridCell.Tab.0.left/0.23.1440.825@0.23.1440.825" timestamp="1605239386391" />
+    <state width="1396" height="215" key="GridCell.Tab.0.left/0.23.1440.826@0.23.1440.826" timestamp="1605499351012" />
     <state width="1398" height="320" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1602211119517" />
-    <state width="1398" height="167" key="GridCell.Tab.0.right" timestamp="1602675080060">
-      <screen x="0" y="23" width="1440" height="816" />
+    <state width="1396" height="215" key="GridCell.Tab.0.right" timestamp="1605499351013">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
     <state width="1879" height="164" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1600526035457" />
     <state width="1398" height="167" key="GridCell.Tab.0.right/0.23.1440.816@0.23.1440.816" timestamp="1602675080060" />
+    <state width="1396" height="215" key="GridCell.Tab.0.right/0.23.1440.825@0.23.1440.825" timestamp="1605239386392" />
+    <state width="1396" height="215" key="GridCell.Tab.0.right/0.23.1440.826@0.23.1440.826" timestamp="1605499351013" />
     <state width="1398" height="320" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1602211119518" />
-    <state width="1398" height="395" key="GridCell.Tab.1.bottom" timestamp="1601209083122">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1396" height="259" key="GridCell.Tab.1.bottom" timestamp="1605499255029">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
+    <state width="1396" height="259" key="GridCell.Tab.1.bottom/0.23.1440.826@0.23.1440.826" timestamp="1605499255029" />
     <state width="1398" height="395" key="GridCell.Tab.1.bottom/0.23.1440.877@0.23.1440.877" timestamp="1601209083122" />
-    <state width="1398" height="395" key="GridCell.Tab.1.center" timestamp="1601209083121">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1396" height="259" key="GridCell.Tab.1.center" timestamp="1605499255028">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
+    <state width="1396" height="259" key="GridCell.Tab.1.center/0.23.1440.826@0.23.1440.826" timestamp="1605499255028" />
     <state width="1398" height="395" key="GridCell.Tab.1.center/0.23.1440.877@0.23.1440.877" timestamp="1601209083121" />
-    <state width="1398" height="395" key="GridCell.Tab.1.left" timestamp="1601209083121">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1396" height="259" key="GridCell.Tab.1.left" timestamp="1605499255027">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
+    <state width="1396" height="259" key="GridCell.Tab.1.left/0.23.1440.826@0.23.1440.826" timestamp="1605499255027" />
     <state width="1398" height="395" key="GridCell.Tab.1.left/0.23.1440.877@0.23.1440.877" timestamp="1601209083121" />
-    <state width="1398" height="395" key="GridCell.Tab.1.right" timestamp="1601209083122">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1396" height="259" key="GridCell.Tab.1.right" timestamp="1605499255028">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
+    <state width="1396" height="259" key="GridCell.Tab.1.right/0.23.1440.826@0.23.1440.826" timestamp="1605499255028" />
     <state width="1398" height="395" key="GridCell.Tab.1.right/0.23.1440.877@0.23.1440.877" timestamp="1601209083122" />
     <state x="229" y="95" key="SettingsEditor" timestamp="1602675112532">
       <screen x="0" y="23" width="1440" height="816" />
@@ -201,9 +295,10 @@
     <state x="305" y="95" key="SettingsEditor/0.0.1920.1080@0.0.1920.1080" timestamp="1600528365712" />
     <state x="229" y="95" key="SettingsEditor/0.23.1440.816@0.23.1440.816" timestamp="1602675112532" />
     <state x="229" y="100" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1600530276542" />
-    <state width="720" height="438" key="XDebugger.FullValuePopup" timestamp="1600952638543">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="720" height="413" key="XDebugger.FullValuePopup" timestamp="1605497937939">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
+    <state width="720" height="413" key="XDebugger.FullValuePopup/0.23.1440.826@0.23.1440.826" timestamp="1605497937939" />
     <state width="720" height="438" key="XDebugger.FullValuePopup/0.23.1440.877@0.23.1440.877" timestamp="1600952638543" />
     <state x="484" y="307" key="com.goide.refactor.move.GoMoveDeclarationDialog" timestamp="1600332468396">
       <screen x="0" y="23" width="1440" height="877" />
@@ -217,18 +312,23 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="263" y="197" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1440.877@0.23.1440.877" timestamp="1600350949108" />
-    <state x="421" y="216" width="617" height="522" key="find.popup" timestamp="1601200772032">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="421" y="205" width="617" height="493" key="find.popup" timestamp="1605497754062">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
     <state x="561" y="238" width="823" height="604" key="find.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1600525522885" />
+    <state x="421" y="204" width="617" height="490" key="find.popup/0.23.1440.822@0.23.1440.822" timestamp="1605007833227" />
+    <state x="421" y="205" width="617" height="493" key="find.popup/0.23.1440.826@0.23.1440.826" timestamp="1605497754062" />
     <state x="421" y="216" width="617" height="522" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1601200772032" />
     <state x="549" y="235" key="refactoring.ChangeSignatureDialog" timestamp="1601175457789">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="549" y="235" key="refactoring.ChangeSignatureDialog/0.23.1440.877@0.23.1440.877" timestamp="1601175457789" />
-    <state x="385" y="213" width="670" height="676" key="search.everywhere.popup" timestamp="1601207662580">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="385" y="202" width="670" height="638" key="search.everywhere.popup" timestamp="1605497751850">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
+    <state x="385" y="201" width="670" height="634" key="search.everywhere.popup/0.23.1440.822@0.23.1440.822" timestamp="1605003030833" />
+    <state x="385" y="202" width="670" height="637" key="search.everywhere.popup/0.23.1440.825@0.23.1440.825" timestamp="1605238468860" />
+    <state x="385" y="202" width="670" height="638" key="search.everywhere.popup/0.23.1440.826@0.23.1440.826" timestamp="1605497751850" />
     <state x="385" y="213" width="670" height="676" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1601207662580" />
   </component>
   <component name="XDebuggerManager">
@@ -250,9 +350,44 @@
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/test/msg/test.pb.go</url>
-          <line>328</line>
-          <option name="timeStamp" value="26" />
+          <url>file://$PROJECT_DIR$/internal/sequence/test/ring_test.go</url>
+          <line>32</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/session/writer_test.go</url>
+          <line>58</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/test/bench/bench_test.go</url>
+          <line>49</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/test/bench/bench_test.go</url>
+          <line>86</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/test/bench/bench_test.go</url>
+          <line>111</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/session/session.go</url>
+          <line>75</line>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/session/rw.go</url>
+          <line>53</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/session/rw.go</url>
+          <line>59</line>
+          <option name="timeStamp" value="64" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -263,9 +398,13 @@
         <watch expression="iNdEx" />
         <watch expression="time.Now().Nanosecond()/1e6" />
         <watch expression="pb" />
+        <watch expression="mw" language="go" />
         <watch expression="err" />
         <watch expression="io.ReadFull(s, s.ReadHeaderBuf[:4])" />
         <watch expression="s" />
+        <watch expression="buffer.Len()" />
+        <watch expression="mw" language="go" />
+        <watch expression="b.N " language="go" />
       </configuration>
     </watches-manager>
   </component>

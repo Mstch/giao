@@ -14,11 +14,12 @@ var lastSessionId = uint64(0)
 type Session struct {
 	net.Conn
 	Id            uint64
-	ReadBuf       *buffer.Buffer
+	ReadBuf       []byte
 	ReadHeaderBuf []byte
 	WriteBufPool  *sync.Pool
 	Meta          sync.Map
 	WriteLock     sync.Mutex
+	writeMsgChan  chan giao.Msg
 	closed        bool
 }
 
@@ -38,11 +39,12 @@ func CreateSession(conn net.Conn) *Session {
 	s := &Session{
 		Id:            atomic.AddUint64(&lastSessionId, 1),
 		Conn:          conn,
-		ReadBuf:       buffer.GetBuffer(),
+		ReadBuf:       make([]byte, 64),
 		ReadHeaderBuf: make([]byte, 8),
 		WriteBufPool:  buffer.CommonBufferPool,
 		WriteLock:     sync.Mutex{},
 		Meta:          sync.Map{},
+		writeMsgChan:  make(chan giao.Msg, 65535),
 	}
 	return s
 }

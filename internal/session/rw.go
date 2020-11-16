@@ -19,13 +19,16 @@ func (s *Session) Read() (int, []byte, error) {
 	if err != nil {
 		return 0, nil, err
 	}
+	length := int(binary.BigEndian.Uint32(s.ReadHeaderBuf[4:8]))
 	//申请proto的buf
-	protoBytes := s.ReadBuf.Take(int(binary.BigEndian.Uint32(s.ReadHeaderBuf[4:8])))
-	_, err = io.ReadFull(s.Conn, protoBytes)
+	if len(s.ReadBuf) < length {
+		s.ReadBuf = make([]byte, 64*(length/64+1))
+	}
+	_, err = io.ReadFull(s.Conn, s.ReadBuf[:length])
 	if err != nil {
 		return 0, nil, err
 	}
-	return int(binary.BigEndian.Uint32(s.ReadHeaderBuf[:4])), protoBytes, nil
+	return int(binary.BigEndian.Uint32(s.ReadHeaderBuf[:4])), s.ReadBuf[:length], nil
 }
 
 func (s *Session) Write(handlerId int, msg giao.Msg) error {
@@ -35,19 +38,30 @@ func (s *Session) Write(handlerId int, msg giao.Msg) error {
 	if s.closed {
 		return errors.ErrWriteToClosedConn
 	}
-	msgPb := msg.(giao.Msg)
-	size := msgPb.Size()
+	s.writeMsgChan <- msg
 	writerBuf := s.WriteBufPool.Get().(*buffer.Buffer)
 	defer s.WriteBufPool.Put(writerBuf)
-	totalBytes := writerBuf.Take(8 + size)
-	headerBytes := totalBytes[:8]
-	binary.BigEndian.PutUint32(headerBytes, uint32(handlerId))
-	binary.BigEndian.PutUint32(headerBytes[4:8], uint32(size))
-	protoBytes := totalBytes[8 : 8+size]
-	_, err := msg.(giao.Msg).MarshalTo(protoBytes)
-	if err != nil {
-		return err
+	writerBuf.Reset()
+	for {
+		select {
+		case msgInChan := <-s.writeMsgChan:
+			{
+				size := msgInChan.Size()
+				writerBuf.WriteUint32(uint32(handlerId))
+				writerBuf.WriteUint32(uint32(size))
+				_, err := writerBuf.WriteMsg(msgInChan)
+				if err != nil {
+					return err
+				}
+			}
+		default:
+			_, err := writerBuf.WriteTo(s.Conn)
+			if err != nil {
+				return err
+			}
+			goto end
+		}
 	}
-	_, err = s.Conn.Write(totalBytes)
-	return err
+end:
+	return nil
 }
