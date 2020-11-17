@@ -6,6 +6,7 @@ import (
 	"github.com/Mstch/giao/internal/buffer"
 	"github.com/Mstch/giao/internal/errors"
 	"io"
+	"time"
 )
 
 func (s *Session) Read() (int, []byte, error) {
@@ -42,6 +43,8 @@ func (s *Session) Write(handlerId int, msg giao.Msg) error {
 	writerBuf := s.WriteBufPool.Get().(*buffer.Buffer)
 	defer s.WriteBufPool.Put(writerBuf)
 	writerBuf.Reset()
+	needWrite := 0
+	retries := 0
 	for {
 		select {
 		case msgInChan := <-s.writeMsgChan:
@@ -53,13 +56,19 @@ func (s *Session) Write(handlerId int, msg giao.Msg) error {
 				if err != nil {
 					return err
 				}
+				needWrite++
 			}
 		default:
-			_, err := writerBuf.WriteTo(s.Conn)
-			if err != nil {
-				return err
+			if 0 < needWrite && needWrite < 5 && retries < 5 {
+				retries++
+				time.Sleep(200)
+			} else {
+				_, err := writerBuf.WriteTo(s.Conn)
+				if err != nil {
+					return err
+				}
+				goto end
 			}
-			goto end
 		}
 	}
 end:
