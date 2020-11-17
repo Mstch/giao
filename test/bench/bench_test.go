@@ -143,6 +143,15 @@ func BenchmarkStp16C(b *testing.B) {
 			panic(err)
 		}
 	}
+	go func() {
+		err = benchmarkStupidEchoServer.Serve()
+		if err != nil {
+			if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+				panic(err)
+			}
+		}
+	}()
+
 	w.Add(b.N)
 	for i := 0; i < 16; i++ {
 		c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
