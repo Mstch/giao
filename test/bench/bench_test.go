@@ -7,7 +7,6 @@ import (
 	"github.com/Mstch/giao/internal/server"
 	test "github.com/Mstch/giao/test/msg"
 	"google.golang.org/grpc"
-	"net/rpc"
 	"strings"
 	"sync"
 	"testing"
@@ -224,79 +223,6 @@ func BenchmarkStp16C(b *testing.B) {
 			panic(err)
 		}
 	}
-}
-func BenchmarkSyncStd1C(b *testing.B) {
-	b.SetBytes(5462 * 2)
-	c, err := rpc.Dial("tcp", "localhost:8080")
-	w := sync.WaitGroup{}
-	w.Add(b.N)
-	if err != nil {
-		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
-			panic(err)
-		}
-	}
-	b.ResetTimer()
-	for j := 0; j < b.N; j++ {
-		go func(k int) {
-			err := c.Call("StandardEcho.DoEcho", EchoMsg[k%12], &test.Echo{})
-			if err != nil {
-				if !strings.HasSuffix(err.Error(), "use of closed network connection") {
-					panic(err)
-				}
-			}
-			w.Done()
-		}(j)
-	}
-	w.Wait()
-}
-func BenchmarkSyncStd16C(b *testing.B) {
-	b.SetBytes(5462 * 2)
-	w := sync.WaitGroup{}
-	w.Add(b.N)
-	for i := 0; i < 16; i++ {
-		c, err := rpc.Dial("tcp", "localhost:8080")
-		if err != nil {
-			if !strings.HasSuffix(err.Error(), "use of closed network connection") {
-				panic(err)
-			}
-		}
-		go func(index int) {
-			for j := 0; j < b.N/16; j++ {
-				msg := &test.Echo{}
-				msg.Content = EchoMsg[j%12].Content
-				msg.Index = int32(index)
-				err := c.Call("StandardEcho.DoEcho", msg, &test.Echo{})
-				if err != nil {
-					if !strings.HasSuffix(err.Error(), "use of closed network connection") {
-						panic(err)
-					}
-				}
-				w.Done()
-			}
-		}(i)
-	}
-	c, err := rpc.Dial("tcp", "localhost:8080")
-	if err != nil {
-		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
-			panic(err)
-		}
-	}
-	go func(index int) {
-		for j := 0; j < b.N%16; j++ {
-			msg := &test.Echo{}
-			msg.Content = EchoMsg[j%12].Content
-			msg.Index = int32(index)
-			err := c.Call("StandardEcho.DoEcho", msg, &test.Echo{})
-			if err != nil {
-				if !strings.HasSuffix(err.Error(), "use of closed network connection") {
-					panic(err)
-				}
-			}
-			w.Done()
-		}
-	}(0)
-	b.ResetTimer()
-	w.Wait()
 }
 
 func BenchmarkGrpc1C(b *testing.B) {

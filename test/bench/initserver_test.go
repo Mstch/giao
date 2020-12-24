@@ -9,7 +9,6 @@ import (
 	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
-	"net/rpc"
 	"testing"
 )
 
@@ -23,14 +22,6 @@ func (g *GrpcEcho) DoEcho(ctx context.Context, echo *test.Echo) (*test.Echo, err
 	return out, nil
 }
 
-type StandardEcho struct {
-}
-
-func (e *StandardEcho) DoEcho(req *test.Echo, resp *test.Echo) error {
-	resp = &test.Echo{}
-	resp.Content = req.Content
-	return nil
-}
 
 func TestStpServer(t *testing.T) {
 	shandler := &giao.Handler{
@@ -53,19 +44,6 @@ func TestStpServer(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-}
-func TestStdServer(t *testing.T) {
-	var err error
-	benchmarkStandardEchoServer := rpc.NewServer()
-	err = benchmarkStandardEchoServer.Register(&StandardEcho{})
-	if err != nil {
-		panic(err)
-	}
-	l, err := net.Listen("tcp", ":8080")
-	if err != nil {
-		panic(err)
-	}
-	benchmarkStandardEchoServer.Accept(l)
 }
 func TestGRpcServer(t *testing.T) {
 	var err error

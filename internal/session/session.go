@@ -17,6 +17,7 @@ type Session struct {
 	ReadBuf       *buffer.Buffer
 	ReadHeaderBuf []byte
 	WriteBufPool  *sync.Pool
+	WriteBatchBuf *buffer.BatchBuffer
 	Meta          sync.Map
 	WriteLock     sync.Mutex
 	closed        bool
@@ -41,41 +42,59 @@ func CreateSession(conn net.Conn) *Session {
 		ReadBuf:       buffer.GetBuffer(),
 		ReadHeaderBuf: make([]byte, 8),
 		WriteBufPool:  buffer.CommonBufferPool,
+		WriteBatchBuf: buffer.NewBatchBuffer(conn),
 		WriteLock:     sync.Mutex{},
 		Meta:          sync.Map{},
 	}
+
 	return s
 }
 
 func (s *Session) Close() error {
 	s.closed = true
+	err := s.WriteBatchBuf.Stop()
+	if err != nil {
+		return err
+	}
 	s.Meta.Range(func(key interface{}, value interface{}) bool {
 		s.Meta.Delete(key)
 		return true
 	})
-	err := s.Conn.Close()
+	err = s.Conn.Close()
 	return err
 }
 
 func (s *Session) Serve(handlers map[int]*giao.Handler) error {
-	for !s.closed {
-		handlerId, protoBytes, err := s.Read()
-		if err != nil {
-			if err == io.EOF {
-				break
-			}
-			return err
-		}
-		if handler, ok := handlers[handlerId]; ok {
-			reqPool := handler.InputPool
-			pb := reqPool.Get().(giao.Msg)
-			err := pb.Unmarshal(protoBytes)
+	eChan := make(chan error, 2)
+	go func() {
+		eChan <- s.WriteBatchBuf.StartFlushLooper()
+	}()
+	go func() {
+		for !s.closed {
+			handlerId, protoBytes, err := s.Read()
 			if err != nil {
-				return err
+				if err == io.EOF {
+					break
+				}
+				eChan <- err
+				return
 			}
-			reqPool.Put(pb)
-			go handler.H(pb, s)
+			if handler, ok := handlers[handlerId]; ok {
+				reqPool := handler.InputPool
+				pb := reqPool.Get().(giao.Msg)
+				err := pb.Unmarshal(protoBytes)
+				if err != nil {
+					eChan <- err
+				}
+				reqPool.Put(pb)
+				go handler.H(pb, s)
+			}
 		}
+		eChan <- nil
+	}()
+	if err := <-eChan; err == nil {
+		return <-eChan
+	} else {
+		return err
 	}
-	return nil
 }
