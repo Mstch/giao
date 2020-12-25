@@ -1,0 +1,1 @@
+ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go test -o bench -run=None

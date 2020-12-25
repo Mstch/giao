@@ -21,7 +21,7 @@ import (
 // smallBufferSize is an initial allocation minimal capacity.
 const smallBufferSize = 64
 const FlushSize = 512 * 1024
-const ForceFlushInterval = 1 * time.Millisecond
+const ForceFlushInterval = 500 * time.Microsecond
 
 // A MsgBuffer is a variable-sized buffer of bytes with Read and Write methods.
 // The zero value for MsgBuffer is an empty buffer ready to use.
@@ -458,8 +458,9 @@ func (b *BatchBuffer) Stop() error {
 	return nil
 }
 func (b *BatchBuffer) StartFlushLooper() error {
+	ticker := time.NewTicker(ForceFlushInterval)
 	for !b.stop {
-		<-time.After(ForceFlushInterval)
+		<-ticker.C
 		for i := 0; i < common.GoMaxProc; i++ {
 			now := time.Now().UnixNano() / 1e6
 			mbuf := b.mbufs[i]
@@ -471,5 +472,6 @@ func (b *BatchBuffer) StartFlushLooper() error {
 			}
 		}
 	}
+	ticker.Stop()
 	return nil
 }
