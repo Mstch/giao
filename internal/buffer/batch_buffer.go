@@ -21,7 +21,7 @@ import (
 // smallBufferSize is an initial allocation minimal capacity.
 const smallBufferSize = 64
 const FlushSize = 512 * 1024
-const ForceFlushInterval = 500 * time.Microsecond
+const ForceFlushInterval = 1 * time.Millisecond
 
 // A MsgBuffer is a variable-sized buffer of bytes with Read and Write methods.
 // The zero value for MsgBuffer is an empty buffer ready to use.
@@ -382,22 +382,41 @@ func (b *MsgBuffer) UnreadByte() error {
 	}
 	return nil
 }
-
-func (b *MsgBuffer) Flush(writer io.Writer) error {
+func (b *MsgBuffer) WriteTo(w io.Writer) (n int, err error) {
+	b.lastRead = opInvalid
+	if nBytes := b.Len(); nBytes > 0 {
+		m, e := w.Write(b.buf[b.off:])
+		if m > nBytes {
+			panic("bytes.Buffer.WriteTo: invalid Write count")
+		}
+		b.off += m
+		n = m
+		if e != nil {
+			return n, e
+		}
+		// all bytes should have been written, by definition of
+		// Write method in io.Writer
+		if m != nBytes {
+			return n, io.ErrShortWrite
+		}
+	}
+	// Buffer is now empty; reset.
+	b.Reset()
+	return n, nil
+}
+func (b *MsgBuffer) Flush(writer io.Writer) (n int, err error) {
 	b.lock.Lock()
 	if l := b.Len(); l > 0 {
 		atomic.StoreInt64(&b.lastFlush, time.Now().UnixNano()/1e6)
-		buf := make([]byte, l)
-		copy(buf, b.Next(l))
+		n, err = b.WriteTo(writer)
 		b.lock.Unlock()
-		_, err := writer.Write(buf)
 		if err != nil {
-			return err
+			return
 		}
 	} else {
 		b.lock.Unlock()
 	}
-	return nil
+	return
 }
 
 // NewBuffer creates and initializes a new MsgBuffer using buf as its
@@ -431,15 +450,14 @@ func NewBatchBuffer(writer io.Writer) *BatchBuffer {
 }
 func (b *BatchBuffer) WriteMsg(handlerId int, msg giao.Msg) (n int, err error) {
 	mbuf := b.mbufs[runtime.GetPid()]
+	atomic.StoreInt64(&mbuf.lastFlush, time.Now().UnixNano()/1e6)
 	mbuf.lock.Lock()
 	n, err = mbuf.WriteMsg(handlerId, msg)
 	if err == nil {
 		if l := mbuf.Len(); l >= FlushSize {
-			atomic.StoreInt64(&mbuf.lastFlush, time.Now().UnixNano()/1e6)
-			buf := make([]byte, l)
-			copy(buf, mbuf.Next(l))
+			n, err = mbuf.WriteTo(b.Writer)
 			mbuf.lock.Unlock()
-			return b.Writer.Write(buf)
+			return
 		}
 	}
 	mbuf.lock.Unlock()
@@ -450,7 +468,7 @@ func (b *BatchBuffer) Stop() error {
 	b.stop = true
 	for i := 0; i < common.GoMaxProc; i++ {
 		mbuf := b.mbufs[i]
-		err := mbuf.Flush(b.Writer)
+		_, err := mbuf.Flush(b.Writer)
 		if err != nil {
 			return err
 		}
@@ -465,10 +483,7 @@ func (b *BatchBuffer) StartFlushLooper() error {
 			now := time.Now().UnixNano() / 1e6
 			mbuf := b.mbufs[i]
 			if now >= atomic.LoadInt64(&mbuf.lastFlush)+ForceFlushInterval.Milliseconds() {
-				err := mbuf.Flush(b.Writer)
-				if err != nil {
-					return err
-				}
+				go mbuf.Flush(b.Writer)
 			}
 		}
 	}

@@ -39,9 +39,10 @@ func BenchmarkStp1C(b *testing.B) {
 	w.Add(b.N)
 	shandler := &giao.Handler{
 		H: func(req giao.Msg, session giao.Session) {
-			respMsg := &test.Echo{}
+			respMsg := echoPool.Get().(*test.Echo)
 			respMsg.Content = req.(*test.Echo).Content
 			err := session.Write(EchoRpc, respMsg)
+			echoPool.Put(respMsg)
 			if err != nil {
 				if !strings.HasSuffix(err.Error(), "use of closed network connection") {
 					panic(err)
@@ -116,9 +117,10 @@ func BenchmarkStp16C(b *testing.B) {
 	w := sync.WaitGroup{}
 	shandler := &giao.Handler{
 		H: func(req giao.Msg, session giao.Session) {
-			respMsg := &test.Echo{}
+			respMsg := echoPool.Get().(*test.Echo)
 			respMsg.Content = req.(*test.Echo).Content
 			err := session.Write(EchoRpc, respMsg)
+			echoPool.Put(respMsg)
 			if err != nil {
 				if !strings.HasSuffix(err.Error(), "use of closed network connection") {
 					panic(err)
