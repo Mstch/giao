@@ -1,25 +1,60 @@
 goos: darwin
 goarch: amd64
 pkg: github.com/Mstch/giao/test/bench
-BenchmarkStd1C-16      	  105409	     10704 ns/op	1020.57 MB/s	    5821 B/op	      10 allocs/op
-BenchmarkStd1C-16      	   96853	     10598 ns/op	1030.80 MB/s	    5822 B/op	      10 allocs/op
-BenchmarkStd1C-16      	   83662	     12438 ns/op	 878.25 MB/s	    5821 B/op	      10 allocs/op
-BenchmarkStd1C-16      	  104556	     10595 ns/op	1031.02 MB/s	    5822 B/op	      10 allocs/op
-BenchmarkStd1C-16      	  105712	     11420 ns/op	 956.60 MB/s	    5821 B/op	      10 allocs/op
-BenchmarkStd16C-16    	  126444	     16578 ns/op	 658.96 MB/s	    5857 B/op	      10 allocs/op
-BenchmarkStd16C-16    	  106146	     16735 ns/op	 652.78 MB/s	    5860 B/op	      10 allocs/op
-BenchmarkStd16C-16    	  117492	     16818 ns/op	 649.53 MB/s	    5859 B/op	      10 allocs/op
-BenchmarkStd16C-16    	  119805	     18030 ns/op	 605.88 MB/s	    5860 B/op	      10 allocs/op
-BenchmarkStd16C-16    	  125120	     17547 ns/op	 622.54 MB/s	    5854 B/op	      10 allocs/op
-BenchmarkStp1C-16      	   89228	     21047 ns/op	 519.02 MB/s	   11843 B/op	       1 allocs/op
-BenchmarkStp1C-16      	  183195	     11854 ns/op	 921.55 MB/s	   11870 B/op	       1 allocs/op
-BenchmarkStp1C-16      	  159939	      7400 ns/op	1476.12 MB/s	   11601 B/op	       1 allocs/op
-BenchmarkStp1C-16      	  128440	     11039 ns/op	 989.59 MB/s	   11926 B/op	       1 allocs/op
-BenchmarkStp1C-16      	  130651	     18805 ns/op	 580.92 MB/s	   11381 B/op	       1 allocs/op
-BenchmarkStp16C-16     	 1000000	      8693 ns/op	1256.63 MB/s	   16140 B/op	       1 allocs/op
-BenchmarkStp16C-16     	 1000000	     13920 ns/op	 784.80 MB/s	   18559 B/op	       1 allocs/op
-BenchmarkStp16C-16     	  196350	     12702 ns/op	 860.04 MB/s	   19944 B/op	       0 allocs/op
-BenchmarkStp16C-16     	  845488	     11402 ns/op	 958.10 MB/s	   16997 B/op	       1 allocs/op
-BenchmarkStp16C-16     	  295119	      8805 ns/op	1240.67 MB/s	   16576 B/op	       0 allocs/op
+BenchmarkRpcx1C-16     	   10000	    125155 ns/op	  87.28 MB/s	   47559 B/op	      28 allocs/op
+BenchmarkRpcx1C-16     	10000	    105283 ns/op	 103.76 MB/s	   47160 B/op	      28 allocs/op
+BenchmarkRpcx1C-16     	10000	    104964 ns/op	 104.07 MB/s	   47095 B/op	      28 allocs/op
+BenchmarkRpcx1C-16     	10000	    113497 ns/op	  96.25 MB/s	   47303 B/op	      28 allocs/op
+BenchmarkRpcx1C-16     	10000	    115289 ns/op	  94.75 MB/s	   47192 B/op	      27 allocs/op
+BenchmarkRpcx16C-16    	   81728	     25262 ns/op	 432.43 MB/s	   48691 B/op	      27 allocs/op
+BenchmarkRpcx16C-16    	   77488	     19858 ns/op	 550.10 MB/s	   48797 B/op	      27 allocs/op
+BenchmarkRpcx16C-16     59296	     23822 ns/op	 458.57 MB/s	   48714 B/op	      27 allocs/op
+BenchmarkRpcx16C-16    57440	     24096 ns/op	 453.35 MB/s	   48898 B/op	      28 allocs/op
+BenchmarkRpcx16C-16    	   54624	     24881 ns/op	 439.05 MB/s	   48935 B/op	      28 allocs/op
+BenchmarkStd1C-16      	   67089	     16882 ns/op	 647.07 MB/s	    5825 B/op	      10 allocs/op
+BenchmarkStd1C-16      	   75913	     15767 ns/op	 692.84 MB/s	    5823 B/op	      10 allocs/op
+BenchmarkStd1C-16      	   71899	     18779 ns/op	 581.71 MB/s	    5824 B/op	      10 allocs/op
+BenchmarkStd1C-16      	   66168	     20175 ns/op	 541.45 MB/s	    5824 B/op	      10 allocs/op
+BenchmarkStd1C-16      	   60914	     19804 ns/op	 551.60 MB/s	    5824 B/op	      10 allocs/op
+BenchmarkStd16C-16     	   74980	     22008 ns/op	 496.37 MB/s	    5879 B/op	      10 allocs/op
+BenchmarkStd16C-16     	   67166	     20921 ns/op	 522.16 MB/s	    5886 B/op	      10 allocs/op
+BenchmarkStd16C-16     	   65746	     21530 ns/op	 507.38 MB/s	    5891 B/op	      10 allocs/op
+BenchmarkStd16C-16     	   57410	     24162 ns/op	 452.12 MB/s	    5905 B/op	      10 allocs/op
+BenchmarkStd16C-16     	   65937	     24060 ns/op	 454.04 MB/s	    5887 B/op	      10 allocs/op
+BenchmarkStp1C-16      	  106796	     27938 ns/op	 391.01 MB/s	     440 B/op	       0 allocs/op
+BenchmarkStp1C-16      	   89911	     20709 ns/op	 527.50 MB/s	     545 B/op	       0 allocs/op
+BenchmarkStp1C-16      	  113422	     10281 ns/op	1062.59 MB/s	     449 B/op	       0 allocs/op
+BenchmarkStp1C-16      	  107432	     25372 ns/op	 430.55 MB/s	     870 B/op	       1 allocs/op
+BenchmarkStp1C-16      	  120019	     17029 ns/op	 641.49 MB/s	     373 B/op	       0 allocs/op
+BenchmarkStp16C-16     	  754317	      8564 ns/op	1275.63 MB/s	     779 B/op	       1 allocs/op
+BenchmarkStp16C-16     	  294489	      8411 ns/op	1298.80 MB/s	    1609 B/op	       0 allocs/op
+BenchmarkStp16C-16     	 1000000	      8685 ns/op	1257.85 MB/s	     709 B/op	       0 allocs/op
+BenchmarkStp16C-16     	  311359	     14195 ns/op	 769.59 MB/s	     994 B/op	       0 allocs/op
+BenchmarkStp16C-16     	  494803	     10151 ns/op	1076.11 MB/s	     934 B/op	       0 allocs/op
 PASS
-ok  	github.com/Mstch/giao/test/bench	73.132s
+ok  	github.com/Mstch/giao/test/bench	77.674s
+goos: darwin
+goarch: amd64
+pkg: github.com/Mstch/giao/test/bench
+BenchmarkHprose1C-16               18474             59077 ns/op         184.91 MB/s       60726 B/op         34 allocs/op
+BenchmarkHprose1C-16               19686             60663 ns/op         180.08 MB/s       60746 B/op         34 allocs/op
+BenchmarkHprose1C-16               18324             65065 ns/op         167.89 MB/s       60775 B/op         34 allocs/op
+BenchmarkHprose1C-16               17440             68141 ns/op         160.32 MB/s       60777 B/op         34 allocs/op
+BenchmarkHprose1C-16               16910             69902 ns/op         156.28 MB/s       60788 B/op         34 allocs/op
+BenchmarkHprose16C-16              32320             33909 ns/op         322.16 MB/s       61239 B/op         35 allocs/op
+BenchmarkHprose16C-16              33280             34631 ns/op         315.44 MB/s       61161 B/op         35 allocs/op
+BenchmarkHprose16C-16              32736             34592 ns/op         315.79 MB/s       61100 B/op         35 allocs/op
+BenchmarkHprose16C-16              32304             35424 ns/op         308.38 MB/s       61161 B/op         35 allocs/op
+BenchmarkHprose16C-16              32448             35234 ns/op         310.04 MB/s       61209 B/op         35 allocs/op
+BenchmarkStp1C-16                 110269              9469 ns/op        1153.62 MB/s         455 B/op          0 allocs/op
+BenchmarkStp1C-16                 106602             32258 ns/op         338.64 MB/s         657 B/op          0 allocs/op
+BenchmarkStp1C-16                 130204              7798 ns/op        1400.87 MB/s         348 B/op          0 allocs/op
+BenchmarkStp1C-16                 117854             20941 ns/op         521.66 MB/s         511 B/op          0 allocs/op
+BenchmarkStp1C-16                 121396             24422 ns/op         447.31 MB/s         365 B/op          0 allocs/op
+BenchmarkStp16C-16               1000000              7419 ns/op        1472.47 MB/s         661 B/op          0 allocs/op
+BenchmarkStp16C-16                268854              7119 ns/op        1534.43 MB/s        1653 B/op          0 allocs/op
+BenchmarkStp16C-16                414516              7867 ns/op        1388.54 MB/s        1076 B/op          0 allocs/op
+BenchmarkStp16C-16                431760              8545 ns/op        1278.34 MB/s        1114 B/op          0 allocs/op
+BenchmarkStp16C-16                246553             10944 ns/op         998.17 MB/s        1639 B/op          0 allocs/op
+PASS
+ok      github.com/Mstch/giao/test/bench        52.541s

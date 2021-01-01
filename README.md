@@ -21,29 +21,45 @@ benchmark platform :
 
 benchmark data :
 ```
-name        time/op
-Std1C-16      11.2µs ±12%
-SStd16C-16    17.1µs ± 5%
-Stp1C-16      14.0µs ±50%
-Stp16C-16     11.1µs ±25%
+name          time/op
+Stp16C-16       9.41µs ±21%
+Stp1C-16        18.0µs ±55%
+Std1C-16        18.3µs ±14%
+Std16C-16       22.5µs ± 7%
+Rpcx16C-16      23.6µs ±16%
+Hprose16C-16    37.8µs ±14%
+Hprose1C-16     68.8µs ±10%
+Rpcx1C-16        113µs ±11%
 
-name        speed
-Std1C-16     983MB/s ±11%
-SStd16C-16   638MB/s ± 5%
-Stp1C-16     897MB/s ±64%
-Stp16C-16   1.02GB/s ±23%
+name          speed
+Stp16C-16     1.13GB/s ±32%
+Stp1C-16       651MB/s ±71%
+Std1C-16       603MB/s ±15%
+Std16C-16      486MB/s ± 7%
+Rpcx16C-16     467MB/s ±18%
+Hprose16C-16   290MB/s ±13%
+Hprose1C-16    159MB/s ±11%
+Rpcx1C-16     97.2MB/s ±10%
 
-name        alloc/op
-Std1C-16      5.82kB ± 0%
-SStd16C-16    5.86kB ± 0%
-Stp1C-16      11.7kB ± 3%
-Stp16C-16     17.6kB ±13%
+name          alloc/op
+Stp1C-16          535B ±62%
+Stp16C-16       1.00kB ±60%
+Std1C-16        5.82kB ± 0%
+Std16C-16       5.89kB ± 0%
+Rpcx1C-16       47.3kB ± 1%
+Rpcx16C-16      48.8kB ± 0%
+Hprose1C-16     60.8kB ± 0%
+Hprose16C-16    61.2kB ± 0%
 
-name        allocs/op
-Std1C-16        10.0 ± 0%
-SStd16C-16      10.0 ± 0%
-Stp1C-16        1.00 ± 0%
-Stp16C-16      0.60 ±100%
+name          allocs/op
+Stp1C-16          0.00
+Stp16C-16         0.00
+Std1C-16          10.0 ± 0%
+Std16C-16         10.0 ± 0%
+Rpcx16C-16        27.4 ± 2%
+Rpcx1C-16         28.0 ± 0%
+Hprose1C-16       34.0 ± 0%
+Hprose16C-16      35.0 ± 0%
 
 
 ```
