@@ -48,6 +48,5 @@ func (s *Session) Write(handlerId int, msg giao.Msg) error {
 	//	return err
 	//}
 	//_, err = s.Conn.Write(totalBytes)
-	_, err := s.WriteBatchBuf.WriteMsg(handlerId, msg)
-	return err
+	return s.WriteBuffer.Write(msg, handlerId)
 }

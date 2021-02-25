@@ -1,9 +1,9 @@
 - [x] basic rpc logic
-- [ ] graceful shutdown
+- [x] graceful shutdown
 - [ ] humanize api
-- [ ] goroutine safe off heap memory pool
 - [x] client conn pool for a stateless server rpc  
-- [ ] add auto batch write(may depends on the memory pool)         
+- [x] add auto batch write(may depends on the memory pool)  
+- [ ] add context to reduce the possibility  and positioning of coroutine leakage
 
 bench result  
 "Stp" means stupid,a milestone of the framework  

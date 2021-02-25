@@ -66,7 +66,7 @@ func (s *StupidServer) serve(conn net.Conn, errChan chan error) {
 	s.sessions = append(s.sessions, connSession)
 	err := connSession.Serve(s.handlers)
 	if err != nil {
-		<-errChan
+		errChan <- err
 	}
 }
 

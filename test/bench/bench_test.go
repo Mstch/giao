@@ -7,6 +7,7 @@ import (
 	test "github.com/Mstch/giao/test/msg"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"testing"
 )
 
@@ -114,6 +115,7 @@ func BenchmarkStp1C(b *testing.B) {
 }
 func BenchmarkStp16C(b *testing.B) {
 	b.SetBytes(5462 * 2)
+	done := int32(0)
 	w := sync.WaitGroup{}
 	shandler := &giao.Handler{
 		H: func(req giao.Msg, session giao.Session) {
@@ -132,6 +134,7 @@ func BenchmarkStp16C(b *testing.B) {
 	chandler := &giao.Handler{
 		H: func(req giao.Msg, session giao.Session) {
 			w.Done()
+			atomic.AddInt32(&done, 1)
 		},
 		InputPool: echoPool,
 	}
@@ -210,6 +213,7 @@ func BenchmarkStp16C(b *testing.B) {
 		}
 	}(16)
 	w.Wait()
+	println("wait end", b.N)
 	b.StopTimer()
 	err = c.Shutdown()
 	if err != nil {
@@ -223,4 +227,5 @@ func BenchmarkStp16C(b *testing.B) {
 			panic(err)
 		}
 	}
+
 }

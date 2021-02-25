@@ -3,10 +3,12 @@ package session
 import (
 	"github.com/Mstch/giao"
 	"github.com/Mstch/giao/internal/buffer"
+	"github.com/Mstch/giao/internal/buffer/flushbuffer"
 	"io"
 	"net"
 	"sync"
 	"sync/atomic"
+	"time"
 )
 
 var lastSessionId = uint64(0)
@@ -16,8 +18,7 @@ type Session struct {
 	Id            uint64
 	ReadBuf       *buffer.Buffer
 	ReadHeaderBuf []byte
-	WriteBufPool  *sync.Pool
-	WriteBatchBuf *buffer.BatchBuffer
+	WriteBuffer   *flushbuffer.FBuffers
 	Meta          sync.Map
 	WriteLock     sync.Mutex
 	closed        bool
@@ -41,8 +42,7 @@ func CreateSession(conn net.Conn) *Session {
 		Conn:          conn,
 		ReadBuf:       buffer.GetBuffer(),
 		ReadHeaderBuf: make([]byte, 8),
-		WriteBufPool:  buffer.CommonBufferPool,
-		WriteBatchBuf: buffer.NewBatchBuffer(conn),
+		WriteBuffer:   flushbuffer.NewFBuffers(1*time.Microsecond, conn),
 		WriteLock:     sync.Mutex{},
 		Meta:          sync.Map{},
 	}
@@ -52,7 +52,7 @@ func CreateSession(conn net.Conn) *Session {
 
 func (s *Session) Close() error {
 	s.closed = true
-	err := s.WriteBatchBuf.Stop()
+	err := s.WriteBuffer.StopFlushTimer()
 	if err != nil {
 		return err
 	}
@@ -60,14 +60,13 @@ func (s *Session) Close() error {
 		s.Meta.Delete(key)
 		return true
 	})
-	err = s.Conn.Close()
-	return err
+	return s.Conn.Close()
 }
 
 func (s *Session) Serve(handlers map[int]*giao.Handler) error {
 	eChan := make(chan error, 2)
 	go func() {
-		eChan <- s.WriteBatchBuf.StartFlushLooper()
+		eChan <- s.WriteBuffer.StartFlushTimer()
 	}()
 	go func() {
 		for !s.closed {
