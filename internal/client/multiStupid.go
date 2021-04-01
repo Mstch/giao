@@ -24,7 +24,7 @@ func (m *MultiConnClient) Connect(network, address string) (giao.MultiConnClient
 	if err != nil {
 		return nil, err
 	}
-	connSession := session.CreateSession(conn)
+	connSession := session.CreateSession(conn, nil)
 	m.selector.AddSession(connSession)
 	return m, nil
 }
@@ -33,7 +33,7 @@ func (m *MultiConnClient) Serve() chan error {
 	errChan := make(chan error)
 	for _, connSession := range m.selector.GetAllSession() {
 		go func(connSession giao.Session) {
-			errChan <- connSession.(*session.Session).Serve(m.handlers)
+			connSession.(*session.Session).Serve(m.handlers)
 		}(connSession)
 	}
 	return errChan
@@ -66,7 +66,7 @@ func (m *MultiConnClient) Shutdown() chan error {
 	errChan := make(chan error)
 	for _, connSession := range m.selector.GetAllSession() {
 		go func(connSession giao.Session) {
-			errChan <- connSession.(*session.Session).Serve(m.handlers)
+			connSession.(*session.Session).Serve(m.handlers)
 		}(connSession)
 	}
 	return errChan

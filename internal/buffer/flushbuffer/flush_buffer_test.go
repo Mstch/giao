@@ -22,7 +22,7 @@ func TestFlushBuffer(t *testing.T) {
 			panic(err)
 		}
 		fb := NewFBuffers(1, c)
-		go fb.StartFlushTimer()
+		go fb.StartFlusher(nil)
 		for i := 0; i < 1024; i++ {
 			go writer(fb, 1024)
 		}
@@ -73,7 +73,7 @@ func BenchmarkFBuffers(b *testing.B) {
 			panic(err)
 		}
 		fb := NewFBuffers(1*time.Microsecond, c)
-		go fb.StartFlushTimer()
+		go fb.StartFlusher(nil)
 		for i := 0; i < 16; i++ {
 			go writer(fb, b.N/16)
 		}

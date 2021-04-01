@@ -1,6 +1,7 @@
 package flushbuffer
 
 import (
+	"context"
 	"encoding/binary"
 	"github.com/Mstch/giao"
 	"io"
@@ -11,7 +12,7 @@ import (
 	_ "unsafe"
 )
 
-const FlushSize = 512 * 1024
+const FlushSize = 1024 * 1024
 
 var bufPool = &sync.Pool{
 	New: func() interface{} {
@@ -22,12 +23,14 @@ var bufPool = &sync.Pool{
 //The buffer size is fixed that when it is full will flush all data and discard this buf
 type (
 	FBuffers struct {
-		buffers        []*FBuffer
-		flushSize      int
-		flushTimer     *time.Timer
-		flushTimerDone chan struct{}
-		flushTimeout   time.Duration
-		writer         io.Writer
+		flushLock    *sync.Mutex
+		buffers      []*FBuffer
+		flushSize    int
+		flushTimer   *time.Timer
+		flushTimeout time.Duration
+		writer       io.Writer
+		DoneCh       chan struct{}
+		Len          uint64
 	}
 	FBuffer struct {
 		/*
@@ -48,7 +51,7 @@ func NewFBuffers(flushTimeout time.Duration, writer io.Writer) *FBuffers {
 	for i := range buffers {
 		buffers[i] = NewFBuffer(FlushSize)
 	}
-	return &FBuffers{buffers: buffers, flushSize: FlushSize, flushTimeout: flushTimeout, writer: writer,flushTimerDone:make(chan struct{})}
+	return &FBuffers{buffers: buffers, flushSize: FlushSize, flushTimeout: flushTimeout, writer: writer, flushLock: &sync.Mutex{}, DoneCh: make(chan struct{})}
 
 }
 
@@ -63,7 +66,7 @@ func NewFBuffer(flushSize int) *FBuffer {
 }
 
 func (fbs *FBuffers) Write(msg giao.Msg, id int) error {
-	fb := fbs.buffers[runtime.ProcPin()]
+	fb := fbs.buffers[pin()]
 	if fbs.flushSize < msg.Size()+8 {
 		panic("panic err too large msg")
 	}
@@ -78,7 +81,7 @@ func (fbs *FBuffers) Write(msg giao.Msg, id int) error {
 		_, err := msg.MarshalTo(buf[l+8 : l+8+size])
 		fb.buf[bufI] = fb.buf[bufI][:l+8+size]
 		fb.accessor.release(bufI)
-		runtime.ProcUnpin()
+		unpin()
 		return err
 	}
 	flushableBuf := buf[:l]
@@ -89,7 +92,7 @@ func (fbs *FBuffers) Write(msg giao.Msg, id int) error {
 	_, err := msg.MarshalTo(fb.buf[bufI][8 : 8+size])
 	fb.buf[bufI] = fb.buf[bufI][:8+size]
 	fb.accessor.release(bufI)
-	runtime.ProcUnpin()
+	unpin()
 	if err != nil {
 		return err
 	}
@@ -99,23 +102,26 @@ func (fbs *FBuffers) Write(msg giao.Msg, id int) error {
 	return err
 }
 
-func (fbs *FBuffers) StartFlushTimer() error {
+func (fbs *FBuffers) StartFlusher(ctx context.Context) error {
+	fctx := context.WithValue(ctx, "name", "flusher")
 	fbs.flushTimer = time.NewTimer(fbs.flushTimeout)
 	for {
 		select {
-		case <-fbs.flushTimer.C:
-			if err := fbs.flush(); err != nil {
+		case t := <-fbs.flushTimer.C:
+			if err := fbs.flush(t); err != nil {
 				return err
 			}
 			fbs.flushTimer.Reset(fbs.flushTimeout)
-		case <-fbs.flushTimerDone:
+		case <-fctx.Done():
 			return nil
 		}
 	}
 }
-func (fbs *FBuffers) flush() error {
+func (fbs *FBuffers) flush(t time.Time) error {
+	fbs.flushLock.Lock()
+	defer fbs.flushLock.Unlock()
 	for _, buffer := range fbs.buffers {
-		if time.Now().UnixNano()-atomic.LoadInt64(&buffer.optTime) > int64(fbs.flushTimeout) {
+		if t.UnixNano()-atomic.LoadInt64(&buffer.optTime) > int64(fbs.flushTimeout) {
 			if ok := buffer.accessor.tryAccess(0); ok {
 				buf := buffer.buf[0]
 				if len(buf) > 0 {
@@ -142,10 +148,47 @@ func (fbs *FBuffers) flush() error {
 	}
 	return nil
 }
-func (fbs *FBuffers) StopFlushTimer() error {
-	fbs.flushTimerDone <- struct{}{}
-	if !fbs.flushTimer.Stop() {
-		return fbs.flush()
+
+func (fbs *FBuffers) ForceFlush() error {
+	fbs.flushLock.Lock()
+	defer fbs.flushLock.Unlock()
+	for _, buffer := range fbs.buffers {
+		if ok := buffer.accessor.tryAccess(0); ok {
+			buf := buffer.buf[0]
+			if len(buf) > 0 {
+				_, err := fbs.writer.Write(buf)
+				buffer.buf[0] = buffer.buf[0][:0]
+				if err != nil {
+					return err
+				}
+			}
+			buffer.accessor.release(0)
+		}
+		if ok := buffer.accessor.tryAccess(1); ok {
+			buf := buffer.buf[1]
+			if len(buf) > 0 {
+				_, err := fbs.writer.Write(buf)
+				buffer.buf[1] = buffer.buf[1][:0]
+				if err != nil {
+					return err
+				}
+			}
+			buffer.accessor.release(1)
+		}
 	}
 	return nil
 }
+
+func (fbs *FBuffers) StopFlushTimer() error {
+	if !fbs.flushTimer.Stop() {
+		t := <-fbs.flushTimer.C
+		return fbs.flush(t)
+	}
+	return nil
+}
+
+//go:linkname pin runtime.procPin
+func pin() int
+
+//go:linkname unpin runtime.procUnpin
+func unpin() int

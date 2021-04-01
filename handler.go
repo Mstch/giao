@@ -5,8 +5,8 @@ import (
 )
 
 type Handler struct {
-	H         MsgHandler
-	InputPool Pool
+	H           MsgHandler
+	InputPool   Pool
 }
 
 type MsgHandler func(in Msg, session Session)

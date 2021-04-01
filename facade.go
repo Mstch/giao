@@ -33,8 +33,6 @@ type Selector interface {
 }
 
 type Session interface {
-	Get(key interface{}) (interface{}, bool)
-	Set(key, value interface{})
 	GetId() uint64
 	Write(handlerId int, msg Msg) error
 }

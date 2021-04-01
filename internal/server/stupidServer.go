@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"github.com/Mstch/giao"
 	"github.com/Mstch/giao/internal/session"
 	"net"
@@ -8,14 +9,20 @@ import (
 
 type StupidServer struct {
 	handlers map[int]*giao.Handler
+	Ctx      context.Context
+	cancel   context.CancelFunc
 	l        net.Listener
 	sessions []*session.Session
 }
 
 func NewStupidServer() giao.Server {
+	ctx := context.WithValue(context.Background(), "name", "server")
+	ctx, cancel := context.WithCancel(ctx)
 	return &StupidServer{
 		handlers: make(map[int]*giao.Handler, 8),
 		sessions: make([]*session.Session, 0),
+		Ctx:      ctx,
+		cancel:   cancel,
 	}
 }
 
@@ -30,21 +37,13 @@ func (s *StupidServer) Listen(network, address string) error {
 }
 
 func (s *StupidServer) Serve() error {
-	errChan := make(chan error)
-	go func() {
-		for {
-			conn, err := s.l.Accept()
-			if err != nil {
-				errChan <- err
-				break
-				//TODO log
-			}
-			go s.serve(conn, errChan)
+	for {
+		conn, err := s.l.Accept()
+		if err != nil {
+			s.cancel()
+			return err
 		}
-	}()
-	select {
-	case err := <-errChan:
-		return err
+		go s.serve(conn)
 	}
 }
 
@@ -61,16 +60,15 @@ func (s *StupidServer) RegWithId(id int, handler *giao.Handler) giao.Server {
 	return s
 }
 
-func (s *StupidServer) serve(conn net.Conn, errChan chan error) {
-	connSession := session.CreateSession(conn)
+func (s *StupidServer) serve(conn net.Conn) {
+	connSession := session.CreateSession(conn, s.Ctx)
 	s.sessions = append(s.sessions, connSession)
-	err := connSession.Serve(s.handlers)
-	if err != nil {
-		errChan <- err
-	}
+	connSession.Serve(s.handlers)
+	s.Ctx.Err()
 }
 
 func (s *StupidServer) Shutdown() error {
+	s.cancel()
 	for _, ss := range s.sessions {
 		_ = ss.Close()
 	}

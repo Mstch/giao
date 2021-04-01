@@ -1,12 +1,13 @@
 package session
 
 import (
+	"context"
 	"github.com/Mstch/giao"
 	"github.com/Mstch/giao/internal/buffer"
 	"github.com/Mstch/giao/internal/buffer/flushbuffer"
 	"io"
 	"net"
-	"sync"
+	"strings"
 	"sync/atomic"
 	"time"
 )
@@ -16,84 +17,74 @@ var lastSessionId = uint64(0)
 type Session struct {
 	net.Conn
 	Id            uint64
-	ReadBuf       *buffer.Buffer
 	ReadHeaderBuf []byte
+	ReadBuf       *buffer.SimpleBuffer
 	WriteBuffer   *flushbuffer.FBuffers
-	Meta          sync.Map
-	WriteLock     sync.Mutex
-	closed        bool
-}
-
-func (s *Session) Get(key interface{}) (interface{}, bool) {
-	return s.Meta.Load(key)
-}
-
-func (s *Session) Set(key, value interface{}) {
-	s.Meta.Store(key, value)
+	Ctx           context.Context
+	Cancel        context.CancelFunc
+	ReadDoneCh    chan struct{}
 }
 
 func (s *Session) GetId() uint64 {
 	return s.Id
 }
 
-func CreateSession(conn net.Conn) *Session {
+func CreateSession(conn net.Conn, parentCtx context.Context) *Session {
+	ctx := context.WithValue(parentCtx, "name", "session")
+	ctx, cancel := context.WithCancel(ctx)
 	s := &Session{
 		Id:            atomic.AddUint64(&lastSessionId, 1),
 		Conn:          conn,
-		ReadBuf:       buffer.GetBuffer(),
 		ReadHeaderBuf: make([]byte, 8),
-		WriteBuffer:   flushbuffer.NewFBuffers(1*time.Microsecond, conn),
-		WriteLock:     sync.Mutex{},
-		Meta:          sync.Map{},
+		ReadBuf:       buffer.NewSimpleBuffer(),
+		WriteBuffer:   flushbuffer.NewFBuffers(1*time.Millisecond, conn),
+		ReadDoneCh:    make(chan struct{}),
+		Cancel:        cancel,
+		Ctx:           ctx,
 	}
-
 	return s
 }
 
 func (s *Session) Close() error {
-	s.closed = true
+	s.Cancel()
 	err := s.WriteBuffer.StopFlushTimer()
 	if err != nil {
 		return err
 	}
-	s.Meta.Range(func(key interface{}, value interface{}) bool {
-		s.Meta.Delete(key)
-		return true
-	})
 	return s.Conn.Close()
 }
-
+func (s *Session) Flush() error {
+	return s.WriteBuffer.ForceFlush()
+}
 func (s *Session) Serve(handlers map[int]*giao.Handler) error {
-	eChan := make(chan error, 2)
 	go func() {
-		eChan <- s.WriteBuffer.StartFlushTimer()
+		s.WriteBuffer.StartFlusher(s.Ctx)
 	}()
 	go func() {
-		for !s.closed {
-			handlerId, protoBytes, err := s.Read()
-			if err != nil {
-				if err == io.EOF {
-					break
-				}
-				eChan <- err
+		for {
+			select {
+			case <-s.Ctx.Done():
 				return
-			}
-			if handler, ok := handlers[handlerId]; ok {
-				reqPool := handler.InputPool
-				pb := reqPool.Get().(giao.Msg)
-				err := pb.Unmarshal(protoBytes)
+			default:
+				handlerId, protoBytes, err := s.Read()
 				if err != nil {
-					eChan <- err
+					if err == io.EOF || strings.HasSuffix(err.Error(), "use of closed network connection") {
+						return
+					}
+					panic(err) //todo
 				}
-				reqPool.Put(pb)
-				go handler.H(pb, s)
+				if handler, ok := handlers[handlerId]; ok {
+					reqPool := handler.InputPool
+					pb := reqPool.Get().(giao.Msg)
+					err := pb.Unmarshal(protoBytes)
+					if err != nil {
+						panic(err) //todo
+					}
+					reqPool.Put(pb)
+					go handler.H(pb, s)
+				}
 			}
 		}
-		eChan <- nil
 	}()
-	if err := <-eChan; err == nil {
-		return <-eChan
-	} else {
-		return err
-	}
+	return nil
 }

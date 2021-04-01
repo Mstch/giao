@@ -1,6 +1,7 @@
 package client
 
 import (
+	"context"
 	"github.com/Mstch/giao"
 	"github.com/Mstch/giao/internal/session"
 	"net"
@@ -9,11 +10,17 @@ import (
 type StupidClient struct {
 	connSession *session.Session
 	handlers    map[int]*giao.Handler
+	Ctx         context.Context
+	Cancel      context.CancelFunc
 }
 
 func NewStupidClient() *StupidClient {
+	ctx, cancel := context.WithCancel(context.Background())
+	ctx = context.WithValue(ctx, "name", "client")
 	return &StupidClient{
 		handlers: make(map[int]*giao.Handler, 8),
+		Ctx:      ctx,
+		Cancel:   cancel,
 	}
 }
 
@@ -22,7 +29,7 @@ func (c *StupidClient) Connect(network, address string) (giao.Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.connSession = session.CreateSession(conn)
+	c.connSession = session.CreateSession(conn, c.Ctx)
 	return c, nil
 }
 
@@ -40,5 +47,6 @@ func (c *StupidClient) RegWithId(id int, handler *giao.Handler) giao.Client {
 }
 
 func (c *StupidClient) Shutdown() error {
+	c.Cancel()
 	return c.connSession.Close()
 }
