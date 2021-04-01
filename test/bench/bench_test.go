@@ -34,7 +34,7 @@ var echoPool = &sync.Pool{New: func() interface{} {
 	return &test.Echo{}
 }}
 
-func BenchmarkStp1C(b *testing.B) {
+func BenchmarkStp1C(b *testing.B)  {
 	b.SetBytes(5462 * 2)
 	w := sync.WaitGroup{}
 	w.Add(b.N)
@@ -138,15 +138,15 @@ func BenchmarkStp16C(b *testing.B) {
 		},
 		InputPool: echoPool,
 	}
-	benchmarkStupidEchoServer := server.NewStupidServer().RegWithId(EchoRpc, shandler)
-	err := benchmarkStupidEchoServer.Listen("tcp", ":8888")
+	s := server.NewStupidServer().RegWithId(EchoRpc, shandler)
+	err := s.Listen("tcp", ":8888")
 	if err != nil {
 		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
 			panic(err)
 		}
 	}
 	go func() {
-		err = benchmarkStupidEchoServer.Serve()
+		err = s.Serve()
 		if err != nil {
 			if !strings.HasSuffix(err.Error(), "use of closed network connection") {
 				panic(err)
@@ -155,8 +155,10 @@ func BenchmarkStp16C(b *testing.B) {
 	}()
 
 	w.Add(b.N)
+	cs := make([]giao.Client, 16)
 	for i := 0; i < 16; i++ {
 		c, err := client.NewStupidClient().RegWithId(EchoRpc, chandler).Connect("tcp", "localhost:8888")
+		cs[i] = c
 		if err != nil {
 			if !strings.HasSuffix(err.Error(), "use of closed network connection") {
 				panic(err)
@@ -213,7 +215,6 @@ func BenchmarkStp16C(b *testing.B) {
 		}
 	}(16)
 	w.Wait()
-	println("wait end", b.N)
 	b.StopTimer()
 	err = c.Shutdown()
 	if err != nil {
@@ -221,11 +222,24 @@ func BenchmarkStp16C(b *testing.B) {
 			panic(err)
 		}
 	}
-	err = benchmarkStupidEchoServer.Shutdown()
+	for _, c1 := range cs {
+		err = c1.Shutdown()
+		if err != nil {
+			if !strings.HasSuffix(err.Error(), "use of closed network connection") {
+				panic(err)
+			}
+		}
+	}
+	err = s.Shutdown()
 	if err != nil {
 		if !strings.HasSuffix(err.Error(), "use of closed network connection") {
 			panic(err)
 		}
 	}
-
+	//pprofF, err := os.OpenFile("pprof", os.O_CREATE|os.O_RDWR, 0777)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//pprof.Lookup("goroutine").WriteTo(pprofF, 1)
+	//println("done")
 }
