@@ -62,3 +62,9 @@ Hprose1C-8       34.0 ± 0%
 Hprose16C-8      36.0 ± 0%
 
 ```
+
+
+addition:
+
+the f-buffer design:
+![f-buffer](doc/fbuffer.png)
