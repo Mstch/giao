@@ -1,1 +1,1 @@
-go test -run=None -benchmem  -count 5 -bench . -timeout 1h | tee benchresult && benchstat  benchresult >benchstatresult
+go test -run=None -benchmem  -count 10 -bench . -timeout 1h > 1.log 2>2.log

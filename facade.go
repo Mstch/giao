@@ -6,6 +6,7 @@ type Server interface {
 	ListenAndServe(network, address string) error
 	RegWithId(id int, handler *Handler) Server
 	Shutdown() error
+	Flush()
 }
 
 type Client interface {
@@ -14,6 +15,7 @@ type Client interface {
 	RegWithId(id int, handler *Handler) Client
 	Go(id int, req Msg) error
 	Shutdown() error
+	Flush() error
 }
 
 type MultiConnClient interface {

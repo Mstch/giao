@@ -47,10 +47,10 @@ func CreateSession(conn net.Conn, parentCtx context.Context) *Session {
 
 func (s *Session) Close() error {
 	s.Cancel()
-	err := s.WriteBuffer.StopFlushTimer()
-	if err != nil {
-		return err
-	}
+	//err := s.WriteBuffer.StopFlushTimer()
+	//if err != nil {
+	//	return err
+	//}
 	return s.Conn.Close()
 }
 func (s *Session) Flush() error {
@@ -58,7 +58,7 @@ func (s *Session) Flush() error {
 }
 func (s *Session) Serve(handlers map[int]*giao.Handler) error {
 	go func() {
-		s.WriteBuffer.StartFlusher(s.Ctx)
+		//s.WriteBuffer.StartFlusher(s.Ctx)
 	}()
 	go func() {
 		for {

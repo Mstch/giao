@@ -74,3 +74,10 @@ func (s *StupidServer) Shutdown() error {
 	}
 	return s.l.Close()
 }
+
+
+func (s *StupidServer) Flush() {
+	for _, ss := range s.sessions {
+		_ = ss.Flush()
+	}
+}

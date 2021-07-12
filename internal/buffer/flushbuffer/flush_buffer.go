@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/binary"
 	"github.com/Mstch/giao"
+	"github.com/Mstch/giao/internal/pool"
 	"io"
 	"runtime"
 	"sync"
@@ -13,12 +14,6 @@ import (
 )
 
 const FlushSize = 1024 * 1024
-
-var bufPool = &sync.Pool{
-	New: func() interface{} {
-		return make([]byte, FlushSize)
-	},
-}
 
 //The buffer size is fixed that when it is full will flush all data and discard this buf
 type (
@@ -41,7 +36,6 @@ type (
 		*/
 		buf     [2][]byte
 		optTime int64
-		//now it only only
 		accessor *accessor
 	}
 )
@@ -66,7 +60,8 @@ func NewFBuffer(flushSize int) *FBuffer {
 }
 
 func (fbs *FBuffers) Write(msg giao.Msg, id int) error {
-	fb := fbs.buffers[pin()]
+	pid := pin()
+	fb := fbs.buffers[pid] //找到线程私有的f-buffer
 	if fbs.flushSize < msg.Size()+8 {
 		panic("panic err too large msg")
 	}
@@ -86,7 +81,7 @@ func (fbs *FBuffers) Write(msg giao.Msg, id int) error {
 	}
 	flushableBuf := buf[:l]
 	//write msg into new buf
-	fb.buf[bufI] = bufPool.Get().([]byte)[:0]
+	fb.buf[bufI] = pool.GetBytes(FlushSize)
 	binary.BigEndian.PutUint32(fb.buf[bufI][:4], uint32(id))
 	binary.BigEndian.PutUint32(fb.buf[bufI][4:8], uint32(size))
 	_, err := msg.MarshalTo(fb.buf[bufI][8 : 8+size])
@@ -98,17 +93,17 @@ func (fbs *FBuffers) Write(msg giao.Msg, id int) error {
 	}
 	//write old buf into tcp conn
 	_, err = fbs.writer.Write(flushableBuf)
-	bufPool.Put(flushableBuf)
+	pool.PutBytes(flushableBuf)
 	return err
 }
 
-func (fbs *FBuffers) StartFlusher(ctx context.Context) error {
-	fctx := context.WithValue(ctx, "name", "flusher")
+func (fbs *FBuffers) StartFlusher(sessionCtx context.Context) error {
+	fctx := context.WithValue(sessionCtx, "name", "flusher")
 	fbs.flushTimer = time.NewTimer(fbs.flushTimeout)
 	for {
 		select {
 		case t := <-fbs.flushTimer.C:
-			if err := fbs.flush(t); err != nil {
+			if err := fbs.flush(t, false); err != nil {
 				return err
 			}
 			fbs.flushTimer.Reset(fbs.flushTimeout)
@@ -117,11 +112,11 @@ func (fbs *FBuffers) StartFlusher(ctx context.Context) error {
 		}
 	}
 }
-func (fbs *FBuffers) flush(t time.Time) error {
+func (fbs *FBuffers) flush(t time.Time, force bool) error {
 	fbs.flushLock.Lock()
 	defer fbs.flushLock.Unlock()
 	for _, buffer := range fbs.buffers {
-		if t.UnixNano()-atomic.LoadInt64(&buffer.optTime) > int64(fbs.flushTimeout) {
+		if force || t.UnixNano()-atomic.LoadInt64(&buffer.optTime) > int64(fbs.flushTimeout) {
 			if ok := buffer.accessor.tryAccess(0); ok {
 				buf := buffer.buf[0]
 				if len(buf) > 0 {
@@ -132,6 +127,8 @@ func (fbs *FBuffers) flush(t time.Time) error {
 					}
 				}
 				buffer.accessor.release(0)
+			} else if force { //when force flush,must promise other writer is done
+				panic("force flush when other writer undone")
 			}
 			if ok := buffer.accessor.tryAccess(1); ok {
 				buf := buffer.buf[1]
@@ -143,6 +140,8 @@ func (fbs *FBuffers) flush(t time.Time) error {
 					}
 				}
 				buffer.accessor.release(1)
+			} else if force { //when force flush,must promise other writer is done
+				panic("force flush when other writer undone")
 			}
 		}
 	}
@@ -150,39 +149,13 @@ func (fbs *FBuffers) flush(t time.Time) error {
 }
 
 func (fbs *FBuffers) ForceFlush() error {
-	fbs.flushLock.Lock()
-	defer fbs.flushLock.Unlock()
-	for _, buffer := range fbs.buffers {
-		if ok := buffer.accessor.tryAccess(0); ok {
-			buf := buffer.buf[0]
-			if len(buf) > 0 {
-				_, err := fbs.writer.Write(buf)
-				buffer.buf[0] = buffer.buf[0][:0]
-				if err != nil {
-					return err
-				}
-			}
-			buffer.accessor.release(0)
-		}
-		if ok := buffer.accessor.tryAccess(1); ok {
-			buf := buffer.buf[1]
-			if len(buf) > 0 {
-				_, err := fbs.writer.Write(buf)
-				buffer.buf[1] = buffer.buf[1][:0]
-				if err != nil {
-					return err
-				}
-			}
-			buffer.accessor.release(1)
-		}
-	}
-	return nil
+	return fbs.flush(time.Time{}, true)
 }
 
 func (fbs *FBuffers) StopFlushTimer() error {
 	if !fbs.flushTimer.Stop() {
 		t := <-fbs.flushTimer.C
-		return fbs.flush(t)
+		return fbs.flush(t, true)
 	}
 	return nil
 }

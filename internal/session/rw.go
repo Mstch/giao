@@ -1,10 +1,8 @@
 package session
 
 import (
-	"context"
 	"encoding/binary"
 	"github.com/Mstch/giao"
-	"github.com/Mstch/giao/internal/errors"
 	"io"
 )
 
@@ -28,9 +26,6 @@ func (s *Session) Read() (int, []byte, error) {
 func (s *Session) Write(handlerId int, msg giao.Msg) error {
 	if msg == nil {
 		return nil
-	}
-	if s.Ctx.Err() == context.Canceled {
-		return errors.ErrWriteToClosedConn
 	}
 	return s.WriteBuffer.Write(msg, handlerId)
 }

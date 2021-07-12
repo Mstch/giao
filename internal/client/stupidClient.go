@@ -14,6 +14,10 @@ type StupidClient struct {
 	Cancel      context.CancelFunc
 }
 
+func (c *StupidClient) Flush() error {
+	return c.connSession.Flush()
+}
+
 func NewStupidClient() *StupidClient {
 	ctx, cancel := context.WithCancel(context.Background())
 	ctx = context.WithValue(ctx, "name", "client")
