@@ -67,4 +67,6 @@ Hprose16C-8      36.0 ± 0%
 addition:
 
 the f-buffer design:
+
+
 ![f-buffer](doc/fbuffer.png)
