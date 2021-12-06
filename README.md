@@ -4,6 +4,7 @@
 - [x] client conn pool for a stateless server rpc  
 - [x] add auto batch write(may depends on the memory pool)  
 - [ ] add context to reduce the possibility  and positioning of coroutine leakage
+- [ ] add batch api
 
 bench result  
 "Stp" means stupid,a milestone of the framework  
