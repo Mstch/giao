@@ -5,11 +5,10 @@ import (
 )
 
 type Handler struct {
-	H           MsgHandler
-	InputPool   Pool
+	Handle    func(in Msg, session Session)
+	InputPool Pool
 }
 
-type MsgHandler func(in Msg, session Session)
 type Msg interface {
 	Size() int
 	MarshalTo(data []byte) (n int, err error)
@@ -35,7 +34,7 @@ func (p *PipelineHandler) Append(h ChainMsgHandler) *PipelineHandler {
 }
 
 func (p *PipelineHandler) Build() *Handler {
-	p.H = func(req Msg, session Session) {
+	p.Handle = func(req Msg, session Session) {
 		for _, h := range p.hs {
 			if !h(req, session) {
 				break

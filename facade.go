@@ -1,7 +1,7 @@
 package giao
 
 type Server interface {
-	Listen(network, address string) error
+	Listen(network, address string) (Server, error)
 	Serve() error
 	ListenAndServe(network, address string) error
 	RegWithId(id int, handler *Handler) Server

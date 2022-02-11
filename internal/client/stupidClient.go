@@ -33,12 +33,19 @@ func (c *StupidClient) Connect(network, address string) (giao.Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.connSession = session.CreateSession(conn, c.Ctx)
+	c.connSession = session.NewSession(conn, c.Ctx)
 	return c, nil
 }
 
 func (c *StupidClient) Serve() error {
-	return c.connSession.Serve(c.handlers)
+	c.connSession.Serve(c.handlers)
+	select {
+	case err := <-c.connSession.Error():
+		return err
+	case <-c.Ctx.Done():
+		return nil
+	}
+
 }
 
 func (c *StupidClient) Go(id int, req giao.Msg) error {
@@ -52,5 +59,5 @@ func (c *StupidClient) RegWithId(id int, handler *giao.Handler) giao.Client {
 
 func (c *StupidClient) Shutdown() error {
 	c.Cancel()
-	return c.connSession.Close()
+	return c.connSession.Shutdown()
 }

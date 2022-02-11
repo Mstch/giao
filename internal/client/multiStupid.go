@@ -24,7 +24,7 @@ func (m *MultiConnClient) Connect(network, address string) (giao.MultiConnClient
 	if err != nil {
 		return nil, err
 	}
-	connSession := session.CreateSession(conn, nil)
+	connSession := session.NewSession(conn, nil)
 	m.selector.AddSession(connSession)
 	return m, nil
 }
